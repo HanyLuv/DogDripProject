@@ -2,14 +2,12 @@ package com.hany.dogdripproject.net;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Switch;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
@@ -33,10 +31,7 @@ public class NetworkManager {
     //로그인
     private final String DRIP_LOGIN_USER = "user/login";
 
-
-    private Context mContext;
     private RequestQueue mQueue;
-    private NetworkListener mNetworkListener;
 
     private static NetworkManager instance = null;
 
@@ -82,30 +77,30 @@ public class NetworkManager {
             parameter = getParameter(keyValues);
         }
 
-        String apiType = null;
+        String apiAddr = null;
 
-        switch (requestType) {
+        switch (requestType) { //요청 타입에따라 api주소를 (apiAddr) 설정한다.
             case DRIP_PUT:
-                apiType = DRIP_PUT;
+                apiAddr = DRIP_PUT;
                 RequestMethod = Request.Method.POST;
                 break;
             case DRIP_REGISTER_USER:
-                apiType = DRIP_REGISTER_USER;
+                apiAddr = DRIP_REGISTER_USER;
                 RequestMethod = Request.Method.POST;
                 break;
             case DRIP_GET:
-                apiType = DRIP_GET;
+                apiAddr = DRIP_GET;
                 break;
             case DRIP_LOGIN_USER:
-                apiType = DRIP_LOGIN_USER;
+                apiAddr = DRIP_LOGIN_USER;
                 break;
         }
 
         String url = null;
         if (parameter != null && RequestMethod != Request.Method.GET) {
-            url = new StringBuilder().append(DRIP_HOST).append(apiType).append(parameter).toString();
+            url = new StringBuilder().append(DRIP_HOST).append(apiAddr).append(parameter).toString();
         } else {
-            url = new StringBuilder().append(DRIP_HOST).append(apiType).toString();
+            url = new StringBuilder().append(DRIP_HOST).append(apiAddr).toString();
         }
 
         Log.d("hany_tag", "** url : " + url);
@@ -134,9 +129,8 @@ public class NetworkManager {
 
     //네트워크 결과 응답 리스너
     public interface NetworkListener {
-        public void onResponse(JSONObject jsonObj);
-
-        public void onErrorResponse(VolleyError error);
+        void onResponse(JSONObject jsonObj);
+        void onErrorResponse(VolleyError error);
     }
 
 }
