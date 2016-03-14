@@ -1,6 +1,7 @@
 package com.hany.dogdripproject.net;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Switch;
 
 import com.android.volley.Request;
@@ -12,6 +13,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by HanyLuv on 2016-03-14.
@@ -34,46 +38,78 @@ public class NetworkManager {
     private RequestQueue mQueue;
     private NetworkListener mNetworkListener;
 
-    public NetworkManager(Context context) {
-        mContext = context;
+    private static NetworkManager instance = null;
+
+
+    public static NetworkManager getInstance() {
+        if (instance == null) {
+            instance = new NetworkManager();
+        }
+        return instance;
+    }
+
+    private NetworkManager() {
+    }
+
+    // P요청
+    public void request(Context context, RequestType type, Map keyValues, NetworkListener listener) {
         mQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = createRequest(type, keyValues, listener);
+        mQueue.add(request);
     }
 
-    public void post(RequestType type, NetworkListener listener) {
-
+    //파라미터를 만든다.
+    private String getParameter(Map keys) {
+        String param = "";
+        StringBuilder builder = new StringBuilder();
+        Iterator iterator = keys.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry key = (Map.Entry) iterator.next();
+            builder.append(param).append(key.getKey()).append("=").append(key.getValue()).append("&");
+        }
+        param = "?" + builder.toString();
+        Log.d("hany_tag", "param : " + param);
+        return param;
     }
 
-    //네트워크 결과 응답 리스너
-    public interface NetworkListener {
-        public void onResponse(JSONObject jsonObj);
-
-        public void onErrorResponse(VolleyError error);
-    }
-
-
-    //타입에 맞는 요청을 가져온다.
-    public JsonObjectRequest getRequset(RequestType requestType, final NetworkListener listener) {
+    //타입에 맞는 요청을 만든다.
+    private JsonObjectRequest createRequest(RequestType requestType, Map keyValues, final NetworkListener listener) {
         JsonObjectRequest request = null;
+        String parameter = null;
         int RequestMethod = Request.Method.GET;
 
-        String type = null;
+        if (keyValues != null) {
+            parameter = getParameter(keyValues);
+        }
+
+        String apiType = null;
+
         switch (requestType) {
-            case DRIP_GET:
-                type = DRIP_GET;
-                break;
             case DRIP_PUT:
-                type = DRIP_PUT;
+                apiType = DRIP_PUT;
                 RequestMethod = Request.Method.POST;
                 break;
-            case DRIP_LOGIN_USER:
-                type = DRIP_LOGIN_USER;
-                break;
             case DRIP_REGISTER_USER:
-                type = DRIP_REGISTER_USER;
+                apiType = DRIP_REGISTER_USER;
+                RequestMethod = Request.Method.POST;
+                break;
+            case DRIP_GET:
+                apiType = DRIP_GET;
+                break;
+            case DRIP_LOGIN_USER:
+                apiType = DRIP_LOGIN_USER;
                 break;
         }
 
-        String url = new StringBuilder().append(DRIP_HOST).append(type).toString();
+        String url = null;
+        if (parameter != null && RequestMethod != Request.Method.GET) {
+            url = new StringBuilder().append(DRIP_HOST).append(apiType).append(parameter).toString();
+        } else {
+            url = new StringBuilder().append(DRIP_HOST).append(apiType).toString();
+        }
+
+        Log.d("hany_tag", "** url : " + url);
+        Log.d("hany_tag", "** Request.Method : " + RequestMethod);
 
         request = new JsonObjectRequest(RequestMethod, url, new Response.Listener<JSONObject>() {
             @Override
@@ -94,6 +130,13 @@ public class NetworkManager {
         DRIP_PUT,
         DRIP_REGISTER_USER,
         DRIP_LOGIN_USER;
+    }
+
+    //네트워크 결과 응답 리스너
+    public interface NetworkListener {
+        public void onResponse(JSONObject jsonObj);
+
+        public void onErrorResponse(VolleyError error);
     }
 
 }
