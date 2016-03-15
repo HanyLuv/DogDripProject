@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.entry.Drip;
 import com.hany.dogdripproject.fragment.adapater.HomeFragmentPagerAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by HanyLuv on 2016-03-15.
@@ -31,11 +34,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        init();
+        ArrayList<Drip> drips = getArguments().getParcelableArrayList("drips");
+        init(drips);
     }
 
-    private void init() {
-        mViewPager.setAdapter(new HomeFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), null));
-
+    private void init(ArrayList<Drip> drips) {
+        if (drips != null) {
+            mViewPager.setAdapter(new HomeFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), drips));
+        }
     }
 }

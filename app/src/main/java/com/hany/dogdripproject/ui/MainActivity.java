@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.entry.Drip;
@@ -33,10 +32,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(JSONObject jsonObj) {
                 try {
-                    JSONArray resultJsonObj = jsonObj.getJSONArray("result");
                     Gson gson = new Gson();
                     Bundle bundle = new Bundle();
                     Type type = new TypeToken<Collection<Drip>>() {}.getType();
+                    JSONArray resultJsonObj = jsonObj.getJSONArray("result");
                     List<Drip> drips = gson.fromJson(resultJsonObj.toString(), type);
                     bundle.putParcelableArrayList("drips", (ArrayList) drips);
                     init(bundle);
@@ -47,9 +46,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("hany_tag", "" + error.getMessage());
-
             }
         });
 
