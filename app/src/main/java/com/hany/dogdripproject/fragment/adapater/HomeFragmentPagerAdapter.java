@@ -27,14 +27,15 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
+        Drip drip = mDrips.get(position);
         Bundle bundle = new Bundle();
-
+        bundle.putString("author", drip.getAuthor());
+        bundle.putString("drip", drip.getDrip());
         return DripPageFragment.newInstance(mContext, bundle);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mDrips.size();
     }
 }
