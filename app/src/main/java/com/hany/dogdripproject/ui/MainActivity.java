@@ -3,12 +3,16 @@ package com.hany.dogdripproject.ui;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.entry.Drip;
 import com.hany.dogdripproject.fragment.HomeFragment;
+import com.hany.dogdripproject.net.BaseApiRequest;
+import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 
 import org.json.JSONArray;
@@ -27,28 +31,44 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        NetworkManager.getInstance().request(getApplicationContext(), NetworkManager.RequestType.DRIP_GET, null, new NetworkManager.NetworkListener() {
+        BaseApiResponse<ArrayList<Drip>> response = new BaseApiResponse(new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
             @Override
-            public void onResponse(JSONObject jsonObj) {
-                try {
-                    Gson gson = new Gson();
-                    Bundle bundle = new Bundle();
-                    Type type = new TypeToken<Collection<Drip>>() {}.getType();
-                    JSONArray resultJsonObj = jsonObj.getJSONArray("result");
-                    List<Drip> drips = gson.fromJson(resultJsonObj.toString(), type);
-                    bundle.putParcelableArrayList("drips", (ArrayList) drips);
-                    init(bundle);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(BaseApiResponse<ArrayList<Drip>> response) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("drips", response.getData());
+                init(bundle);
             }
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("hany_tag", "" + error.getMessage());
+            public void onError(VolleyError error) {
+
             }
-        });
+        }, new TypeToken<ArrayList<Drip>>(){}.getType());
+
+        BaseApiRequest request = new BaseApiRequest(Constants.DRIP_GET, response);
+        NetworkManager.getInstance().request(request);
+
+//        NetworkManager.getInstance().request(getApplicationContext(), NetworkManager.RequestType.DRIP_GET, null, new NetworkManager.NetworkListener() {
+//            @Override
+//            public void onResponse(JSONObject jsonObj) {
+//                try {
+//                    Gson gson = new Gson();
+//                    Bundle bundle = new Bundle();
+//                    Type type = new TypeToken<Collection<Drip>>() {}.getType();
+//                    JSONArray resultJsonObj = jsonObj.getJSONArray("result");
+//                    List<Drip> drips = gson.fromJson(resultJsonObj.toString(), type);
+//                    bundle.putParcelableArrayList("drips", (ArrayList) drips);
+//                    init(bundle);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("hany_tag", "" + error.getMessage());
+//            }
+//        });
 
     }
 
@@ -58,4 +78,5 @@ public class MainActivity extends BaseActivity {
         HomeFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.layout_main_container, HomeFragment).commit();
     }
+
 }

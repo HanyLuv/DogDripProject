@@ -1,6 +1,7 @@
-package com.hany.dogdripproject.net.response;
+package com.hany.dogdripproject.net;
 
 
+import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -10,7 +11,12 @@ import java.lang.reflect.Type;
 /**
  * Created by kwonojin on 16. 3. 15..
  */
-abstract public class BaseResponse <DATA> {
+public class BaseApiResponse<DATA> {
+
+    public interface OnResponseListener<DATA>{
+        void onResponse(BaseApiResponse<DATA> response);
+        void onError(VolleyError error);
+    }
 
     protected static final String KEY_MESSAGE = "message";
     protected static final String KEY_ERROR_CODE = "errorCode";
@@ -24,10 +30,16 @@ abstract public class BaseResponse <DATA> {
     private long duration = 0;
     private DATA data = null;
 
+    private OnResponseListener<DATA> mOnResponseListener = null;
+    private Type mType = null;
+
+
     private Gson mGson = null;
 
-    public BaseResponse(){
+    public BaseApiResponse(OnResponseListener<DATA> listener, Type type){
         mGson = new Gson();
+        mOnResponseListener = listener;
+        mType = type;
     }
 
     public String getMessage() {
@@ -70,16 +82,34 @@ abstract public class BaseResponse <DATA> {
         this.data = data;
     }
 
+    public void setOnResponseListener(OnResponseListener l){
+        mOnResponseListener = l;
+    }
+
+
     public void setResponse(JSONObject response){
         if(response != null){
+            message = response.optString(KEY_MESSAGE);
+            errorCode = response.optInt(KEY_ERROR_CODE);
+            responseTime = response.optLong(KEY_RESPONSE_TIME);
+            duration = response.optLong(KEY_RESPONSE_DURATION);
             String jData = response.optString(getDataRootKey());
             if(jData != null){
-
+                data = getGson().fromJson(jData, getType());
             }
+            mOnResponseListener.onResponse(this);
         }
     }
 
-    public abstract Type getType();
+    public void setError(VolleyError error){
+        if(mOnResponseListener != null){
+            mOnResponseListener.onError(error);
+        }
+    }
+
+    public Type getType(){
+        return mType;
+    }
 
     protected String getDataRootKey(){
         return KEY_DEFAULT_DATA;
