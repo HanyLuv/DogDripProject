@@ -1,13 +1,18 @@
 package com.hany.dogdripproject.ui;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.fragment.HomeFragment;
+import com.hany.dogdripproject.fragment.JoinFragment;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.DripListRequest;
+import com.hany.dogdripproject.net.request.JoinRequest;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
@@ -18,6 +23,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.join_layout).setOnClickListener(joinClickListener);
+
         DripListRequest request = new DripListRequest(this, new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
             @Override
             public void onResponse(BaseApiResponse<ArrayList<Drip>> response) {
@@ -32,13 +39,21 @@ public class MainActivity extends BaseActivity {
             }
         });
         NetworkManager.getInstance().request(request);
+
     }
 
+    private View.OnClickListener joinClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            JoinFragment joinFragment = new JoinFragment();
+            getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), joinFragment).addToBackStack(null).commit();
+        }
+    };
 
     private void init(Bundle bundle) {
-        HomeFragment HomeFragment = new HomeFragment();
-        HomeFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), HomeFragment).commit();
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), homeFragment).commit();
     }
 
 }
