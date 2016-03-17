@@ -1,14 +1,29 @@
 package com.hany.dogdripproject.vo.drip;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+
 /**
- * Created by kwonojin on 16. 3. 15..
+ * Created by HanyLuv on 2016-03-14.
  */
-public class Drip {
-    private int id = 0;
-    private String drip = null;
-    private String author = null;
-    private long createdate = 0;
-    private int heartcount = 0;
+public class Drip implements Parcelable {
+
+    private int id;
+    private String drip;
+    private String author;
+    private long createdate;
+    private int heartcount;
+
+    public Drip(){}
+
+    public Drip(Parcel parcel){
+        heartcount = parcel.readInt();
+        id = parcel.readInt();
+        createdate = parcel.readLong();
+        author = parcel.readString();
+        drip = parcel.readString();
+    }
 
     public int getId() {
         return id;
@@ -50,14 +65,31 @@ public class Drip {
         this.heartcount = heartcount;
     }
 
+
     @Override
-    public String toString() {
-        return "Drip{" +
-                "id=" + id +
-                ", drip='" + drip + '\'' +
-                ", author='" + author + '\'' +
-                ", createdate=" + createdate +
-                ", heartcount=" + heartcount +
-                '}';
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(heartcount);
+        dest.writeInt(id);
+        dest.writeLong(createdate);
+        dest.writeString(author);
+        dest.writeString(drip);
+    }
+
+    public static Creator<Drip> CREATOR = new Creator<Drip>() {
+
+        @Override
+        public Drip createFromParcel(Parcel source) {
+            return new Drip(source);
+        }
+
+        @Override
+        public Drip[] newArray(int size) {
+            return new Drip[size];
+        }
+    };
 }

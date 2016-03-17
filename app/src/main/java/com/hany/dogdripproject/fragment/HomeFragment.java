@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hany.dogdripproject.R;
-import com.hany.dogdripproject.entry.Drip;
 import com.hany.dogdripproject.fragment.adapater.HomeFragmentPagerAdapter;
+import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
 

@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.hany.dogdripproject.entry.Drip;
 import com.hany.dogdripproject.fragment.DripPageFragment;
+import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.List;
 

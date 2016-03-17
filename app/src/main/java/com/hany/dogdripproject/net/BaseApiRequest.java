@@ -1,5 +1,7 @@
 package com.hany.dogdripproject.net;
 
+import android.content.Context;
+
 import com.android.volley.Request;
 
 import java.util.HashMap;
@@ -10,17 +12,19 @@ import java.util.Map;
  */
 public class BaseApiRequest{
 
+    private Context mContext = null;
     private String mUrl = null;
     private Map<String, String> mParams = null;
     private Map<String, String> mHeaders = null;
     private int mRequestMethod = Request.Method.POST;
     private BaseApiResponse mResponse = null;
 
-    public BaseApiRequest(String url, BaseApiResponse response){
-        this(Request.Method.POST, url, response);
+    public BaseApiRequest(Context context, String url, BaseApiResponse response){
+        this(context, Request.Method.POST, url, response);
     }
 
-    public BaseApiRequest(int requestMethod, String url, BaseApiResponse response){
+    public BaseApiRequest(Context context, int requestMethod, String url, BaseApiResponse response){
+        mContext = context;
         mRequestMethod = requestMethod;
         mUrl = url;
         mResponse = response;
@@ -58,6 +62,14 @@ public class BaseApiRequest{
 
     public BaseApiResponse getResponse() {
         return mResponse;
+    }
+
+    protected void setResponse(BaseApiResponse response){
+        mResponse = response;
+    }
+
+    protected Context getContext(){
+        return mContext;
     }
 
     @Override
