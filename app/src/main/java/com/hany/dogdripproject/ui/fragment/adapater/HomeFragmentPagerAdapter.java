@@ -1,12 +1,11 @@
-package com.hany.dogdripproject.fragment.adapater;
+package com.hany.dogdripproject.ui.fragment.adapater;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.hany.dogdripproject.fragment.DripPageFragment;
+import com.hany.dogdripproject.ui.fragment.DripPageFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.List;

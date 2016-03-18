@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.fragment.adapater;
+package com.hany.dogdripproject.ui.fragment.adapater;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

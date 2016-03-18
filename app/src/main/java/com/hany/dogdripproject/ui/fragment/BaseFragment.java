@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.fragment;
+package com.hany.dogdripproject.ui.fragment;
 
 import android.support.v4.app.Fragment;
 
