@@ -15,14 +15,11 @@ import java.util.List;
  * Created by HanyLuv on 2016-03-16.
  */
 public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
-    private Context mContext;
     private List<Drip> mDrips;
 
-    public HomeFragmentPagerAdapter(FragmentManager fm, Context context, List<Drip> drips) {
+    public HomeFragmentPagerAdapter(FragmentManager fm, List<Drip> drips) {
         super(fm);
-        mContext = context;
         mDrips = drips;
-
     }
 
     @Override
@@ -31,7 +28,7 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putString("author", drip.getAuthor());
         bundle.putString("drip", drip.getDrip());
-        return DripPageFragment.newInstance(mContext, bundle);
+        return DripPageFragment.newInstance(bundle);
     }
 
     @Override

@@ -14,18 +14,22 @@ import com.hany.dogdripproject.R;
 /**
  * Created by HanyLuv on 2016-03-15.
  */
-public class DripPageFragment extends Fragment {
+public class DripPageFragment extends BaseFragment {
 
-    private Context mContext;
+    /**
+     * 환희씨 Fragment에서 mContext는 불필요해요 ~
+     *
+     * getActivity()를 사용하세요
+     */
+//    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    public static Fragment newInstance(Context context, Bundle bundle) {
+    public static Fragment newInstance(Bundle bundle) {
         DripPageFragment dripFragment = new DripPageFragment();
-        dripFragment.setContext(context);
         dripFragment.setArguments(bundle);
         return dripFragment;
     }
@@ -50,10 +54,4 @@ public class DripPageFragment extends Fragment {
         mTvAuthor.setText(getArguments().getString("author"));
         mTvDrip.setText(getArguments().getString("drip"));
     }
-
-    public void setContext(Context context) {
-        mContext = context;
-    }
-
-
 }

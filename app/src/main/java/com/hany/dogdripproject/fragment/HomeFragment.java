@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by HanyLuv on 2016-03-15.
  */
 //메인화면 프래그먼트
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
 
     private ViewPager mViewPager;
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
 
     private void init(ArrayList<Drip> drips) {
         if (drips != null) {
-            mViewPager.setAdapter(new HomeFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), drips));
+            mViewPager.setAdapter(new HomeFragmentPagerAdapter(getFragmentManager(), drips));
         }
     }
 }

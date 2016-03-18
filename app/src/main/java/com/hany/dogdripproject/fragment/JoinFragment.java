@@ -12,7 +12,7 @@ import com.hany.dogdripproject.R;
 /**
  * Created by HanyLuv on 2016-03-18.
  */
-public class JoinFragment extends Fragment {
+public class JoinFragment extends BaseFragment {
 
     @Nullable
     @Override
