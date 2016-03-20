@@ -6,10 +6,19 @@ package com.hany.dogdripproject.vo.user;
 public class User {
     private String email = null;
     private String nickname = null;
+    private String password = null;
     private long createdate = 0;
     private long lastconn = 0;
     private int point = 0;
     private UserState userstate = null;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;

@@ -39,14 +39,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private View.OnClickListener joinClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            JoinFragment joinFragment = new JoinFragment();
-            getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), joinFragment).addToBackStack(null).commit();
-        }
-    };
-
     private void init(Bundle bundle) {
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setArguments(bundle);

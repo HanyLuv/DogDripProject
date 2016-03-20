@@ -15,13 +15,6 @@ import com.hany.dogdripproject.R;
  */
 public class DripPageFragment extends BaseFragment {
 
-    /**
-     * 환희씨 Fragment에서 mContext는 불필요해요 ~
-     *
-     * getActivity()를 사용하세요
-     */
-//    private Context mContext;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -42,6 +42,26 @@ public class BaseApiResponse<DATA> {
         mType = type;
     }
 
+    public void setResponse(JSONObject response){
+        if(response != null){
+            message = response.optString(KEY_MESSAGE);
+            errorCode = response.optInt(KEY_ERROR_CODE);
+            responseTime = response.optLong(KEY_RESPONSE_TIME);
+            duration = response.optLong(KEY_RESPONSE_DURATION);
+            String jData = response.optString(getDataRootKey());
+            if(jData != null){
+                data = getGson().fromJson(jData, getType());
+            }
+            mOnResponseListener.onResponse(this);
+        }
+    }
+
+    public void setError(VolleyError error){
+        if(mOnResponseListener != null){
+            mOnResponseListener.onError(error);
+        }
+    }
+
     public String getMessage() {
         return message;
     }
@@ -84,27 +104,6 @@ public class BaseApiResponse<DATA> {
 
     public void setOnResponseListener(OnResponseListener l){
         mOnResponseListener = l;
-    }
-
-
-    public void setResponse(JSONObject response){
-        if(response != null){
-            message = response.optString(KEY_MESSAGE);
-            errorCode = response.optInt(KEY_ERROR_CODE);
-            responseTime = response.optLong(KEY_RESPONSE_TIME);
-            duration = response.optLong(KEY_RESPONSE_DURATION);
-            String jData = response.optString(getDataRootKey());
-            if(jData != null){
-                data = getGson().fromJson(jData, getType());
-            }
-            mOnResponseListener.onResponse(this);
-        }
-    }
-
-    public void setError(VolleyError error){
-        if(mOnResponseListener != null){
-            mOnResponseListener.onError(error);
-        }
     }
 
     public Type getType(){

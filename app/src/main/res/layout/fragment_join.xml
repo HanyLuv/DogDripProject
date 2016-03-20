@@ -18,7 +18,8 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tv_device" />
+        android:layout_toRightOf="@+id/tv_device"
+        android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/tv_password"
@@ -35,7 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_email"
-        android:layout_toRightOf="@+id/tv_device" />
+        android:layout_toRightOf="@+id/tv_device"
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/tv_nickname"
@@ -68,4 +70,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_nickname"
         android:layout_toRightOf="@+id/tv_device" />
+
+    <Button
+        android:id="@+id/bt_join"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_device"
+        android:background="@color/white"
+        android:text="가입" />
 </RelativeLayout>

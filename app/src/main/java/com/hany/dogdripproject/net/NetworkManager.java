@@ -74,20 +74,6 @@ public class NetworkManager {
         }
     }
 
-    //파라미터를 만든다.
-    private String createGETparams(Map keys) {
-        String param = "";
-        StringBuilder builder = new StringBuilder();
-        Iterator iterator = keys.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry key = (Map.Entry) iterator.next();
-            builder.append(param).append(key.getKey()).append("=").append(key.getValue()).append("&");
-        }
-        param = "?" + builder.toString();
-        Log.d("hany_tag", "param : " + param);
-        return param;
-    }
-
     private Request requestPost(final BaseApiRequest baseApiRequest){
         Request request = null;
         if(baseApiRequest != null){
