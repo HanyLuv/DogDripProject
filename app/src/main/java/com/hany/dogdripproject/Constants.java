@@ -17,4 +17,10 @@ public class Constants {
     private final String DRIP_REGISTER_USER = "user/register";
     //로그인
     private final String DRIP_LOGIN_USER = "user/login";
+
+    //파라미터 값들
+    public static final String PARAM_EMAIL = "email";
+    public static final String PARAM_PASSWORD = "password";
+    public static final String PARAM_NICKNAME = "nickname";
+    public static final String PARAM_DEVICE = "device";
 }

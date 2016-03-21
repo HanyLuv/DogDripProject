@@ -7,32 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.JoinRequest;
 import com.hany.dogdripproject.vo.user.User;
 
-import java.util.ArrayList;
-
 /**
  * Created by HanyLuv on 2016-03-18.
  */
 public class JoinFragment extends BaseFragment {
 
-    private final String JOIN_PARAM_EMAIL = "email";
-    private final String JOIN_PARAM_PASSWORD = "password";
-    private final String JOIN_PARAM_NICKNAME = "nickname";
-    private final String JOIN_PARAM_DEVICE = "device";
-
     private EditText etEmail;
     private EditText etNickname;
     private EditText etPassword;
     private EditText etDevice;
-    private Button btJoin;
+    private Button btnJoin;
 
     @Nullable
     @Override
@@ -43,7 +36,7 @@ public class JoinFragment extends BaseFragment {
         etNickname = (EditText) view.findViewById(R.id.et_nickname);
         etPassword = (EditText) view.findViewById(R.id.et_password);
         etDevice = (EditText) view.findViewById(R.id.et_device);
-        btJoin = (Button) view.findViewById(R.id.bt_join);
+        btnJoin = (Button) view.findViewById(R.id.bt_join);
 
         return view;
     }
@@ -55,7 +48,7 @@ public class JoinFragment extends BaseFragment {
     }
 
     private void init() {
-        btJoin.setOnClickListener(new View.OnClickListener() {
+        btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = etEmail.getText().toString();
@@ -76,7 +69,7 @@ public class JoinFragment extends BaseFragment {
                     showToast(response.getMessage());
                     return;
                 }
-                showToast(response.getData().getNickname() + " 님 환영합니다!");
+                showToast(response.getData().getNickname() + getResources().getString(R.string.join_welcome));
             }
 
             @Override
@@ -85,10 +78,10 @@ public class JoinFragment extends BaseFragment {
             }
         });
 
-        joinRequest.putParam(JOIN_PARAM_EMAIL, email);
-        joinRequest.putParam(JOIN_PARAM_PASSWORD, password);
-        joinRequest.putParam(JOIN_PARAM_NICKNAME, nickname);
-        joinRequest.putParam(JOIN_PARAM_DEVICE, device);
+        joinRequest.putParam(Constants.PARAM_EMAIL, email);
+        joinRequest.putParam(Constants.PARAM_PASSWORD, password);
+        joinRequest.putParam(Constants.PARAM_NICKNAME, nickname);
+        joinRequest.putParam(Constants.PARAM_DEVICE, device);
 
         NetworkManager.getInstance().request(joinRequest);
     }

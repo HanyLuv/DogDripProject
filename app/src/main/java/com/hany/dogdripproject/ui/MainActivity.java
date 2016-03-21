@@ -20,7 +20,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        findViewById(R.id.join_layout).setOnClickListener(joinClickListener);
 
         DripListRequest request = new DripListRequest(this, new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
             @Override
@@ -36,7 +35,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         NetworkManager.getInstance().request(request);
-
     }
 
     private void init(Bundle bundle) {

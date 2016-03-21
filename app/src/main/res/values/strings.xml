@@ -8,4 +8,15 @@
     <string name="join_password">비밀번호</string>
     <string name="join_nickname">닉네임</string>
     <string name="join_device">디바이스정보</string>
+    <string name="join_btn_join">가입</string>
+    <string name="join_welcome"> 님 환영합니다!</string>
+
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_device">Device</string>
+    <string name="login_btn_login">로그인</string>
+    <string name="login_welcome"> 님 로그인!</string>
+
+    <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
+    <string name="write_btn_write">글쓰기</string>
 </resources>

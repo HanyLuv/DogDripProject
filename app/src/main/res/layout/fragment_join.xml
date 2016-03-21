@@ -77,5 +77,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_device"
         android:background="@color/white"
-        android:text="가입" />
+        android:text="@string/join_btn_join" />
 </RelativeLayout>
