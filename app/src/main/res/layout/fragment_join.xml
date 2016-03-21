@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:gravity="center"
-    android:padding="10dp">
+    android:padding="@dimen/join_fragment_padding">
 
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_email"
-        android:text="이메일"
+        android:text="@string/join_email"
         android:textColor="@color/black" />
 
     <EditText
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_password"
         android:layout_below="@+id/tv_email"
-        android:text="비밀번호"
+        android:text="@string/join_password"
         android:textColor="@color/black" />
 
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_nickname"
         android:layout_below="@+id/tv_password"
-        android:text="닉네임"
+        android:text="@string/join_nickname"
         android:textColor="@color/black" />
 
     <EditText
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_device"
         android:layout_below="@+id/tv_nickname"
-        android:text="디바이스정보"
+        android:text="@string/join_device"
         android:textColor="@color/black" />
 
     <EditText

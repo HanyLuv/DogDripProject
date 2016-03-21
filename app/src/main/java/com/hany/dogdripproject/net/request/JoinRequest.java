@@ -15,7 +15,6 @@ import java.util.ArrayList;
  */
 public class JoinRequest extends BasicRequest<User> {
 
-
     /* Constants 여기다가 주소를 모아두신것같은데
         어떻게 사용하실지 몰라서 일단 아래처럼 붙여서 사용했어요! */
 

@@ -3,4 +3,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="config_data_check">데이터 정보를 확인 중 입니다</string>
+
+    <string name="join_email">이메일</string>
+    <string name="join_password">비밀번호</string>
+    <string name="join_nickname">닉네임</string>
+    <string name="join_device">디바이스정보</string>
 </resources>

@@ -67,10 +67,6 @@ public class JoinFragment extends BaseFragment {
         });
     }
 
-    private void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
     private void requestJoin(String email, String password, String nickname, String device) {
 
         JoinRequest joinRequest = new JoinRequest(getContext(), new BaseApiResponse.OnResponseListener<User>() {
