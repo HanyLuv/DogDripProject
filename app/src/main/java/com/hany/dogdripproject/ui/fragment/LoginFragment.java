@@ -81,7 +81,7 @@ public class LoginFragment extends BaseFragment {
                 loginRequst.putParam(Constants.PARAM_PASSWORD, strPassword);
                 loginRequst.putParam(Constants.PARAM_DEVICE, strDevice);
 
-                NetworkManager.getInstance().request(loginRequst);
+                request(loginRequst);
 
             }
 

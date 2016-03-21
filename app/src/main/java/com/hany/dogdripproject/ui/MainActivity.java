@@ -10,6 +10,7 @@ import com.hany.dogdripproject.ui.fragment.JoinFragment;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.DripListRequest;
+import com.hany.dogdripproject.ui.fragment.WriteFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         DripListRequest request = new DripListRequest(this, new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
             @Override
             public void onResponse(BaseApiResponse<ArrayList<Drip>> response) {

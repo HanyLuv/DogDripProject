@@ -62,7 +62,7 @@ public class JoinFragment extends BaseFragment {
 
     private void requestJoin(String email, String password, String nickname, String device) {
 
-        JoinRequest joinRequest = new JoinRequest(getContext(), new BaseApiResponse.OnResponseListener<User>() {
+        JoinRequest joinRequest = new JoinRequest(getActivity(), new BaseApiResponse.OnResponseListener<User>() {
             @Override
             public void onResponse(BaseApiResponse<User> response) {
                 if (response.getErrorCode() != 0) {
@@ -83,7 +83,7 @@ public class JoinFragment extends BaseFragment {
         joinRequest.putParam(Constants.PARAM_NICKNAME, nickname);
         joinRequest.putParam(Constants.PARAM_DEVICE, device);
 
-        NetworkManager.getInstance().request(joinRequest);
+        request(joinRequest);
     }
 
 }
