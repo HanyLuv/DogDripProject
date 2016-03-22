@@ -10,7 +10,7 @@ public class User {
     private long createdate = 0;
     private long lastconn = 0;
     private int point = 0;
-    private UserState userstate = null;
+    private UserStatus userstate = null;
 
     public String getPassword() {
         return password;
@@ -60,11 +60,11 @@ public class User {
         this.point = point;
     }
 
-    public UserState getUserstate() {
+    public UserStatus getUserstate() {
         return userstate;
     }
 
-    public void setUserstate(UserState userstate) {
+    public void setUserstate(UserStatus userstate) {
         this.userstate = userstate;
     }
 
