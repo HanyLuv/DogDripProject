@@ -65,8 +65,7 @@ public class JoinFragment extends BaseFragment {
         JoinRequest joinRequest = new JoinRequest(getActivity(), new BaseApiResponse.OnResponseListener<User>() {
             @Override
             public void onResponse(BaseApiResponse<User> response) {
-                if (response.getErrorCode() != 0) {
-                    showToast(response.getMessage());
+                if(!isRequestSuccessfully(response)){
                     return;
                 }
                 showToast(response.getData().getNickname() + getResources().getString(R.string.join_welcome));

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.ui.fragment.DripPageFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
@@ -25,8 +26,10 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Drip drip = mDrips.get(position);
         Bundle bundle = new Bundle();
-        bundle.putString("author", drip.getAuthor());
-        bundle.putString("drip", drip.getDrip());
+        bundle.putString(Constants.PARAM_AUTHOR, drip.getAuthor());
+        bundle.putString(Constants.PARAM_DRIP, drip.getDrip());
+        bundle.putString(Constants.PARAM_HEARTCOUNT, String.valueOf(drip.getHeartcount()));
+        bundle.putString(Constants.PARAM_ID, String.valueOf(drip.getId()));
         return DripPageFragment.newInstance(bundle);
     }
 

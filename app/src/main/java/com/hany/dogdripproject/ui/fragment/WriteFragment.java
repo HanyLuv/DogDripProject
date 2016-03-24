@@ -46,8 +46,7 @@ public class WriteFragment extends BaseFragment {
                 WriteRequst writeRequst = new WriteRequst(getActivity(), new BaseApiResponse.OnResponseListener<Drip>() {
                     @Override
                     public void onResponse(BaseApiResponse<Drip> response) {
-                        if (response.getErrorCode() != 0) {
-                            showToast(response.getMessage());
+                        if (!isRequestSuccessfully(response)) {
                             return;
                         }
                         showToast(response.getData().getAuthor() + getResources().getString(R.string.write_welcome));

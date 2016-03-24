@@ -6,17 +6,47 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_drip"
+        android:id="@+id/tv_drip_drip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="랄랄랄"
-        android:textColor="#000000" />
+        android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/tv_author"
+        android:id="@+id/tv_drip_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="랄랄랄"
-        android:textColor="#000000" />
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/drip_page_divider_left_top"
+        android:layout_marginRight="@dimen/drip_page_divider_right_top"
+        android:layout_marginTop="@dimen/drip_page_divider_margin_top"
+        android:background="@color/divider_color" />
+
+    <!--댓글, 추천 레이아웃-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_drip_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/drip_page_common_padding"
+            android:text="@string/drip_comment"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_drip_recommend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/drip_page_common_padding"
+            android:text="@string/drip_recommend"
+            android:textColor="@color/black" />
+    </RelativeLayout>
 
 </LinearLayout>

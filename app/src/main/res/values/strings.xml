@@ -20,4 +20,7 @@
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
     <string name="write_btn_write">글쓰기</string>
     <string name="write_welcome"> 님의 글이 등록 되었습니다!</string>
+
+    <string name="drip_recommend">추천+%s</string>
+    <string name="drip_comment">댓글+%s</string>
 </resources>

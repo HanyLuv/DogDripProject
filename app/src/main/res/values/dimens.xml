@@ -9,4 +9,10 @@
 
     <dimen name="write_fragment_text_size">14dp</dimen>
     <dimen name="write_fragment_padding">@dimen/join_fragment_padding</dimen>
+
+    <!--메인-->
+    <dimen name="drip_page_divider_margin_top">10dp</dimen>
+    <dimen name="drip_page_divider_left_top">@dimen/drip_page_divider_margin_top</dimen>
+    <dimen name="drip_page_divider_right_top">@dimen/drip_page_divider_margin_top</dimen>
+    <dimen name="drip_page_common_padding">10dp</dimen>
 </resources>
