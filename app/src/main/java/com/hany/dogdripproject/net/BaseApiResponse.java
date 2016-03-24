@@ -1,6 +1,8 @@
 package com.hany.dogdripproject.net;
 
 
+import android.text.TextUtils;
+
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
 
@@ -49,7 +51,7 @@ public class BaseApiResponse<DATA> {
             responseTime = response.optLong(KEY_RESPONSE_TIME);
             duration = response.optLong(KEY_RESPONSE_DURATION);
             String jData = response.optString(getDataRootKey());
-            if(jData != null){
+            if(!TextUtils.isEmpty(jData)){
                 data = getGson().fromJson(jData, getType());
             }
             mOnResponseListener.onResponse(this);
