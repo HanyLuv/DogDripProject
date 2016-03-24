@@ -57,7 +57,7 @@ public class DripPageFragment extends BaseFragment {
     private void init() {
         mTvAuthor.setText(getArguments().getString(Constants.PARAM_AUTHOR));
         mTvDrip.setText(getArguments().getString(Constants.PARAM_DRIP));
-        
+
         String strCommend = createStringForFormat(getResources().getString(R.string.drip_recommend), getArguments().getString(Constants.PARAM_HEARTCOUNT));
         mTvRecommend.setText(strCommend);
         mTvRecommend.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +77,9 @@ public class DripPageFragment extends BaseFragment {
                 }
                 showToast(response.getMessage());
                 if (response.getData() != null) {
-                    int recommendCount = response.getData().getRow();
-                    createStringForFormat(getResources().getString(R.string.drip_recommend), String.valueOf(recommendCount));
-                    mTvRecommend.setText(recommendCount);
+                    updateRecommendCount(response.getData());
                 }
             }
-
             @Override
             public void onError(VolleyError error) {
                 showToast(error.getMessage());
@@ -93,12 +90,25 @@ public class DripPageFragment extends BaseFragment {
         request(likeRequest);
     }
 
+    private void updateRecommendCount(Like like) {
+        final String recommendCount = createStringForFormat(
+                getResources().getString(R.string.drip_recommend),
+                String.valueOf(like.getRow()));
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mTvRecommend.setText(recommendCount);
+            }
+        });
+    }
+
     /**
      * 포맷형식에 맞춰 String 생성
      * BaseFragment에 공통으로 뺄까 고민중...
      *
      * @param format 포맷형식
-     * @param value 값
+     * @param value  값
      **/
 
     private String createStringForFormat(String format, String value) {

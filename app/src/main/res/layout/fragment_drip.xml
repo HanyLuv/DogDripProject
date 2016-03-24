@@ -19,7 +19,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1px"
         android:layout_marginLeft="@dimen/drip_page_divider_left_top"
         android:layout_marginRight="@dimen/drip_page_divider_right_top"
         android:layout_marginTop="@dimen/drip_page_divider_margin_top"
