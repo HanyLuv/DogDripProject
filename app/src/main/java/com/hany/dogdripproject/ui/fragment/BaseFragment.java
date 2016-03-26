@@ -1,8 +1,10 @@
 package com.hany.dogdripproject.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiRequest;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
@@ -36,5 +38,16 @@ public class BaseFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    protected void replaceFragment(BaseFragment fragment) {
+        replaceFragment(fragment,null);
+    }
+
+    protected void replaceFragment(BaseFragment fragment,Bundle bundle) {
+        if(bundle!=null) { fragment.setArguments(bundle);  }
+        if (getActivity() != null && fragment!=null) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_container, fragment).commit();
+        }
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--향후 이미지 넣을것 대비 -->
+
+    <ImageView
+        android:id="@+id/iv_user"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@color/color_black_alpha_10" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_user"
+        android:text="name" />
+
+</RelativeLayout>
