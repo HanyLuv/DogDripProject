@@ -31,4 +31,7 @@ public class Constants {
     public static final String PARAM_AUTHOR = "author";
     public static final String PARAM_ID = "id";
     public static final String PARAM_USER = "user";
+
+    //어댑터 포지션값
+    public static final String DRIP_PAGER_POSITION = "drip_position";
 }

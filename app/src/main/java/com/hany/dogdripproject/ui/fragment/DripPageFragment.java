@@ -13,6 +13,7 @@ import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.request.LikeRequest;
+import com.hany.dogdripproject.ui.MainActivity;
 import com.hany.dogdripproject.vo.drip.Like;
 
 /**
@@ -24,6 +25,9 @@ public class DripPageFragment extends BaseFragment {
     private TextView mTvDrip;
     private TextView mTvRecommend;
     private TextView mTvcomment;
+    private String mHeartCount;
+
+    private int mFragmentPagerPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,15 +59,17 @@ public class DripPageFragment extends BaseFragment {
     }
 
     private void init() {
+        mFragmentPagerPosition = getArguments().getInt(Constants.DRIP_PAGER_POSITION);
         mTvAuthor.setText(getArguments().getString(Constants.PARAM_AUTHOR));
         mTvDrip.setText(getArguments().getString(Constants.PARAM_DRIP));
-
-        String strCommend = createStringForFormat(getResources().getString(R.string.drip_recommend), getArguments().getString(Constants.PARAM_HEARTCOUNT));
+        mHeartCount = getArguments().getString(Constants.PARAM_HEARTCOUNT);
+        String strCommend = createStringForFormat(getResources().getString(R.string.drip_recommend),mHeartCount);
         mTvRecommend.setText(strCommend);
         mTvRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestLikeDrip(getArguments().getString(Constants.PARAM_ID));
+//                replaceFragment(new LikeListFragment());
             }
         });
     }
@@ -91,9 +97,14 @@ public class DripPageFragment extends BaseFragment {
     }
 
     private void updateRecommendCount(Like like) {
+
         final String recommendCount = createStringForFormat(
                 getResources().getString(R.string.drip_recommend),
                 String.valueOf(like.getRow()));
+
+        if(getActivity() instanceof MainActivity){
+            ((MainActivity)getActivity()).getDrips().get(mFragmentPagerPosition).setHeartcount(like.getRow());
+        }
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

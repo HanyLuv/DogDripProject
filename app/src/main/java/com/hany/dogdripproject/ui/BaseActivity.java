@@ -8,15 +8,27 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.vo.drip.Drip;
+
+import java.util.ArrayList;
 
 /**
  * Created by kwonojin on 16. 3. 15..
  */
 public class BaseActivity extends FragmentActivity {
-
+    private ArrayList<Drip> drips;
     private FrameLayout mLayoutMainContainer = null;
 
     private static final String TAG = BaseActivity.class.getSimpleName();
+
+
+    public void setDrips(ArrayList<Drip> drips) {
+        this.drips = drips;
+    }
+
+    public ArrayList<Drip> getDrips() {
+        return drips;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

@@ -30,6 +30,7 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
         bundle.putString(Constants.PARAM_DRIP, drip.getDrip());
         bundle.putString(Constants.PARAM_HEARTCOUNT, String.valueOf(drip.getHeartcount()));
         bundle.putString(Constants.PARAM_ID, String.valueOf(drip.getId()));
+        bundle.putInt(Constants.DRIP_PAGER_POSITION, position);
         return DripPageFragment.newInstance(bundle);
     }
 
