@@ -73,7 +73,7 @@ public class JoinFragment extends BaseFragment {
 
             @Override
             public void onError(VolleyError error) {
-                showToast(String.valueOf(error.networkResponse.statusCode));
+                    showToast(error.getMessage());
             }
         });
 

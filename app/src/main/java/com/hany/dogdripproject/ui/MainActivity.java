@@ -17,16 +17,21 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), new WriteFragment()).commit();
         DripListRequest request = new DripListRequest(this, new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
             @Override
             public void onResponse(BaseApiResponse<ArrayList<Drip>> response) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("drips", response.getData());
-                init(bundle);
+                if(response.getData()!=null) {
+                    setDrips(response.getData());
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("drips", response.getData());
+                    init(bundle);
+                }
             }
 
             @Override

@@ -3,6 +3,7 @@ package com.hany.dogdripproject.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,13 @@ import com.android.volley.VolleyError;
 import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
+import com.hany.dogdripproject.net.request.LikeCheckRequest;
 import com.hany.dogdripproject.net.request.LikeRequest;
 import com.hany.dogdripproject.ui.MainActivity;
 import com.hany.dogdripproject.vo.drip.Like;
+import com.hany.dogdripproject.vo.drip.LikeInfo;
+
+import java.util.ArrayList;
 
 /**
  * Created by HanyLuv on 2016-03-15.
@@ -28,6 +33,7 @@ public class DripPageFragment extends BaseFragment {
     private String mHeartCount;
 
     private int mFragmentPagerPosition;
+    private String mDripId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,20 +65,50 @@ public class DripPageFragment extends BaseFragment {
     }
 
     private void init() {
+        mDripId = getArguments().getString(Constants.PARAM_ID);
         mFragmentPagerPosition = getArguments().getInt(Constants.DRIP_PAGER_POSITION);
         mTvAuthor.setText(getArguments().getString(Constants.PARAM_AUTHOR));
         mTvDrip.setText(getArguments().getString(Constants.PARAM_DRIP));
         mHeartCount = getArguments().getString(Constants.PARAM_HEARTCOUNT);
         String strCommend = createStringForFormat(getResources().getString(R.string.drip_recommend),mHeartCount);
         mTvRecommend.setText(strCommend);
-        mTvRecommend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestLikeDrip(getArguments().getString(Constants.PARAM_ID));
-//                replaceFragment(new LikeListFragment());
-            }
-        });
+        mTvRecommend.setOnClickListener(recommendCheckClickListener);
     }
+
+    //추천 조회 클릭 리스너
+    private View.OnClickListener recommendCheckClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LikeCheckRequest likeCheckRequest = new LikeCheckRequest(getActivity(), new BaseApiResponse.OnResponseListener<ArrayList<LikeInfo>>() {
+                @Override
+                public void onResponse(BaseApiResponse<ArrayList<LikeInfo>> response) {
+                    if(!isRequestSuccessfully(response)){
+                        return;
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("likelist", response.getData());
+                    replaceFragment(new LikeListFragment(),bundle);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                        showToast(error.getMessage());
+                }
+            });
+            likeCheckRequest.putParam(Constants.PARAM_ID,mDripId);
+            request(likeCheckRequest);
+        }
+    };
+
+    //추천 클릭 리스너
+    private View.OnClickListener recommendClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!TextUtils.isEmpty(mDripId)) {
+                requestLikeDrip(mDripId);
+            }
+        }
+    };
 
     private void requestLikeDrip(String dripID) {
         LikeRequest likeRequest = new LikeRequest(getActivity(), new BaseApiResponse.OnResponseListener<Like>() {

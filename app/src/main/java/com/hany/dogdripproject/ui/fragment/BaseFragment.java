@@ -26,6 +26,10 @@ public class BaseFragment extends Fragment {
         NetworkManager.getInstance().request(request);
     }
 
+    protected void replaceFragment(BaseFragment fragment) {
+        replaceFragment(fragment,null);
+    }
+
     /**
      * 요청 성공여부 판단
      *
@@ -38,10 +42,6 @@ public class BaseFragment extends Fragment {
             return false;
         }
         return true;
-    }
-
-    protected void replaceFragment(BaseFragment fragment) {
-        replaceFragment(fragment,null);
     }
 
     protected void replaceFragment(BaseFragment fragment,Bundle bundle) {
