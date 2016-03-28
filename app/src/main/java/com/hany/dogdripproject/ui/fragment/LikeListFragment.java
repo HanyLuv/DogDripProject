@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by HanyLuv on 2016-03-27.
  */
 public class LikeListFragment extends BaseFragment {
-
+    public static String TAG = "LikeListFragment";
     private ListView mListView;
 
     @Override
@@ -35,7 +35,6 @@ public class LikeListFragment extends BaseFragment {
     }
 
     private void init(ArrayList<LikeInfo> likeList) {
-
         LikeListAdapter likeListAdapter = new LikeListAdapter(getActivity(), likeList);
         mListView.setAdapter(likeListAdapter);
 

@@ -15,7 +15,7 @@ import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseDripActivity {
 
 
     @Override
@@ -43,9 +43,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init(Bundle bundle) {
-        HomeFragment homeFragment = new HomeFragment();
-        homeFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), homeFragment).commit();
+        addFragment(new HomeFragment(), bundle, HomeFragment.TAG);
     }
 
 }

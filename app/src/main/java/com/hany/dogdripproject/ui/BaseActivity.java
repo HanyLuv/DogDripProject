@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
@@ -16,19 +17,10 @@ import java.util.ArrayList;
  * Created by kwonojin on 16. 3. 15..
  */
 public class BaseActivity extends FragmentActivity {
-    private ArrayList<Drip> drips;
     private FrameLayout mLayoutMainContainer = null;
 
     private static final String TAG = BaseActivity.class.getSimpleName();
 
-
-    public void setDrips(ArrayList<Drip> drips) {
-        this.drips = drips;
-    }
-
-    public ArrayList<Drip> getDrips() {
-        return drips;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -41,20 +33,56 @@ public class BaseActivity extends FragmentActivity {
         View activityView = LayoutInflater.from(this).inflate(layoutResID, null);
         setContentView(activityView);
     }
+
     @Override
     public void setContentView(View view) {
         View mergeView = initView(view);
         super.setContentView(mergeView);
     }
 
-    private View initView(View childView){
+    private View initView(View childView) {
         View rootView = LayoutInflater.from(this).inflate(R.layout.activity_base, null);
         mLayoutMainContainer = (FrameLayout) rootView.findViewById(R.id.layout_main_container);
         mLayoutMainContainer.addView(childView);
         return rootView;
     }
 
-    protected int getFragmentAchorViewId(){
+    protected int getFragmentAchorViewId() {
         return mLayoutMainContainer.getId();
+    }
+
+
+    public void replaceFragment(BaseFragment fragment, String tag) {
+        replaceFragment(fragment, null, tag);
+    }
+
+
+    /**
+     * 이미 추가되어있는 Fragment를 다른 Fragment로 대체
+     *
+     * @param tag Fragment Tag 값
+     */
+    public void replaceFragment(BaseFragment fragment, Bundle bundle, String tag) {
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        getSupportFragmentManager().beginTransaction().replace(getFragmentAchorViewId(), fragment).commit();
+    }
+
+
+    /***
+     * Fragment 추가
+     *
+     * @param tag Fragment Tag 값
+     */
+    public void addFragment(BaseFragment fragment, String tag) {
+        addFragment(fragment, null, tag);
+    }
+
+    public void addFragment(BaseFragment fragment, Bundle bundle, String tag) {
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), fragment).addToBackStack(null).commit();
     }
 }

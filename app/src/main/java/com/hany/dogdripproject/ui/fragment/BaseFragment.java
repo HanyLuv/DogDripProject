@@ -26,10 +26,6 @@ public class BaseFragment extends Fragment {
         NetworkManager.getInstance().request(request);
     }
 
-    protected void replaceFragment(BaseFragment fragment) {
-        replaceFragment(fragment,null);
-    }
-
     /**
      * 요청 성공여부 판단
      *
@@ -44,10 +40,4 @@ public class BaseFragment extends Fragment {
         return true;
     }
 
-    protected void replaceFragment(BaseFragment fragment,Bundle bundle) {
-        if(bundle!=null) { fragment.setArguments(bundle);  }
-        if (getActivity() != null && fragment!=null) {
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_container, fragment).commit();
-        }
-    }
 }

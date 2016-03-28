@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 //메인화면 프래그먼트
 public class HomeFragment extends BaseFragment {
-
+    public static String TAG = "HomeFragment";
 
     private ViewPager mViewPager;
 

@@ -15,6 +15,7 @@ import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.request.LikeCheckRequest;
 import com.hany.dogdripproject.net.request.LikeRequest;
+import com.hany.dogdripproject.ui.BaseActivity;
 import com.hany.dogdripproject.ui.MainActivity;
 import com.hany.dogdripproject.vo.drip.Like;
 import com.hany.dogdripproject.vo.drip.LikeInfo;
@@ -72,7 +73,8 @@ public class DripPageFragment extends BaseFragment {
         mHeartCount = getArguments().getString(Constants.PARAM_HEARTCOUNT);
         String strCommend = createStringForFormat(getResources().getString(R.string.drip_recommend),mHeartCount);
         mTvRecommend.setText(strCommend);
-        mTvRecommend.setOnClickListener(recommendCheckClickListener);
+//        mTvRecommend.setOnClickListener(recommendCheckClickListener); //추천인 조회
+        mTvRecommend.setOnClickListener(recommendClickListener); //추천하기
     }
 
     //추천 조회 클릭 리스너
@@ -87,12 +89,14 @@ public class DripPageFragment extends BaseFragment {
                     }
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("likelist", response.getData());
-                    replaceFragment(new LikeListFragment(),bundle);
+                    if (getActivity() != null) {
+                        ((BaseActivity) getActivity()).addFragment(new LikeListFragment(), bundle, LikeListFragment.TAG);
+                    }
                 }
 
                 @Override
                 public void onError(VolleyError error) {
-                        showToast(error.getMessage());
+                    showToast(error.getMessage());
                 }
             });
             likeCheckRequest.putParam(Constants.PARAM_ID,mDripId);
@@ -109,6 +113,7 @@ public class DripPageFragment extends BaseFragment {
             }
         }
     };
+
 
     private void requestLikeDrip(String dripID) {
         LikeRequest likeRequest = new LikeRequest(getActivity(), new BaseApiResponse.OnResponseListener<Like>() {
