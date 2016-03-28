@@ -6,12 +6,14 @@ import android.os.Parcelable;
 /**
  * Created by kwonojin on 16. 3. 24..
  */
-public class LikeInfo  implements Parcelable {
+public class LikeInfo implements Parcelable {
 
     private int id = 0;
     private String user = null;
     private String author = null;
     private long createdate = 0;
+
+    public LikeInfo(){}
 
     public int getId() {
         return id;
@@ -37,6 +39,14 @@ public class LikeInfo  implements Parcelable {
     public void setCreatedate(long createdate) {
         this.createdate = createdate;
     }
+
+    public LikeInfo(Parcel parcel){
+        id = parcel.readInt();
+        author = parcel.readString();
+        user = parcel.readString();
+        createdate = parcel.readLong();
+
+    }
     @Override
     public String toString() {
         return "LikeDrips [id=" + id + ", user=" + user + ", author=" + author + ", createdate=" + createdate + "]";
@@ -55,5 +65,16 @@ public class LikeInfo  implements Parcelable {
         dest.writeLong(createdate);
     }
 
+    public static Parcelable.Creator<LikeInfo> CREATOR = new Creator<LikeInfo>() {
+        @Override
+        public LikeInfo createFromParcel(Parcel source) {
+            return new LikeInfo(source);
+        }
+
+        @Override
+        public LikeInfo[] newArray(int size) {
+            return new LikeInfo[size];
+        }
+    };
 
 }
