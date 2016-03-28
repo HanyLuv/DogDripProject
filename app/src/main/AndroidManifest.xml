@@ -3,6 +3,12 @@
     package="com.hany.dogdripproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--GCM PERMISSIONS -->
+    <permission android:name="com.hany.dogdripproject.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.hany.dogdripproject.permission.C2D_MESSAGE" />
 
     <application
         android:name=".ApplicationEx"
@@ -25,5 +31,23 @@
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
+        <service
+            android:name=".service.GCMService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.hany.dogdripproject" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

@@ -10,6 +10,7 @@ public class ConfigPreferenceManager {
     private static final String PREF_NAME = "config";
 
     private static final String VERSION_NUMBER = "_version_number";
+    private static final String GCM_DEVICE = "gcm_dvice_id";
 
     private SharedPreferenceHelper mHelper = null;
 
@@ -32,4 +33,15 @@ public class ConfigPreferenceManager {
     public int getVersionNumber(String name){
         return mHelper.getData(name + VERSION_NUMBER, 0);
     }
+
+    public void setGcmDeviceId(String id){
+        if(id != null){
+            mHelper.putData(GCM_DEVICE, id);
+        }
+    }
+
+    public String getGcmDeviceId(){
+        return mHelper.getData(GCM_DEVICE, null);
+    }
+
 }

@@ -9,6 +9,7 @@ public class AppConfig {
     private String appLatestVersion = null;
     private String appVersionName = null;
     private String appMarketUrl = null;
+    private String senderId = null;
 
     public String getAppId() {
         return appId;
@@ -50,6 +51,14 @@ public class AppConfig {
         this.appMarketUrl = appMarketUrl;
     }
 
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
     @Override
     public String toString() {
         return "AppConfig{" +
@@ -58,6 +67,7 @@ public class AppConfig {
                 ", appLatestVersion='" + appLatestVersion + '\'' +
                 ", appVersionName='" + appVersionName + '\'' +
                 ", appMarketUrl='" + appMarketUrl + '\'' +
+                ", senderId='" + senderId + '\'' +
                 '}';
     }
 }
