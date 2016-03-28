@@ -1,5 +1,7 @@
 package com.hany.dogdripproject.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
@@ -84,5 +86,18 @@ public class BaseActivity extends FragmentActivity {
             fragment.setArguments(bundle);
         }
         getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), fragment).addToBackStack(null).commit();
+    }
+
+
+    /**
+     * 확인,취소만 존재하는 가장 기본적인 Alert Dialog 를 만들어 리턴.
+     * 음.. 이친구 선언 위치 고민중.
+     * **/
+    public AlertDialog createAlertDialog(String msg,DialogInterface.OnClickListener okListener,DialogInterface.OnClickListener cancelListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
+        builder.setPositiveButton(getResources().getText(R.string.ok), okListener);
+        builder.setNegativeButton(getResources().getText(R.string.cancel),cancelListener);
+        return builder.create();
     }
 }

@@ -2,6 +2,9 @@
     <string name="app_name">DogDripProject</string>
     <string name="action_settings">Settings</string>
 
+    <string name="ok">확인</string>
+    <string name="cancel">취소</string>
+
     <string name="config_data_check">데이터 정보를 확인 중 입니다</string>
 
     <string name="join_email">이메일</string>
@@ -20,6 +23,8 @@
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
     <string name="write_btn_write">글쓰기</string>
     <string name="write_welcome"> 님의 글이 등록 되었습니다!</string>
+    <string name="write_notice">한 번 내 뱉은 드립은 주워 담을 수 없다.</string>
+    <string name="write_empty_notice">드립을 입력하시게.</string>
 
     <string name="drip_recommend">추천+%s</string>
     <string name="drip_comment">댓글+%s</string>

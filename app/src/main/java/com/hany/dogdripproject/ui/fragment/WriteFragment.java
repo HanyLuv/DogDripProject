@@ -1,7 +1,9 @@
 package com.hany.dogdripproject.ui.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.WriteRequst;
+import com.hany.dogdripproject.ui.BaseActivity;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 /**
@@ -42,34 +45,49 @@ public class WriteFragment extends BaseFragment {
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dripContent = etWrite.getText().toString();
-                WriteRequst writeRequst = new WriteRequst(getActivity(), new BaseApiResponse.OnResponseListener<Drip>() {
-                    @Override
-                    public void onResponse(BaseApiResponse<Drip> response) {
-                        if (!isRequestSuccessfully(response)) {
-                            return;
-                        }
-                        showToast(response.getData().getAuthor() + getResources().getString(R.string.write_welcome));
-                    }
 
-                    @Override
-                    public void onError(VolleyError error) {
-                        showToast(error.getMessage());
-                    }
-                });
-                /**
-                 * api 정의문서보면
-                 * author 가 존재하는 회원이어야한다고 하셨는데
-                 * 조회 api는 따로 주실예정이신거죠?
-                 * 그렇담 일단 그냥 무조건 등록되겠금
-                 * author 는 admin으로 해놓겠습니다 >-<
-                 */
-                writeRequst.putParam(Constants.PARAM_AUTHOR, "admin");
-                writeRequst.putParam(Constants.PARAM_DRIP, dripContent);
+                if (TextUtils.isEmpty(etWrite.getText().toString())) {
+                    showToast(getResources().getString(R.string.write_empty_notice).toString());
+                    return;
+                }
 
-                request(writeRequst);
+                    ((BaseActivity) getActivity()).createAlertDialog(getActivity().getResources().getText(R.string.write_notice).toString(),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    requestWriteDrip();
+                                }
+                            }, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+
+                }
+            });
+        }
+
+    private void requestWriteDrip() {
+        WriteRequst writeRequst = new WriteRequst(getActivity(), new BaseApiResponse.OnResponseListener<Drip>() {
+            @Override
+            public void onResponse(BaseApiResponse<Drip> response) {
+                if (!isRequestSuccessfully(response)) {
+                    return;
+                }
+                showToast(response.getData().getAuthor() + getResources().getString(R.string.write_welcome));
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                showToast(error.getMessage());
             }
         });
+
+        String dripContent = etWrite.getText().toString();
+            writeRequst.putParam(Constants.PARAM_AUTHOR, "admin");
+            writeRequst.putParam(Constants.PARAM_DRIP, dripContent);
+            request(writeRequst);
     }
 
 }
