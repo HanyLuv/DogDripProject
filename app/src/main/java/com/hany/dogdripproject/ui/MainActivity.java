@@ -43,7 +43,7 @@ public class MainActivity extends BaseDripActivity {
     }
 
     private void init(Bundle bundle) {
-        addFragment(new HomeFragment(), bundle, HomeFragment.TAG);
+        addFragment(HomeFragment.class, bundle);
     }
 
 }

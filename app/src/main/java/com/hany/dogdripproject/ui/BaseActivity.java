@@ -5,13 +5,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
-import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
 
@@ -54,38 +54,64 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-    public void replaceFragment(BaseFragment fragment, String tag) {
-        replaceFragment(fragment, null, tag);
-    }
-
-
-    /**
-     * 이미 추가되어있는 Fragment를 다른 Fragment로 대체
-     *
-     * @param tag Fragment Tag 값
-     */
-    public void replaceFragment(BaseFragment fragment, Bundle bundle, String tag) {
-        if (bundle != null) {
-            fragment.setArguments(bundle);
-        }
-        getSupportFragmentManager().beginTransaction().replace(getFragmentAchorViewId(), fragment).commit();
-    }
+//   public void replaceFragment(BaseFragment fragment, String tag) {
+//        replaceFragment(fragment, null, tag);
+//    }
+//
+//
+//    /**
+//     * 이미 추가되어있는 Fragment를 다른 Fragment로 대체
+//     *
+//     * @param tag Fragment Tag 값
+//     */
+//    public void replaceFragment(BaseFragment fragment, Bundle bundle, String tag) {
+//        if (bundle != null) {
+//            fragment.setArguments(bundle);
+//        }
+//        getSupportFragmentManager().beginTransaction().replace(getFragmentAchorViewId(), fragment).commit();
+//    }
 
 
     /***
      * Fragment 추가
      *
-     * @param tag Fragment Tag 값
      */
-    public void addFragment(BaseFragment fragment, String tag) {
-        addFragment(fragment, null, tag);
+    public void addFragment(Class<? extends BaseFragment> fClss) {
+        addFragment(fClss, null);
     }
 
-    public void addFragment(BaseFragment fragment, Bundle bundle, String tag) {
-        if (bundle != null) {
-            fragment.setArguments(bundle);
+    /**
+     * BaseFragment를 추가한다. 이미 추가된 Fragment일 경우 FragmentManager에서 TAG값을 이용해 Frament를 가져와
+     * 다시 Replace 시킨다
+     * @param fClss BaseFragment 를 상속 받은 Fragment의 class
+     * @param bundle 전달한 Fragment Argument
+     */
+    public void addFragment(Class<? extends BaseFragment> fClss, Bundle bundle) {
+        BaseFragment f = null;
+        try {
+             f = fClss.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        getSupportFragmentManager().beginTransaction().add(getFragmentAchorViewId(), fragment).addToBackStack(null).commit();
+
+        if(f != null){
+            BaseFragment of = (BaseFragment) getSupportFragmentManager().findFragmentByTag(f.getFragmentTag());
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (of != null) {
+                ft.replace(getFragmentAchorViewId(), of);
+            }else{
+                of = f;
+                ft.add(getFragmentAchorViewId(), of, of.getFragmentTag());
+            }
+            if(bundle != null){
+                of.setArguments(bundle);
+            }
+            ft.setBreadCrumbTitle(of.getFragmentTitle())
+                    .addToBackStack(of.getBackstackName())
+                    .commitAllowingStateLoss();
+        }
     }
 
 

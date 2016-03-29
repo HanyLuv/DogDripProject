@@ -85,4 +85,13 @@ public class JoinFragment extends BaseFragment {
         request(joinRequest);
     }
 
+    @Override
+    public String getFragmentTag() {
+        return getClass().getSimpleName();
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return null;
+    }
 }

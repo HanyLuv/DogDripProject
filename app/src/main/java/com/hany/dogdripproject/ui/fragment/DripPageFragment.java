@@ -90,7 +90,7 @@ public class DripPageFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putParcelableArrayList("likelist", response.getData());
                     if (getActivity() != null) {
-                        ((BaseActivity) getActivity()).addFragment(new LikeListFragment(), bundle, LikeListFragment.TAG);
+                        ((BaseActivity) getActivity()).addFragment(LikeListFragment.class, bundle);
                     }
                 }
 
@@ -166,5 +166,15 @@ public class DripPageFragment extends BaseFragment {
     private String createStringForFormat(String format, String value) {
         String createdStr = String.format(format, value);
         return createdStr;
+    }
+
+    @Override
+    public String getFragmentTag() {
+        return "drippageFragment";
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return "Drip";
     }
 }

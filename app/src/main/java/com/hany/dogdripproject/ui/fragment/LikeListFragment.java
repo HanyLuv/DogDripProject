@@ -39,4 +39,14 @@ public class LikeListFragment extends BaseFragment {
         mListView.setAdapter(likeListAdapter);
 
     }
+
+    @Override
+    public String getFragmentTag() {
+        return TAG;
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return "목록";
+    }
 }

@@ -3,7 +3,6 @@ package com.hany.dogdripproject.service;
 import android.os.Bundle;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.service.notification.NotificationData;
 import com.hany.dogdripproject.ui.SplashActivity;
 import com.hany.dogdripproject.utils.Log;
@@ -24,7 +23,7 @@ public class GCMService extends GcmListenerService {
         if(message != null){
             NotificationData notificationData = new NotificationData();
             notificationData.id = 1;
-            notificationData.message = "푸쉬 테스트";
+            notificationData.message = message;
             notificationData.targetClass = SplashActivity.class.getName();
             notificationData.title = "새로운 알림";
             notificationData.hasLarge = false;

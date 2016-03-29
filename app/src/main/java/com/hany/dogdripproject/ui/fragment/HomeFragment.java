@@ -42,4 +42,14 @@ public class HomeFragment extends BaseFragment {
             mViewPager.setAdapter(new HomeFragmentPagerAdapter(getFragmentManager(), drips));
         }
     }
+
+    @Override
+    public String getFragmentTag() {
+        return "homefragment";
+    }
+
+    @Override
+    public String getFragmentTitle() {
+        return "홈";
+    }
 }

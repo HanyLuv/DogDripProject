@@ -40,4 +40,17 @@ public class BaseFragment extends Fragment {
         return true;
     }
 
+    public String getFragmentTag(){
+        return getClass().getSimpleName();
+    }
+
+    public String getFragmentTitle(){
+        return getClass().getSimpleName();
+    }
+
+    public String getBackstackName(){
+        return this.getClass().getName();
+    }
+
+
 }
