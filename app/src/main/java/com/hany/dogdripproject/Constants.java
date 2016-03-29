@@ -25,7 +25,7 @@ public class Constants {
     public static final String PARAM_EMAIL = "email";
     public static final String PARAM_PASSWORD = "password";
     public static final String PARAM_NICKNAME = "nickname";
-    public static final String PARAM_DEVICE = "device";
+    public static final String PARAM_GCM = "gcm";
     public static final String PARAM_DRIP= "drip";
     public static final String PARAM_HEARTCOUNT= "heartcount";
     public static final String PARAM_AUTHOR = "author";

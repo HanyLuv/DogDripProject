@@ -24,7 +24,6 @@ public class JoinFragment extends BaseFragment {
     private EditText etEmail;
     private EditText etNickname;
     private EditText etPassword;
-    private EditText etDevice;
     private Button btnJoin;
 
     @Nullable
@@ -35,7 +34,6 @@ public class JoinFragment extends BaseFragment {
         etEmail = (EditText) view.findViewById(R.id.et_email);
         etNickname = (EditText) view.findViewById(R.id.et_nickname);
         etPassword = (EditText) view.findViewById(R.id.et_password);
-        etDevice = (EditText) view.findViewById(R.id.et_device);
         btnJoin = (Button) view.findViewById(R.id.bt_join);
 
         return view;
@@ -54,13 +52,12 @@ public class JoinFragment extends BaseFragment {
                 String email = etEmail.getText().toString();
                 String nickname = etNickname.getText().toString();
                 String password = etPassword.getText().toString();
-                String device = etDevice.getText().toString();
-                requestJoin(email, password, nickname, device);
+                requestJoin(email, password, nickname);
             }
         });
     }
 
-    private void requestJoin(String email, String password, String nickname, String device) {
+    private void requestJoin(String email, String password, String nickname) {
 
         JoinRequest joinRequest = new JoinRequest(getActivity(), new BaseApiResponse.OnResponseListener<User>() {
             @Override
@@ -80,7 +77,6 @@ public class JoinFragment extends BaseFragment {
         joinRequest.putParam(Constants.PARAM_EMAIL, email);
         joinRequest.putParam(Constants.PARAM_PASSWORD, password);
         joinRequest.putParam(Constants.PARAM_NICKNAME, nickname);
-        joinRequest.putParam(Constants.PARAM_DEVICE, device);
 
         request(joinRequest);
     }

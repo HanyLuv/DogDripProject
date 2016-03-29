@@ -15,6 +15,7 @@ import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.LoginRequst;
+import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
 import com.hany.dogdripproject.vo.user.User;
 
 /**
@@ -28,7 +29,6 @@ public class LoginFragment extends BaseFragment {
 
     private EditText etEmail;
     private EditText etPassword;
-    private EditText etDevice;
     private Button btnLogin;
 
     @Nullable
@@ -38,7 +38,6 @@ public class LoginFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         etEmail = (EditText) view.findViewById(R.id.et_id);
         etPassword = (EditText) view.findViewById(R.id.et_password);
-        etDevice = (EditText) view.findViewById(R.id.et_device);
         btnLogin = (Button) view.findViewById(R.id.bt_login);
         return view;
     }
@@ -70,15 +69,13 @@ public class LoginFragment extends BaseFragment {
                     }
                 });
 
-                /** 슨배님 >-< ! 디바이스값 없어도 로그인 되어야 하는것아닌가엽!! */
-
+                ConfigPreferenceManager preferenceManager  = new ConfigPreferenceManager(getActivity());
                 String strEmail = etEmail.getText().toString();
                 String strPassword = etPassword.getText().toString();
-                String strDevice = etDevice.getText().toString();
 
-                loginRequst.putParam(Constants.PARAM_EMAIL, strEmail);
+                loginRequst.putParam(Constants.PARAM_EMAIL, strEmail.trim());
                 loginRequst.putParam(Constants.PARAM_PASSWORD, strPassword);
-                loginRequst.putParam(Constants.PARAM_DEVICE, strDevice);
+                loginRequst.putParam(Constants.PARAM_GCM, preferenceManager.getGcmDeviceId());
 
                 request(loginRequst);
 

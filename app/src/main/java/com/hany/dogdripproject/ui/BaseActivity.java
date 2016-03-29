@@ -54,24 +54,6 @@ public class BaseActivity extends FragmentActivity {
     }
 
 
-//   public void replaceFragment(BaseFragment fragment, String tag) {
-//        replaceFragment(fragment, null, tag);
-//    }
-//
-//
-//    /**
-//     * 이미 추가되어있는 Fragment를 다른 Fragment로 대체
-//     *
-//     * @param tag Fragment Tag 값
-//     */
-//    public void replaceFragment(BaseFragment fragment, Bundle bundle, String tag) {
-//        if (bundle != null) {
-//            fragment.setArguments(bundle);
-//        }
-//        getSupportFragmentManager().beginTransaction().replace(getFragmentAchorViewId(), fragment).commit();
-//    }
-
-
     /***
      * Fragment 추가
      *
@@ -105,6 +87,7 @@ public class BaseActivity extends FragmentActivity {
                 of = f;
                 ft.add(getFragmentAchorViewId(), of, of.getFragmentTag());
             }
+
             if(bundle != null){
                 of.setArguments(bundle);
             }

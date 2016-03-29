@@ -18,7 +18,7 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tv_device"
+        android:layout_toRightOf="@+id/tv_password"
         android:inputType="textEmailAddress" />
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_email"
-        android:layout_toRightOf="@+id/tv_device"
+        android:layout_toRightOf="@+id/tv_password"
         android:inputType="textPassword" />
 
     <TextView
@@ -53,29 +53,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_password"
-        android:layout_toRightOf="@+id/tv_device" />
+        android:layout_toRightOf="@id/tv_password" />
 
-    <TextView
-        android:id="@+id/tv_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/et_device"
-        android:layout_below="@+id/tv_nickname"
-        android:text="@string/join_device"
-        android:textColor="@color/black" />
-
-    <EditText
-        android:id="@+id/et_device"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_nickname"
-        android:layout_toRightOf="@+id/tv_device" />
 
     <Button
         android:id="@+id/bt_join"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_device"
+        android:layout_below="@+id/et_nickname"
         android:background="@color/white"
         android:text="@string/join_btn_join" />
 </RelativeLayout>
