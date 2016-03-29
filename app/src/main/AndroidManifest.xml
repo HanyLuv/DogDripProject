@@ -40,6 +40,9 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.NotificationService"/>
+
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"

@@ -51,7 +51,7 @@ public class BaseApiResponse<DATA> {
             responseTime = response.optLong(KEY_RESPONSE_TIME);
             duration = response.optLong(KEY_RESPONSE_DURATION);
             String jData = response.optString(getDataRootKey());
-            if(!TextUtils.isEmpty(jData)){
+            if(!TextUtils.isEmpty(jData) && getType() != null){
                 data = getGson().fromJson(jData, getType());
             }
             mOnResponseListener.onResponse(this);
