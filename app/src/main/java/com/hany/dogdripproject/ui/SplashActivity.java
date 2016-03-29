@@ -48,34 +48,31 @@ public class SplashActivity extends BaseActivity {
     };
 
     private void registerDevice(final AppConfig appConfig){
-        String regId = mConfigPref.getGcmDeviceId();
-        if(regId == null){
-            new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    String regId = null;
-                    if(appConfig != null){
-                        if(regId == null && appConfig.getSenderId() != null){
-                            GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(getApplicationContext());
-                            try {
-                                regId = gcm.register(appConfig.getSenderId());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String regId = null;
+                if(appConfig != null){
+                    if(regId == null && appConfig.getSenderId() != null){
+                        GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(getApplicationContext());
+                        try {
+                            regId = gcm.register(appConfig.getSenderId());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                    return regId;
                 }
+                return regId;
+            }
 
-                @Override
-                protected void onPostExecute(String value) {
-                    super.onPostExecute(value);
+            @Override
+            protected void onPostExecute(String value) {
+                super.onPostExecute(value);
+                if(value != null){
                     mConfigPref.setGcmDeviceId(value);
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 }
-            }.execute();
-        }else{
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        }
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
+        }.execute();
     }
 }
