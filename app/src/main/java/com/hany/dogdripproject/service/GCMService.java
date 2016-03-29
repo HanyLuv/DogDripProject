@@ -1,11 +1,11 @@
 package com.hany.dogdripproject.service;
 
-import android.app.IntentService;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.service.notification.NotificationData;
+import com.hany.dogdripproject.ui.SplashActivity;
 import com.hany.dogdripproject.utils.Log;
 
 
@@ -22,7 +22,14 @@ public class GCMService extends GcmListenerService {
         super.onMessageReceived(from, data);
         String message = data.getString(DATA_KEY);
         if(message != null){
-
+            NotificationData notificationData = new NotificationData();
+            notificationData.id = 1;
+            notificationData.message = "푸쉬 테스트";
+            notificationData.targetClass = SplashActivity.class.getName();
+            notificationData.title = "새로운 알림";
+            notificationData.hasLarge = false;
+            notificationData.uri = "drip/1";
+            NotificationService.createNotifcation(this, notificationData);
         }
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
