@@ -24,4 +24,14 @@ public class ConfigReqeust extends BasicRequest<AppConfig> {
     protected Type getClassType() {
         return new TypeToken<AppConfig>(){}.getType();
     }
+
+    @Override
+    public long getCacheTimeMilliseconds() {
+        return 1000 * 60 * 5;
+    }
+
+    @Override
+    public boolean isCache() {
+        return true;
+    }
 }

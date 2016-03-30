@@ -3,6 +3,7 @@ package com.hany.dogdripproject.net;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +30,7 @@ public class NetworkManager {
      */
     private Context mContext = null;
     private RequestQueue mQueue = null;
+    private NetworkCache mNetworkCache = null;
 
     private static NetworkManager sInstance = null;
 
@@ -47,6 +49,7 @@ public class NetworkManager {
     private NetworkManager(Context context) {
         mContext = context;
         mQueue = Volley.newRequestQueue(context);
+        mNetworkCache = new NetworkCache(mContext.getCacheDir());
     }
 
     // P요청
@@ -77,45 +80,73 @@ public class NetworkManager {
     private Request requestPost(final BaseApiRequest baseApiRequest){
         Request request = null;
         if(baseApiRequest != null){
+            Cache.Entry entry = mNetworkCache.get(baseApiRequest.getUrl());
             Log.d(TAG, "requestPost " + baseApiRequest.toString());
-            request = new StringRequest(baseApiRequest.getMethod(), baseApiRequest.getUrl(),
-                    new Response.Listener<String>()
-                    {
-                        @Override
-                        public void onResponse(String response) {
-                            BaseApiResponse apiResponse = baseApiRequest.getResponse();
-                            if(apiResponse != null){
-                                try {
-                                    apiResponse.setResponse(new JSONObject(response));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+
+            if(baseApiRequest.isCache() && entry != null && !entry.isExpired()){
+                Log.d(TAG, "api cached : " + entry);
+                try {
+                    BaseApiResponse apiResponse = baseApiRequest.getResponse();
+                    if(apiResponse != null){
+                        apiResponse.setResponse(new JSONObject(new String(entry.data)));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    VolleyError error = new VolleyError(e);
+                    BaseApiResponse apiResponse = baseApiRequest.getResponse();
+                    if(apiResponse != null){
+                        apiResponse.setError(error);
+                    }
+                }
+            }else{
+                request = new StringRequest(baseApiRequest.getMethod(), baseApiRequest.getUrl(),
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                /**
+                                 * Request result를 캐싱한다
+                                 */
+                                Cache.Entry entry = new Cache.Entry();
+                                entry.data = response.toString().getBytes();
+                                entry.lastModified = System.currentTimeMillis();
+                                entry.ttl = System.currentTimeMillis() + baseApiRequest.getCacheTimeMilliseconds();
+                                mNetworkCache.put(baseApiRequest.getUrl(), entry);
+                                BaseApiResponse apiResponse = baseApiRequest.getResponse();
+
+                                if(apiResponse != null){
+                                    try {
+                                        apiResponse.setResponse(new JSONObject(response));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO Auto-generated method stub
+                                Log.d(TAG,"error => "+error.toString());
+                                BaseApiResponse apiResponse = baseApiRequest.getResponse();
+                                if(apiResponse != null){
+                                    apiResponse.setError(error);
                                 }
                             }
                         }
-                    },
-                    new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO Auto-generated method stub
-                            Log.d(TAG,"error => "+error.toString());
-                            BaseApiResponse apiResponse = baseApiRequest.getResponse();
-                            if(apiResponse != null){
-                                apiResponse.setError(error);
-                            }
-                        }
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        return baseApiRequest.getHeaders();
                     }
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    return baseApiRequest.getHeaders();
-                }
 
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    return baseApiRequest.getParams();
-                }
-            };
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        return baseApiRequest.getParams();
+                    }
+                };
+            }
         }
         return request;
     }

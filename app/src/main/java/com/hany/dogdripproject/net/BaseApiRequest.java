@@ -64,6 +64,14 @@ public class BaseApiRequest{
         return mResponse;
     }
 
+    public boolean isCache(){
+        return false;
+    }
+
+    public long getCacheTimeMilliseconds(){
+        return 1000;
+    }
+
     protected void setResponse(BaseApiResponse response){
         mResponse = response;
     }

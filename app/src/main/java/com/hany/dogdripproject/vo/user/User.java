@@ -7,6 +7,7 @@ public class User {
     private String email = null;
     private String nickname = null;
     private String password = null;
+    private String imageurl = null;
     private long createdate = 0;
     private long lastconn = 0;
     private int point = 0;
@@ -17,6 +18,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
     }
 
     public String getEmail() {
@@ -64,6 +73,8 @@ public class User {
         return "User{" +
                 "email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", imageurl='" + imageurl + '\'' +
                 ", createdate=" + createdate +
                 ", lastconn=" + lastconn +
                 ", point=" + point +
