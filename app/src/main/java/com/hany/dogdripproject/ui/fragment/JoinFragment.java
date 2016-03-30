@@ -9,10 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
-import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
-import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.JoinRequest;
 import com.hany.dogdripproject.vo.user.User;
 
@@ -74,10 +72,7 @@ public class JoinFragment extends BaseFragment {
             }
         });
 
-        joinRequest.putParam(Constants.PARAM_EMAIL, email);
-        joinRequest.putParam(Constants.PARAM_PASSWORD, password);
-        joinRequest.putParam(Constants.PARAM_NICKNAME, nickname);
-
+        joinRequest.setUserInfo(email, password, nickname);
         request(joinRequest);
     }
 
