@@ -196,4 +196,8 @@ public class NetworkManager {
         }
         return request;
     }
+
+    public RequestQueue getRequestQueue(){
+        return mQueue;
+    }
 }
