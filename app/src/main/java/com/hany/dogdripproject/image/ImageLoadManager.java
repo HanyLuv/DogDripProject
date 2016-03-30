@@ -51,7 +51,12 @@ public class ImageLoadManager {
         sInstance = new ImageLoadManager(requestQueue);
     }
 
-    public ImageLoadManager getInstance(){
+    public static ImageLoadManager getInstance(){
         return sInstance;
     }
+
+    public static ImageLoader getImageLoader(){
+        return sInstance.mImageLoader;
+    }
+
 }
