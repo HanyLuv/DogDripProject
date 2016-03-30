@@ -12,6 +12,7 @@ public class Drip implements Parcelable {
     private int id;
     private String drip;
     private String author;
+    private String imageurl;
     private long createdate;
     private int heartcount;
 
@@ -23,6 +24,7 @@ public class Drip implements Parcelable {
         createdate = parcel.readLong();
         author = parcel.readString();
         drip = parcel.readString();
+        imageurl = parcel.readString();
     }
 
     public int getId() {
@@ -65,6 +67,13 @@ public class Drip implements Parcelable {
         this.heartcount = heartcount;
     }
 
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
 
     @Override
     public int describeContents() {
@@ -78,6 +87,19 @@ public class Drip implements Parcelable {
         dest.writeLong(createdate);
         dest.writeString(author);
         dest.writeString(drip);
+        dest.writeString(imageurl);
+    }
+
+    @Override
+    public String toString() {
+        return "Drip{" +
+                "id=" + id +
+                ", drip='" + drip + '\'' +
+                ", author='" + author + '\'' +
+                ", imageurl='" + imageurl + '\'' +
+                ", createdate=" + createdate +
+                ", heartcount=" + heartcount +
+                '}';
     }
 
     public static Creator<Drip> CREATOR = new Creator<Drip>() {
