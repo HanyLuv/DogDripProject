@@ -23,10 +23,6 @@ import com.hany.dogdripproject.vo.user.User;
  */
 public class LoginFragment extends BaseFragment {
 
-    //멤버변수 앞에 m붙여서 주로 선언하라 하셨잖아요!
-    //근데 뭔가 View에게 붙이기엔 애매해서 저번부터 m을 제거햇는데
-    //이경우 대체로 어떻게 선언하는게 가독성이 좋을까요? 음..
-
     private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
@@ -72,10 +68,7 @@ public class LoginFragment extends BaseFragment {
                 ConfigPreferenceManager preferenceManager  = new ConfigPreferenceManager(getActivity());
                 String strEmail = etEmail.getText().toString();
                 String strPassword = etPassword.getText().toString();
-
-                loginRequst.putParam(Constants.PARAM_EMAIL, strEmail.trim());
-                loginRequst.putParam(Constants.PARAM_PASSWORD, strPassword);
-                loginRequst.putParam(Constants.PARAM_GCM, preferenceManager.getGcmDeviceId());
+                loginRequst.setUserInfo( strEmail.trim(),strPassword);
 
                 request(loginRequst);
 
