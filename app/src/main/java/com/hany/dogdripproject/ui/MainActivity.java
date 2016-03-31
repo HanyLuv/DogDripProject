@@ -37,7 +37,7 @@ public class MainActivity extends BaseDripActivity {
         ArrayList<Class <? extends BaseFragment>> baseFragments = new ArrayList<>();
 
         baseFragments.add(LoginFragment.class);
-//        baseFragments.add(DripFagemnt.class);
+        baseFragments.add(DripFagemnt.class);
         baseFragments.add(SettingFragment.class);
 
 

@@ -15,11 +15,17 @@ import java.lang.reflect.Type;
 public class LikeRequest extends BasicRequest<Like> {
 
     private static final String API = Constants.API_SERVER_HOST + "/drip/like";
+    public static String PARAM_ID  = "id";
+    public static String PARAM_USER  = "user";
 
     public LikeRequest(Context context, BaseApiResponse.OnResponseListener<Like> responseListener) {
         super(context, API, responseListener);
     }
 
+    public void setLikeInfo(String dripID,String user){
+        getParams().put(PARAM_ID,"dripID");
+        getParams().put(PARAM_USER,"user");
+    }
     @Override
     protected Type getClassType() {
         return new TypeToken<Like>() {}.getType();

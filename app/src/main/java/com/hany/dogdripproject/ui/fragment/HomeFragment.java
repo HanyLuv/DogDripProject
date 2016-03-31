@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hany.dogdripproject.R;
-import com.hany.dogdripproject.ui.fragment.adapater.HomeFragmentPagerAdapter;
+import com.hany.dogdripproject.ui.fragment.adapater.DripFragmentPagerAdapter;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class HomeFragment extends BaseFragment {
 
     private void init(ArrayList<Drip> drips) {
         if (drips != null) {
-            mViewPager.setAdapter(new HomeFragmentPagerAdapter(getFragmentManager(), drips));
+            mViewPager.setAdapter(new DripFragmentPagerAdapter(getFragmentManager(), drips));
         }
     }
 

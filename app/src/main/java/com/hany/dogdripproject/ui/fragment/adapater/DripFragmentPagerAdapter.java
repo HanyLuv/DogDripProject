@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Created by HanyLuv on 2016-03-16.
  */
-public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class DripFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private List<Drip> mDrips;
 
-    public HomeFragmentPagerAdapter(FragmentManager fm, List<Drip> drips) {
+    public DripFragmentPagerAdapter(FragmentManager fm, List<Drip> drips) {
         super(fm);
         mDrips = drips;
     }

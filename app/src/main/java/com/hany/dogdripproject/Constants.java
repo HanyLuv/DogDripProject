@@ -22,15 +22,10 @@ public class Constants {
     private final String DRIP_LIKE = "/drip/like";
 
     //파라미터 값들
-    public static final String PARAM_EMAIL = "email";
-    public static final String PARAM_PASSWORD = "password";
-    public static final String PARAM_NICKNAME = "nickname";
-    public static final String PARAM_GCM = "gcm";
     public static final String PARAM_DRIP= "drip";
     public static final String PARAM_HEARTCOUNT= "heartcount";
     public static final String PARAM_AUTHOR = "author";
     public static final String PARAM_ID = "id";
-    public static final String PARAM_USER = "user";
 
     //어댑터 포지션값
     public static final String DRIP_PAGER_POSITION = "drip_position";
