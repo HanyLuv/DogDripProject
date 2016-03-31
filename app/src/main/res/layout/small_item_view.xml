@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_small_view"
+    android:layout_width="@dimen/small_item_view_default_width"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small_item_view_default_margin">
+
+    <FrameLayout
+        android:id="@+id/layout_small_item_view_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/small_item_view_default_top_height">
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/iv_small_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_small_item_view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/small_item_view_default_bottom_height"
+        android:layout_below="@id/layout_small_item_view_top">
+        <TextView
+            android:id="@+id/tv_small_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@style/SmallText.Title"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_small_item_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/LargeText"/>
+
+</RelativeLayout>
