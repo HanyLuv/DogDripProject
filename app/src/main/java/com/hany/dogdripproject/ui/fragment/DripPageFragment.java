@@ -50,7 +50,7 @@ public class DripPageFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_drip, container, false);
+        View view = inflater.inflate(R.layout.fragment_drip_item, container, false);
         mTvAuthor = (TextView) view.findViewById(R.id.tv_drip_author);
         mTvDrip = (TextView) view.findViewById(R.id.tv_drip_drip);
 
@@ -132,8 +132,7 @@ public class DripPageFragment extends BaseFragment {
                 showToast(error.getMessage());
             }
         });
-        likeRequest.putParam(Constants.PARAM_ID, dripID);
-        likeRequest.putParam(Constants.PARAM_USER, "admin");
+        likeRequest.setLikeInfo(dripID,"admin");
         request(likeRequest);
     }
 
