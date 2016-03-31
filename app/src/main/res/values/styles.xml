@@ -27,4 +27,24 @@
         <item name="android:textSize">10dp</item>
     </style>
 
+    <style name="SmallText">
+        <item name="android:gravity">center</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="SmallText.Title">
+        <item name="android:textSize">@dimen/small_text_title_size</item>
+    </style>
+
+    <style name="SmallText.Subtitle">
+        <item name="android:textSize">@dimen/small_text_subtitle_text_size</item>
+    </style>
+
+    <style name="LargeText">
+        <item name="android:gravity">center</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textSize">@dimen/large_text_text_size</item>
+    </style>
+
+
 </resources>

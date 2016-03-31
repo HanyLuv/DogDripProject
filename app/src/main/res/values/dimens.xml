@@ -15,4 +15,14 @@
     <dimen name="drip_page_divider_left_top">@dimen/drip_page_divider_margin_top</dimen>
     <dimen name="drip_page_divider_right_top">@dimen/drip_page_divider_margin_top</dimen>
     <dimen name="drip_page_common_padding">10dp</dimen>
+
+    <dimen name="large_text_text_size">20dp</dimen>
+    <dimen name="small_text_subtitle_text_size">8dp</dimen>
+    <dimen name="small_text_title_size">12dp</dimen>
+
+    <dimen name="small_item_view_default_top_height">80dp</dimen>
+    <dimen name="small_item_view_default_bottom_height">30dp</dimen>
+    <dimen name="small_item_view_default_width">80dp</dimen>
+    <dimen name="small_item_view_default_margin">2dp</dimen>
+
 </resources>

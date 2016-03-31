@@ -4,8 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.fivetrue.dotopguide.R;
-import com.fivetrue.dotopguide.ui.view.SmallItemView;
+
+import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.ui.view.SmallItemView;
 
 import java.util.List;
 

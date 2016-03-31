@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.fivetrue.dotopguide.R;
-import com.fivetrue.dotopguide.network.NetworkInstance;
+import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.image.ImageLoadManager;
 
 /**
  * Created by kwonojin on 16. 2. 17..
@@ -97,7 +97,7 @@ public class SmallItemView extends RelativeLayout {
 
     public void setImageUrl(String url){
         if(mImageView != null){
-            mImageView.setImageUrl(url, NetworkInstance.getInstance().getImageLoader());
+            mImageView.setImageUrl(url, ImageLoadManager.getImageLoader());
         }
     }
 
