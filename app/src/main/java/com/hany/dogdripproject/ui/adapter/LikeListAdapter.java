@@ -15,60 +15,35 @@ import com.hany.dogdripproject.ui.BaseActivity;
 import com.hany.dogdripproject.vo.drip.LikeInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-27.
  */
-public class LikeListAdapter extends BaseAdapter {
-
-    private ArrayList<LikeInfo> mLikeInfos;
-    private Context mContext;
-    private LayoutInflater mInflater;
+public class LikeListAdapter extends BaseListAdapter<LikeInfo, LikeListAdapter.ViewHolder> {
 
 
-    public LikeListAdapter(Context context, ArrayList<LikeInfo> likeInfos) {
-        mContext = context;
-        mLikeInfos = likeInfos;
-        mInflater = LayoutInflater.from(context);
+    public LikeListAdapter(Context context, List<LikeInfo> data) {
+        super(context, data, R.layout.item_likelist_row);
     }
 
     @Override
-    public int getCount() {
-        return mLikeInfos.size();
+    protected ViewHolder makeHolder(View view) {
+        ViewHolder holder = new ViewHolder();
+        holder.ivUserImg = (ImageView) view.findViewById(R.id.iv_user);
+        holder.tvUserName = (TextView) view.findViewById(R.id.tv_user_name);
+        return holder;
     }
 
     @Override
-    public LikeInfo getItem(int position) {
-        return mLikeInfos.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LikeInfo likeUserInfo = mLikeInfos.get(position);
-        View vListItem = convertView;
-        ViewHolder holder = null;
-
-        if (vListItem == null) {
-            holder = new ViewHolder();
-            vListItem = mInflater.inflate(R.layout.item_likelist_row, null);
-            holder.ivUserImg = (ImageView) vListItem.findViewById(R.id.iv_user);
-            holder.tvUserName = (TextView) vListItem.findViewById(R.id.tv_user_name);
-            vListItem.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+    protected void initView(ViewHolder holder, int position) {
+        LikeInfo info = getItem(position);
+        if(info != null){
+            holder.tvUserName.setText(info.getUser());
         }
-
-        holder.tvUserName.setText(likeUserInfo.getUser());
-
-        return vListItem;
     }
 
-    private class ViewHolder {
+    protected static class ViewHolder {
         public ImageView ivUserImg;
         public TextView tvUserName;
     }

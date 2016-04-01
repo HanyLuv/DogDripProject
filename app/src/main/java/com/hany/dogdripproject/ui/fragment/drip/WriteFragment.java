@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.ui.fragment;
+package com.hany.dogdripproject.ui.fragment.drip;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.WriteRequst;
 import com.hany.dogdripproject.ui.BaseActivity;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 /**

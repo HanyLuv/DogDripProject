@@ -15,19 +15,21 @@ import java.util.List;
 /**
  * Created by kwonojin on 16. 3. 31..
  */
-abstract public class BaseHorizontalScrollFragment <PAGE> extends BaseFragment {
+abstract public class BaseHorizontalScrollFragment <PAGE> extends BaseFragment implements ViewPager.OnPageChangeListener{
 
     private ViewPager mViewPager = null;
     private BaseFragmentPagerAdapter mPagerAdapter = null;
 
     private List<PAGE> mPageList = null;
 
+    private ViewPager.OnPageChangeListener mPageChangeListener = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_horizontal, container, false);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_base_horizontal);
+        mViewPager.addOnPageChangeListener(this);
         return view;
     }
 
@@ -50,5 +52,50 @@ abstract public class BaseHorizontalScrollFragment <PAGE> extends BaseFragment {
 
     public ViewPager getViewPager(){
         return mViewPager;
+    }
+
+    public BaseFragmentPagerAdapter getPagerAdapter(){
+        return mPagerAdapter;
+    }
+
+    public int getCurrentPagePosition(){
+        int pos = 0;
+        if(mViewPager != null){
+            pos = mViewPager.getCurrentItem();
+        }
+        return pos;
+    }
+
+    public int getPageCount(){
+        int count = 0;
+        if(mPageList != null){
+            count = mPageList.size();
+        }
+        return count;
+    }
+
+    public void setPageChangeListener(ViewPager.OnPageChangeListener ll){
+        mPageChangeListener = ll;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if(mPageChangeListener != null){
+            mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if(mPageChangeListener != null){
+            mPageChangeListener.onPageSelected(position);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        if(mPageChangeListener != null){
+            mPageChangeListener.onPageScrollStateChanged(state);
+        }
     }
 }

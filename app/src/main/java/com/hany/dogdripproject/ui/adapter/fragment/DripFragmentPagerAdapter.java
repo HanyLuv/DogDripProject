@@ -25,15 +25,18 @@ public class DripFragmentPagerAdapter extends BaseFragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Drip drip = mDrips.get(position);
-
         Bundle bundle = DripPageFragment.makeArgument(drip);
         bundle.putInt(DripPageFragment.KEY_ARGUMENT_PAGER_POSITION, position);
-
         return DripPageFragment.newInstance(bundle);
     }
 
     @Override
     public int getCount() {
         return mDrips.size();
+    }
+
+    @Override
+    protected boolean ignoreDestroyObject(int position, Object object) {
+        return true;
     }
 }

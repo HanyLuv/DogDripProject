@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.ui.fragment;
+package com.hany.dogdripproject.ui.fragment.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +16,7 @@ import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.LoginRequst;
 import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.user.User;
 
 /**

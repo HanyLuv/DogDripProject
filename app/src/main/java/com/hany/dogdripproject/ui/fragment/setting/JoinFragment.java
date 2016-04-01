@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.ui.fragment;
+package com.hany.dogdripproject.ui.fragment.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,7 @@ import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.request.JoinRequest;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.user.User;
 
 /**

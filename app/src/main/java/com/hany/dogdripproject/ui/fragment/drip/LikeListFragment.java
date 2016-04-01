@@ -1,4 +1,4 @@
-package com.hany.dogdripproject.ui.fragment;
+package com.hany.dogdripproject.ui.fragment.drip;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.adapter.LikeListAdapter;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.drip.LikeInfo;
 
 import java.util.ArrayList;
