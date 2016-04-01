@@ -1,9 +1,10 @@
-package com.hany.dogdripproject.ui.fragment.adapater;
+package com.hany.dogdripproject.ui.adapter.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by HanyLuv on 2016-03-31.
  */
-public class FrameFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class FrameFragmentPagerAdapter extends BaseFragmentPagerAdapter {
     private List<Class<? extends BaseFragment>> mFragmentClasses;
 
     public FrameFragmentPagerAdapter(FragmentManager fm, List<Class<? extends BaseFragment>> classList) {
@@ -37,4 +38,5 @@ public class FrameFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mFragmentClasses.size();
     }
+
 }

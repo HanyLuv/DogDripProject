@@ -20,13 +20,4 @@ public class Constants {
 
     //드립 추천
     private final String DRIP_LIKE = "/drip/like";
-
-    //파라미터 값들
-    public static final String PARAM_DRIP= "drip";
-    public static final String PARAM_HEARTCOUNT= "heartcount";
-    public static final String PARAM_AUTHOR = "author";
-    public static final String PARAM_ID = "id";
-
-    //어댑터 포지션값
-    public static final String DRIP_PAGER_POSITION = "drip_position";
 }

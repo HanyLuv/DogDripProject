@@ -1,31 +1,19 @@
 package com.hany.dogdripproject.ui;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
 
-import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
-import com.hany.dogdripproject.net.request.JoinRequest;
+import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
-import com.hany.dogdripproject.ui.fragment.DripFagemnt;
-import com.hany.dogdripproject.ui.fragment.HomeFragment;
-import com.hany.dogdripproject.ui.fragment.JoinFragment;
-import com.hany.dogdripproject.net.BaseApiResponse;
-import com.hany.dogdripproject.net.NetworkManager;
-import com.hany.dogdripproject.net.request.DripListRequest;
+import com.hany.dogdripproject.ui.fragment.drip.DripFagemnt;
 import com.hany.dogdripproject.ui.fragment.LoginFragment;
 import com.hany.dogdripproject.ui.fragment.SettingFragment;
-import com.hany.dogdripproject.ui.fragment.WriteFragment;
-import com.hany.dogdripproject.ui.fragment.adapater.FrameFragmentPagerAdapter;
-import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.ArrayList;
 
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
-public class MainActivity extends BaseDripActivity {
+public class MainActivity extends BaseActivity {
 
     private VerticalViewPager mViewPager;
 

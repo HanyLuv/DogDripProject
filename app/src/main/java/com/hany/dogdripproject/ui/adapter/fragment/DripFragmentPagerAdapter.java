@@ -1,12 +1,12 @@
-package com.hany.dogdripproject.ui.fragment.adapater;
+package com.hany.dogdripproject.ui.adapter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.hany.dogdripproject.Constants;
-import com.hany.dogdripproject.ui.fragment.DripPageFragment;
+import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
+import com.hany.dogdripproject.ui.fragment.drip.DripPageFragment;
 import com.hany.dogdripproject.vo.drip.Drip;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by HanyLuv on 2016-03-16.
  */
-public class DripFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class DripFragmentPagerAdapter extends BaseFragmentPagerAdapter {
     private List<Drip> mDrips;
 
     public DripFragmentPagerAdapter(FragmentManager fm, List<Drip> drips) {
@@ -25,12 +25,10 @@ public class DripFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Drip drip = mDrips.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.PARAM_AUTHOR, drip.getAuthor());
-        bundle.putString(Constants.PARAM_DRIP, drip.getDrip());
-        bundle.putString(Constants.PARAM_HEARTCOUNT, String.valueOf(drip.getHeartcount()));
-        bundle.putString(Constants.PARAM_ID, String.valueOf(drip.getId()));
-        bundle.putInt(Constants.DRIP_PAGER_POSITION, position);
+
+        Bundle bundle = DripPageFragment.makeArgument(drip);
+        bundle.putInt(DripPageFragment.KEY_ARGUMENT_PAGER_POSITION, position);
+
         return DripPageFragment.newInstance(bundle);
     }
 

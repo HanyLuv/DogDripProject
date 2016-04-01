@@ -84,9 +84,10 @@ public class WriteFragment extends BaseFragment {
             }
         });
 
+        //TODO : Have to fix blow codes
         String dripContent = etWrite.getText().toString();
-            writeRequst.putParam(Constants.PARAM_AUTHOR, "admin");
-            writeRequst.putParam(Constants.PARAM_DRIP, dripContent);
+//            writeRequst.putParam(Constants.PARAM_AUTHOR, "admin");
+//            writeRequst.putParam(Constants.PARAM_DRIP, dripContent);
             request(writeRequst);
     }
 

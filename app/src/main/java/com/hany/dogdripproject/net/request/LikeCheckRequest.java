@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class LikeCheckRequest extends BasicRequest<ArrayList<LikeInfo>> {
 
     private static final String API = Constants.API_SERVER_HOST + "/drip/check";
+    private static final String KEY_ID = "id";
 
     public LikeCheckRequest(Context context, BaseApiResponse.OnResponseListener<ArrayList<LikeInfo>> responseListener) {
         super(context, API, responseListener);
@@ -24,5 +25,9 @@ public class LikeCheckRequest extends BasicRequest<ArrayList<LikeInfo>> {
     @Override
     protected Type getClassType() {
         return new TypeToken<ArrayList<LikeInfo>>(){}.getType();
+    }
+
+    public void setDripId(int id){
+        putParam(KEY_ID, String.valueOf(id));
     }
 }

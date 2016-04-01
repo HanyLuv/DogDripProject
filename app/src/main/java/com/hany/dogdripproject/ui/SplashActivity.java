@@ -82,7 +82,7 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void onResponse(BaseApiResponse<Void> response) {
             if(response != null && response.getErrorCode() == 0){
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                doStartNextStep();
             }else{
                 if(RETRY_COUNT > mRetryCount){
                     NetworkManager.getInstance().request(mGcmRegisterRequest);
@@ -124,12 +124,20 @@ public class SplashActivity extends BaseActivity {
             @Override
             protected void onPostExecute(String value) {
                 super.onPostExecute(value);
-                mConfigPref.setGcmDeviceId(value);
-                mGcmRegisterRequest.getParams().put("gcm", value);
-                mGcmRegisterRequest.getParams().put("device", Build.MODEL);
-                NetworkManager.getInstance().request(mGcmRegisterRequest);
+                if(value != null){
+                    mConfigPref.setGcmDeviceId(value);
+                    mGcmRegisterRequest.getParams().put("gcm", value);
+                    mGcmRegisterRequest.getParams().put("device", Build.MODEL);
+                    NetworkManager.getInstance().request(mGcmRegisterRequest);
+                }else{
+                    doStartNextStep();
+                }
             }
         }.execute();
+    }
+
+    private void doStartNextStep(){
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 
 }

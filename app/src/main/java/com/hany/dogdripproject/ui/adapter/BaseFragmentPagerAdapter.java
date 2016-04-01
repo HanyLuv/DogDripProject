@@ -23,9 +23,14 @@ public abstract class BaseFragmentPagerAdapter extends BasePagerAdapter {
         mFragmentManager = fm;
     }
 
-    public abstract int getRealCount();
 
-    public abstract int getVirtualPosition(int position);
+    public int getVirtualPosition(int position){
+        return position;
+    }
+
+    public int getRealCount(){
+        return getCount();
+    }
 
 
     @Override
