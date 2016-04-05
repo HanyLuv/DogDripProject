@@ -9,7 +9,7 @@ import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 import com.hany.dogdripproject.ui.fragment.HomeFragment;
-import com.hany.dogdripproject.ui.fragment.drip.DripFagemnt;
+import com.hany.dogdripproject.ui.fragment.drip.DripBookFragment;
 import com.hany.dogdripproject.ui.fragment.setting.SettingFragment;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             mData.clear();
         }
         mData.add(HomeFragment.class);
-        mData.add(DripFagemnt.class);
+        mData.add(DripBookFragment.class);
         mData.add(SettingFragment.class);
 
         if(mAdapter == null){
@@ -97,11 +97,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 mArrowLeft.setVisibility(View.GONE);
                 mArrowRight.setVisibility(View.GONE);
             }else if(pos == 0 && count > pos){
-                mArrowLeft.setVisibility(View.GONE);
-                mArrowRight.setVisibility(View.VISIBLE);
-            }else if(pos > 0 && pos == count){
                 mArrowLeft.setVisibility(View.VISIBLE);
                 mArrowRight.setVisibility(View.GONE);
+            }else if(pos > 0 && pos == count){
+                mArrowLeft.setVisibility(View.GONE);
+                mArrowRight.setVisibility(View.VISIBLE);
             }else{
                 mArrowLeft.setVisibility(View.VISIBLE);
                 mArrowRight.setVisibility(View.VISIBLE);

@@ -20,14 +20,10 @@ import java.util.List;
  * Created by HanyLuv on 2016-03-15.
  */
 //메인화면 프래그먼트
-public class HomeFragment extends BaseHorizontalScrollFragment<User> {
+public class HomeFragment extends BaseHorizontalScrollFragment {
     public static String TAG = "HomeFragment";
 
 
-    @Override
-    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<User> pageDatas) {
-        return null;
-    }
 
     @Override
     public String getFragmentTag() {
@@ -37,5 +33,10 @@ public class HomeFragment extends BaseHorizontalScrollFragment<User> {
     @Override
     public String getFragmentTitle() {
         return "홈";
+    }
+
+    @Override
+    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<?> pageDatas) {
+        return null;
     }
 }
