@@ -27,4 +27,5 @@
 
     <dimen name="floating_arrow_margin">8dp</dimen>
 
+    <dimen name="my_page_base_height">50dp</dimen>
 </resources>

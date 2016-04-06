@@ -8,8 +8,9 @@ import android.widget.ImageView;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
-import com.hany.dogdripproject.ui.fragment.HomeFragment;
 import com.hany.dogdripproject.ui.fragment.drip.DripFagemnt;
+import com.hany.dogdripproject.ui.fragment.setting.FirstPageFragment;
+import com.hany.dogdripproject.ui.fragment.setting.LoginFragment;
 import com.hany.dogdripproject.ui.fragment.setting.SettingFragment;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }else{
             mData.clear();
         }
-        mData.add(HomeFragment.class);
+        mData.add(FirstPageFragment.class);
         mData.add(DripFagemnt.class);
         mData.add(SettingFragment.class);
 

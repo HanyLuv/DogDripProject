@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="50dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <!-- 사용자 사진, 레벨, 이름 -->
+
+    <ImageView
+        android:id="@+id/iv_user_photo"
+        android:layout_width="@dimen/my_page_base_height"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_user_level"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_toRightOf="@id/iv_user_photo"
+        android:gravity="center_vertical"
+        android:text="user_level" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_toRightOf="@id/iv_user_photo"
+        android:gravity="right|center_vertical"
+        android:text="user_name" />
+
+    <View
+        android:id="@+id/user_info_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/iv_user_photo"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_color" />
+
+    <!-- 드립 수 -->
+
+    <TextView
+        android:id="@+id/tv_user_drip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_below="@id/user_info_divider"
+        android:gravity="center_vertical"
+        android:text="@string/mypage_user_drip" />
+
+    <TextView
+        android:id="@+id/tv_user_drip_count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_below="@id/user_info_divider"
+        android:gravity="right|center_vertical"
+        android:text="0" />
+
+    <!-- 드립 추천 받은 수 -->
+    <View
+        android:id="@+id/user_drip_info_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/tv_user_drip_count"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_color" />
+
+
+    <TextView
+        android:id="@+id/tv_user_drip_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_below="@id/user_drip_info_divider"
+        android:gravity="center_vertical"
+        android:text="@string/mypage_user_drip_recommend" />
+
+    <TextView
+        android:id="@+id/tv_user_drip_recommend_count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_page_base_height"
+        android:layout_below="@id/user_drip_info_divider"
+        android:gravity="right|center_vertical"
+        android:text="0" />
+
+</RelativeLayout>

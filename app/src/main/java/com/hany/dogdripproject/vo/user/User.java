@@ -1,9 +1,12 @@
 package com.hany.dogdripproject.vo.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by kwonojin on 16. 3. 15..
  */
-public class User {
+public class User implements Parcelable {
     private String email = null;
     private String nickname = null;
     private String password = null;
@@ -11,6 +14,19 @@ public class User {
     private long createdate = 0;
     private long lastconn = 0;
     private int point = 0;
+
+    public User() {
+    }
+
+    public User(Parcel parcel) {
+        point = parcel.readInt();
+        createdate = parcel.readLong();
+        lastconn = parcel.readLong();
+        password = parcel.readString();
+        imageurl = parcel.readString();
+        nickname = parcel.readString();
+        email = parcel.readString();
+    }
 
     public String getPassword() {
         return password;
@@ -80,4 +96,35 @@ public class User {
                 ", point=" + point +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(point);
+        dest.writeLong(createdate);
+        dest.writeLong(lastconn);
+        dest.writeString(email);
+        dest.writeString(nickname);
+        dest.writeString(password);
+        dest.writeString(imageurl);
+    }
+
+    public static Creator<User> CREATOR = new Creator<User>() {
+
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User();
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+
 }
