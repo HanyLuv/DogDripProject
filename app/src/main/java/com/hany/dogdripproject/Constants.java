@@ -6,6 +6,10 @@ package com.hany.dogdripproject;
 public class Constants {
 
 
+    /**
+     * Intent Actions
+     */
+    public static final String ACTION_USER_INFO_CHANGED = "com.hany.dogdripproject.user.changed";
 
 
     //호스트 주소

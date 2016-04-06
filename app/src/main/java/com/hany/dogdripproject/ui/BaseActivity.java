@@ -1,7 +1,10 @@
 package com.hany.dogdripproject.ui;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
+import com.hany.dogdripproject.vo.user.User;
 
 import java.util.ArrayList;
 
@@ -19,6 +24,7 @@ import java.util.ArrayList;
  * Created by kwonojin on 16. 3. 15..
  */
 public class BaseActivity extends FragmentActivity {
+
     private FrameLayout mLayoutMainContainer = null;
 
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -109,4 +115,23 @@ public class BaseActivity extends FragmentActivity {
         builder.setNegativeButton(getResources().getText(R.string.cancel),cancelListener);
         return builder.create();
     }
+
+    protected void onUserInfoChanged(User user){
+
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent != null){
+                String action = intent.getAction();
+                if(action != null){
+                    if(action.equals(Constants.ACTION_USER_INFO_CHANGED)){
+                        User user = intent.getParcelableExtra(User.class.getName());
+                        onUserInfoChanged(user);
+                    }
+                }
+            }
+        }
+    };
 }

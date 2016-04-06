@@ -10,7 +10,7 @@ import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 import com.hany.dogdripproject.ui.fragment.HomeFragment;
 import com.hany.dogdripproject.ui.fragment.drip.DripBookFragment;
-import com.hany.dogdripproject.ui.fragment.setting.SettingFragment;
+import com.hany.dogdripproject.ui.fragment.setting.SettingBookFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
         mData.add(HomeFragment.class);
         mData.add(DripBookFragment.class);
-        mData.add(SettingFragment.class);
+        mData.add(SettingBookFragment.class);
 
         if(mAdapter == null){
             mAdapter = new FrameFragmentPagerAdapter(getSupportFragmentManager(), mData);
