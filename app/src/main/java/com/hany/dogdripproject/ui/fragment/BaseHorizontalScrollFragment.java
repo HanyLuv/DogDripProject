@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by kwonojin on 16. 3. 31..
  */
-abstract public class BaseHorizontalScrollFragment <PAGE> extends BaseFragment implements ViewPager.OnPageChangeListener{
+abstract public class BaseHorizontalScrollFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
     private ViewPager mViewPager = null;
     private BaseFragmentPagerAdapter mPagerAdapter = null;
 
-    private List<PAGE> mPageList = null;
+    private List<?> mPageList = null;
 
     private ViewPager.OnPageChangeListener mPageChangeListener = null;
 
@@ -34,9 +34,9 @@ abstract public class BaseHorizontalScrollFragment <PAGE> extends BaseFragment i
     }
 
 
-    protected abstract BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<PAGE> pageDatas);
+    protected abstract BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<?> pageDatas);
 
-    protected void setPageData(List<PAGE> pageDatas){
+    protected void setPageData(List<?> pageDatas){
         if(pageDatas != null){
             mPageList = pageDatas;
             if(mPagerAdapter == null){
