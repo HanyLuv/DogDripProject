@@ -1,17 +1,11 @@
 package com.hany.dogdripproject.ui.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hany.dogdripproject.R;
-import com.hany.dogdripproject.ui.BaseActivity;
 import com.hany.dogdripproject.vo.drip.LikeInfo;
 
 import java.util.ArrayList;

@@ -23,9 +23,9 @@ public class FirstPageFragment extends BaseHorizontalScrollFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_firstpage, container, false);
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.layout_fragment_first_page, new LoginFragment());
-        fragmentTransaction.commit();
+//        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.layout_fragment_first_page, new LoginFragment());
+//        fragmentTransaction.commit();
         return view;
     }
 

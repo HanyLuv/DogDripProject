@@ -5,9 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,19 @@ public class BaseActivity extends FragmentActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Constants.ACTION_USER_INFO_CHANGED);
+        registerReceiver(broadcastReceiver, filter);
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onDestroy() {
+        super.onDestroy();
+        if(broadcastReceiver != null){
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
     @Override
@@ -77,32 +87,38 @@ public class BaseActivity extends FragmentActivity {
     public void addFragment(Class<? extends BaseFragment> fClss, Bundle bundle) {
         BaseFragment f = null;
         try {
-             f = fClss.newInstance();
-        } catch (InstantiationException e) {
+            f = fClss.newInstance();
+        } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
         if(f != null){
-            BaseFragment of = (BaseFragment) getSupportFragmentManager().findFragmentByTag(f.getFragmentTag());
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            BaseFragment of = (BaseFragment) getCurrentFragmentManager().findFragmentByTag(f.getFragmentTag());
+            FragmentTransaction ft = getCurrentFragmentManager().beginTransaction();
             if (of != null) {
-                ft.replace(getFragmentAchorViewId(), of);
-            }else{
-                of = f;
-                ft.add(getFragmentAchorViewId(), of, of.getFragmentTag());
+                if(of.isDetached()){
+                    ft.replace(getFragmentAchorViewId(), of);
+                    if(bundle != null){
+                        of.setArguments(bundle);
+                    }
+                    ft.setBreadCrumbTitle(of.getFragmentTitle())
+                            .addToBackStack(of.getBackstackName())
+                            .commitAllowingStateLoss();
+                }
+                f = null;
+            } else {
+                ft.add(getFragmentAchorViewId(), f, f.getFragmentTag());
+                if(bundle != null){
+                    f.setArguments(bundle);
+                }
+                ft.setBreadCrumbTitle(f.getFragmentTitle())
+                        .addToBackStack(f.getBackstackName())
+                        .commitAllowingStateLoss();
             }
-
-            if(bundle != null){
-                of.setArguments(bundle);
-            }
-            ft.setBreadCrumbTitle(of.getFragmentTitle())
-                    .addToBackStack(of.getBackstackName())
-                    .commitAllowingStateLoss();
         }
     }
-
 
     /**
      * 확인,취소만 존재하는 가장 기본적인 Alert Dialog 를 만들어 리턴.
@@ -134,4 +150,16 @@ public class BaseActivity extends FragmentActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        if(getCurrentFragmentManager().popBackStackImmediate()){
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    protected FragmentManager getCurrentFragmentManager(){
+        return getSupportFragmentManager();
+    }
 }

@@ -6,25 +6,38 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
 import com.hany.dogdripproject.preferences.UserLoginPreferenceManager;
-import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
-import com.hany.dogdripproject.ui.adapter.fragment.SettingFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
-import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-31.
  */
-public class SettingBookFragment extends BaseHorizontalScrollFragment {
+public class SettingBookFragment extends BaseFragment {
 
     private ConfigPreferenceManager mConfigPref = null;
     private UserLoginPreferenceManager mUserPref = null;
+
+    private Button mSettingButton = null;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_setting_book, null);
+        mSettingButton = (Button) view.findViewById(R.id.btn_setting_book_setting);
+        mSettingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addChildFragment(SettingsFragment.class, null);
+            }
+        });
+        return view;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,29 +47,18 @@ public class SettingBookFragment extends BaseHorizontalScrollFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        makeClassList();
-    }
-
-    @Override
-    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List pageDatas) {
-        SettingFragmentPagerAdapter adapter = new SettingFragmentPagerAdapter(getFragmentManager(), pageDatas);
-        return adapter;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(TextUtils.isEmpty(mUserPref.loadLoginId())){
+            addChildFragment(LoginFragment.class, null);
+        }else{
+            addChildFragment(MypageFragment.class, null);
+        }
     }
 
-    private void makeClassList(){
-        List<Class<? extends BaseFragment>> classes = new ArrayList<>();
-        if(TextUtils.isEmpty(mUserPref.loadLoginId())){
-            classes.add(LoginFragment.class);
-            classes.add(JoinFragment.class);
-        }
-        classes.add(SettingsFragment.class);
-        setPageData(classes);
+    @Override
+    protected int getChildFragmentAnchorId() {
+        return R.id.layout_setting_book_root;
     }
+
 }

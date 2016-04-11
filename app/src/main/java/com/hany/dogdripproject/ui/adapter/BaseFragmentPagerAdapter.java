@@ -130,11 +130,15 @@ public abstract class BaseFragmentPagerAdapter extends BasePagerAdapter {
         return position;
     }
 
-    private static String makeFragmentName(int viewId, long id) {
+    protected String makeFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
     }
 
     protected boolean ignoreDestroyObject(int position, Object object){
         return false;
+    }
+
+    protected FragmentManager getFragmentManager(){
+        return mFragmentManager;
     }
 }

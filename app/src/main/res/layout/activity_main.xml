@@ -28,25 +28,4 @@
         android:src="@android:drawable/arrow_down_float"
         />
 
-    <ImageView
-        android:id="@+id/iv_main_arrow_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:rotation="-90"
-        android:layout_margin="@dimen/floating_arrow_margin"
-        android:src="@android:drawable/arrow_down_float"
-        />
-
-    <ImageView
-        android:id="@+id/iv_main_arrow_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:rotation="90"
-        android:layout_margin="@dimen/floating_arrow_margin"
-        android:src="@android:drawable/arrow_down_float"
-        />
-
 </RelativeLayout>

@@ -34,8 +34,14 @@ public class DripFragmentPagerAdapter extends BaseFragmentPagerAdapter {
             Bundle bundle = DripPageFragment.makeArgument(drip);
             bundle.putInt(DripPageFragment.KEY_ARGUMENT_PAGER_POSITION, position);
             f = (DripPageFragment) DripPageFragment.newInstance(bundle);
+            mFragmentMap.put(drip, f);
         }
         return f;
+    }
+
+    @Override
+    protected String makeFragmentName(int viewId, long id) {
+        return super.makeFragmentName(viewId, id) + getClass().getSimpleName();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.hany.dogdripproject.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 import com.hany.dogdripproject.R;
@@ -52,5 +53,44 @@ public class BaseFragment extends Fragment {
         return this.getClass().getName();
     }
 
+    public void addChildFragment(Class<? extends BaseFragment> fClss, Bundle bundle) {
+        BaseFragment f = null;
+        try {
+            f = fClss.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        if(f != null){
+            BaseFragment of = (BaseFragment) getChildFragmentManager().findFragmentByTag(f.getFragmentTag());
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            if (of != null) {
+                if(of.isDetached()){
+                    ft.replace(getChildFragmentAnchorId(), of);
+                    if(bundle != null){
+                        of.setArguments(bundle);
+                    }
+                    ft.setBreadCrumbTitle(of.getFragmentTitle())
+                            .addToBackStack(of.getBackstackName())
+                            .commitAllowingStateLoss();
+                }
+                f = null;
+            } else {
+                ft.add(getChildFragmentAnchorId(), f, f.getFragmentTag());
+                if(bundle != null){
+                    f.setArguments(bundle);
+                }
+                ft.setBreadCrumbTitle(f.getFragmentTitle())
+                        .addToBackStack(f.getBackstackName())
+                        .commitAllowingStateLoss();
+            }
+        }
+    }
+
+    protected int getChildFragmentAnchorId(){
+        return getView().getId();
+    }
 
 }

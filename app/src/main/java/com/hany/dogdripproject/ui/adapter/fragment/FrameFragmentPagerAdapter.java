@@ -2,10 +2,9 @@ package com.hany.dogdripproject.ui.adapter.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 
 import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
-import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +15,10 @@ import java.util.Map;
  */
 public class FrameFragmentPagerAdapter extends BaseFragmentPagerAdapter {
 
-    private Map<Integer, BaseHorizontalScrollFragment> mFragmentMap = null;
-    private List<Class<? extends BaseHorizontalScrollFragment>> mFragmentClasses;
+    private Map<Integer, BaseFragment> mFragmentMap = null;
+    private List<Class<? extends BaseFragment>> mFragmentClasses;
 
-    private ViewPager.OnPageChangeListener mOnPageChangeListener = null;
-
-    public FrameFragmentPagerAdapter(FragmentManager fm, List<Class<? extends BaseHorizontalScrollFragment>> classList) {
+    public FrameFragmentPagerAdapter(FragmentManager fm, List<Class<? extends BaseFragment>> classList) {
         super(fm);
         mFragmentClasses = classList;
         mFragmentMap = new HashMap<>();
@@ -29,11 +26,11 @@ public class FrameFragmentPagerAdapter extends BaseFragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        BaseHorizontalScrollFragment fragment = mFragmentMap.get(position);
+        BaseFragment fragment = mFragmentMap.get(position);
         if(fragment == null){
             Class fClass = mFragmentClasses.get(position);
             try {
-                fragment = (BaseHorizontalScrollFragment) fClass.newInstance();
+                fragment = (BaseFragment) fClass.newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -43,23 +40,16 @@ public class FrameFragmentPagerAdapter extends BaseFragmentPagerAdapter {
                 mFragmentMap.put(position, fragment);
             }
         }
-        if(mOnPageChangeListener != null){
-            fragment.setPageChangeListener(mOnPageChangeListener);
-        }
         return fragment;
     }
 
-    public void setOnChildPageChangeListener(ViewPager.OnPageChangeListener ll){
-        mOnPageChangeListener = ll;
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).hashCode();
     }
 
     @Override
     public int getCount() {
         return mFragmentClasses.size();
-    }
-
-    @Override
-    protected boolean ignoreDestroyObject(int position, Object object) {
-        return true;
     }
 }
