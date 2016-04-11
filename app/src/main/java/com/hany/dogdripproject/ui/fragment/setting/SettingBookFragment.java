@@ -52,7 +52,7 @@ public class SettingBookFragment extends BaseHorizontalScrollFragment {
 
     private void makeClassList(){
         List<Class<? extends BaseFragment>> classes = new ArrayList<>();
-        if(!TextUtils.isEmpty(mUserPref.loadLoginId())){
+        if(TextUtils.isEmpty(mUserPref.loadLoginId())){
             classes.add(LoginFragment.class);
             classes.add(JoinFragment.class);
         }
