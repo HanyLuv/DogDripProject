@@ -19,7 +19,13 @@ import java.util.List;
 /**
  * Created by HanyLuv on 2016-03-31.
  */
-public class DripBookFragment extends BaseHorizontalScrollFragment {
+public class DripFagemnt extends BaseHorizontalScrollFragment<Drip> {
+
+    @Override
+    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<Drip> pageDatas) {
+        DripFragmentPagerAdapter pagerAdapter = new DripFragmentPagerAdapter(getActivity().getSupportFragmentManager(), pageDatas);
+        return pagerAdapter;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -41,11 +47,5 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
             }
         });
         NetworkManager.getInstance().request(request);
-    }
-
-    @Override
-    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List<?> pageDatas) {
-        DripFragmentPagerAdapter adapter = new DripFragmentPagerAdapter(getFragmentManager(), (List<Drip>) pageDatas);
-        return adapter;
     }
 }

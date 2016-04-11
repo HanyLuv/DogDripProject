@@ -12,13 +12,17 @@ import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.request.JoinRequest;
+import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
+import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 import com.hany.dogdripproject.vo.user.User;
+
+import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-18.
  */
-public class JoinFragment extends BaseFragment {
+public class JoinFragment extends BaseHorizontalScrollFragment {
 
     private EditText etEmail;
     private EditText etNickname;
@@ -36,6 +40,11 @@ public class JoinFragment extends BaseFragment {
         btnJoin = (Button) view.findViewById(R.id.bt_join);
 
         return view;
+    }
+
+    @Override
+    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List pageDatas) {
+        return null;
     }
 
     @Override

@@ -29,4 +29,7 @@
 
     <string name="drip_recommend">추천+%s</string>
     <string name="drip_comment">댓글+%s</string>
+
+    <string name="mypage_user_drip">내가 친 드립 수</string>
+    <string name="mypage_user_drip_recommend">추천 받은 수</string>
 </resources>

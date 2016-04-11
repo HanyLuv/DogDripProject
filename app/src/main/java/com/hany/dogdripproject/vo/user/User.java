@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by kwonojin on 16. 3. 15..
  */
-public class User implements Parcelable{
+public class User implements Parcelable {
     private String email = null;
     private String nickname = null;
     private String password = null;
@@ -15,8 +15,17 @@ public class User implements Parcelable{
     private long lastconn = 0;
     private int point = 0;
 
-    public User(){
+    public User() {
+    }
 
+    public User(Parcel parcel) {
+        point = parcel.readInt();
+        createdate = parcel.readLong();
+        lastconn = parcel.readLong();
+        password = parcel.readString();
+        imageurl = parcel.readString();
+        nickname = parcel.readString();
+        email = parcel.readString();
     }
 
     public String getPassword() {
@@ -88,15 +97,6 @@ public class User implements Parcelable{
                 '}';
     }
 
-    public User(Parcel p){
-        email = p.readString();
-        nickname = p.readString();
-        imageurl = p.readString();
-        createdate = p.readLong();
-        lastconn = p.readLong();
-        point = p.readInt();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -104,18 +104,20 @@ public class User implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(email);
-        dest.writeString(nickname);
-        dest.writeString(imageurl);
+        dest.writeInt(point);
         dest.writeLong(createdate);
         dest.writeLong(lastconn);
-        dest.writeInt(point);
+        dest.writeString(email);
+        dest.writeString(nickname);
+        dest.writeString(password);
+        dest.writeString(imageurl);
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static Creator<User> CREATOR = new Creator<User>() {
+
         @Override
         public User createFromParcel(Parcel source) {
-            return new User(source);
+            return new User();
         }
 
         @Override
@@ -123,4 +125,6 @@ public class User implements Parcelable{
             return new User[size];
         }
     };
+
+
 }

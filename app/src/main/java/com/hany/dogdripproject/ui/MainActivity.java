@@ -8,9 +8,10 @@ import android.widget.ImageView;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
-import com.hany.dogdripproject.ui.fragment.HomeFragment;
-import com.hany.dogdripproject.ui.fragment.drip.DripBookFragment;
-import com.hany.dogdripproject.ui.fragment.setting.SettingBookFragment;
+import com.hany.dogdripproject.ui.fragment.drip.DripFagemnt;
+import com.hany.dogdripproject.ui.fragment.setting.FirstPageFragment;
+import com.hany.dogdripproject.ui.fragment.setting.LoginFragment;
+import com.hany.dogdripproject.ui.fragment.setting.SettingFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }else{
             mData.clear();
         }
-        mData.add(HomeFragment.class);
-        mData.add(DripBookFragment.class);
-        mData.add(SettingBookFragment.class);
+        mData.add(FirstPageFragment.class);
+        mData.add(DripFagemnt.class);
+        mData.add(SettingFragment.class);
 
         if(mAdapter == null){
             mAdapter = new FrameFragmentPagerAdapter(getSupportFragmentManager(), mData);
@@ -97,11 +98,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 mArrowLeft.setVisibility(View.GONE);
                 mArrowRight.setVisibility(View.GONE);
             }else if(pos == 0 && count > pos){
-                mArrowLeft.setVisibility(View.VISIBLE);
-                mArrowRight.setVisibility(View.GONE);
-            }else if(pos > 0 && pos == count){
                 mArrowLeft.setVisibility(View.GONE);
                 mArrowRight.setVisibility(View.VISIBLE);
+            }else if(pos > 0 && pos == count){
+                mArrowLeft.setVisibility(View.VISIBLE);
+                mArrowRight.setVisibility(View.GONE);
             }else{
                 mArrowLeft.setVisibility(View.VISIBLE);
                 mArrowRight.setVisibility(View.VISIBLE);
