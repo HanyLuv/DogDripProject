@@ -2,7 +2,6 @@ package com.hany.dogdripproject.ui.fragment.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
-import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
-import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.LoginRequst;
-import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
 import com.hany.dogdripproject.preferences.UserLoginPreferenceManager;
-import com.hany.dogdripproject.ui.BaseActivity;
 import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
-import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 import com.hany.dogdripproject.utils.Log;
-import com.hany.dogdripproject.vo.drip.Drip;
 import com.hany.dogdripproject.vo.user.User;
 
 import java.util.List;
@@ -105,8 +98,7 @@ public class LoginFragment extends BaseHorizontalScrollFragment {
                         MypageFragment mypageFragment = new MypageFragment();
                         mypageFragment.setArguments(bundle);
 
-                        fragmentTransaction.replace(R.id.layout_fragment_first_page, mypageFragment);
-                        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                        fragmentTransaction.replace(getChildFragmentAnchorId(), mypageFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
 
