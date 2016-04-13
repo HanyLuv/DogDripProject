@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="join_fragment_padding">10dp</dimen>
+    <dimen name="join_fragment_padding">50dp</dimen>
     <dimen name="login_fragment_padding">@dimen/join_fragment_padding</dimen>
 
     <dimen name="write_fragment_text_size">14dp</dimen>

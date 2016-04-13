@@ -18,7 +18,9 @@
         android:id="@+id/et_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/tv_password"
+        android:background="@color/ed_txt_bg_color"
         android:inputType="textEmailAddress" />
 
     <TextView
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_password"
         android:layout_below="@+id/et_id"
+        android:layout_marginRight="10dp"
         android:text="@string/login_password" />
 
     <EditText
@@ -34,15 +37,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_id"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/tv_password"
+        android:background="@color/ed_txt_bg_color"
         android:inputType="textPassword" />
 
 
     <Button
         android:id="@+id/bt_login"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_password"
-        android:background="@color/white"
+        android:background="@drawable/btn_bg"
         android:text="@string/login_btn_login" />
+
 </RelativeLayout>

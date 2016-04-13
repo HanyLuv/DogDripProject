@@ -2,10 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:padding="50dp">
+
     <TextView
-        android:text="설정입니다"
+        android:id="@+id/tv_push"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:text="PUSH" />
+
+    <TextView
+        android:id="@+id/tv_push_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_push"
+        android:text="댓글 및 추천 알림 서비스 ON/OFF 설정"
+        android:textSize="10dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_push"
+        android:layout_alignParentRight="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/tv_push_info"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider_color" />
+
 </RelativeLayout>

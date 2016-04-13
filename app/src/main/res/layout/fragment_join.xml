@@ -18,7 +18,9 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/tv_password"
+        android:background="@color/ed_txt_bg_color"
         android:inputType="textEmailAddress" />
 
     <TextView
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/et_password"
         android:layout_below="@+id/tv_email"
+        android:layout_marginRight="10dp"
         android:text="@string/join_password"
         android:textColor="@color/black" />
 
@@ -36,7 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_email"
+        android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/tv_password"
+        android:background="@color/ed_txt_bg_color"
         android:inputType="textPassword" />
 
     <TextView
@@ -53,14 +58,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_password"
-        android:layout_toRightOf="@id/tv_password" />
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/tv_password"
+        android:background="@color/ed_txt_bg_color" />
 
 
     <Button
         android:id="@+id/bt_join"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/btn_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_nickname"
-        android:background="@color/white"
         android:text="@string/join_btn_join" />
 </RelativeLayout>
