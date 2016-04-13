@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DogDripProject</string>
+    <string name="app_name">개드립</string>
     <string name="action_settings">Settings</string>
 
     <string name="ok">확인</string>
