@@ -111,4 +111,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
         return super.getCurrentFragmentManager();
     }
+
+    @Override
+    protected boolean popFragment(FragmentManager fm) {
+        boolean b = false;
+        if(fm != null && fm.getBackStackEntryCount() > 1){
+            b = fm.popBackStackImmediate();
+        }
+        return b;
+    }
 }

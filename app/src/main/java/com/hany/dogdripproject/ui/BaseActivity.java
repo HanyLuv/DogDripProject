@@ -153,10 +153,14 @@ public class BaseActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if(getCurrentFragmentManager().popBackStackImmediate()){
+        if(popFragment(getCurrentFragmentManager())){
             return;
         }
         super.onBackPressed();
+    }
+
+    protected boolean popFragment(FragmentManager fm){
+        return fm.popBackStackImmediate();
     }
 
     protected FragmentManager getCurrentFragmentManager(){
