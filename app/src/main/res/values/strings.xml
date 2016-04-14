@@ -32,4 +32,8 @@
 
     <string name="mypage_user_drip">내가 친 드립 수</string>
     <string name="mypage_user_drip_recommend">추천 받은 수</string>
+
+    <!-- UserInfo -->
+    <string name="invalid_user_email">이메일 형식이 잘 못 되었습니다</string>
+    <string name="invalid_user_password">패스워드 형식이 잘 못 되었습니다</string>
 </resources>

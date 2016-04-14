@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
 import com.hany.dogdripproject.vo.user.User;
@@ -42,7 +43,7 @@ public class MypageFragment extends BaseHorizontalScrollFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        User user = (User) getArguments().get("user_login_info");
+        User user = UserInfoManager.getInstance().getUserInfo();
         initView(user);
     }
 

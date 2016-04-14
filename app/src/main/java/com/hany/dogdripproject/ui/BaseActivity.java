@@ -14,8 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.hany.dogdripproject.Constants;
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.user.User;
 
@@ -33,7 +33,7 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IntentFilter filter = new IntentFilter(Constants.ACTION_USER_INFO_CHANGED);
+        IntentFilter filter = new IntentFilter(UserInfoManager.ACTION_USER_INFO_STATE_CHANGED);
         registerReceiver(broadcastReceiver, filter);
     }
 
@@ -142,7 +142,7 @@ public class BaseActivity extends FragmentActivity {
             if(intent != null){
                 String action = intent.getAction();
                 if(action != null){
-                    if(action.equals(Constants.ACTION_USER_INFO_CHANGED)){
+                    if(action.equals(UserInfoManager.ACTION_USER_INFO_STATE_CHANGED)){
                         User user = intent.getParcelableExtra(User.class.getName());
                         onUserInfoChanged(user);
                     }

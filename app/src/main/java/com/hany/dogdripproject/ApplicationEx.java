@@ -3,6 +3,7 @@ package com.hany.dogdripproject;
 import android.app.Application;
 
 import com.hany.dogdripproject.image.ImageLoadManager;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.net.NetworkManager;
 
 /**
@@ -16,5 +17,6 @@ public class ApplicationEx extends Application {
         super.onCreate();
         NetworkManager.init(this);
         ImageLoadManager.init(NetworkManager.getInstance().getRequestQueue());
+        UserInfoManager.init(this);
     }
 }

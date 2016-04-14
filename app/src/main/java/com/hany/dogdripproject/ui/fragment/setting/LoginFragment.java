@@ -3,6 +3,7 @@ package com.hany.dogdripproject.ui.fragment.setting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 
 import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.request.LoginRequst;
 import com.hany.dogdripproject.preferences.UserLoginPreferenceManager;
@@ -82,46 +84,26 @@ public class LoginFragment extends BaseHorizontalScrollFragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = etEmail.getText().toString();
+                String password = etPassword.getText().toString();
 
-                LoginRequst loginRequst = new LoginRequst(getActivity(), new BaseApiResponse.OnResponseListener<User>() {
+                UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
                     @Override
-                    public void onResponse(BaseApiResponse<User> response) {
-                        if (!isRequestSuccessfully(response)) {
-                            return;
-                        }
-                        showToast(response.getData().getNickname() + getResources().getString(R.string.login_welcome));
-
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("user_login_info", response.getData());
+                    public void onLoginCompleted(User user) {
+                        showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
                         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-
                         MypageFragment mypageFragment = new MypageFragment();
-                        mypageFragment.setArguments(bundle);
-
                         fragmentTransaction.replace(getChildFragmentAnchorId(), mypageFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
-
-//                        UserLoginPreferenceManager userLoginPreferenceManager = new UserLoginPreferenceManager(getActivity());
-//                        userLoginPreferenceManager.saveLoginId(response.getData().getEmail());
-//                        userLoginPreferenceManager.savePassword(response.getData().getPassword());
-//                        userLoginPreferenceManager.saveNickName(response.getData().getNickname());
                     }
 
                     @Override
-                    public void onError(VolleyError error) {
-                        showToast(error.getMessage());
+                    public void onLoginFailed(String errorMessage) {
+                        showToast(errorMessage);
                     }
                 });
-
-                String strEmail = etEmail.getText().toString();
-                String strPassword = etPassword.getText().toString();
-                loginRequst.setUserInfo(strEmail.trim(), strPassword);
-
-                request(loginRequst);
-
             }
-
         });
     }
 }
