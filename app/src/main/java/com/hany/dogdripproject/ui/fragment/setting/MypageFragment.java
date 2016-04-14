@@ -11,16 +11,13 @@ import android.widget.TextView;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.manager.UserInfoManager;
-import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
-import com.hany.dogdripproject.ui.fragment.BaseHorizontalScrollFragment;
+import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.vo.user.User;
-
-import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-04-07.
  */
-public class MypageFragment extends BaseHorizontalScrollFragment {
+public class MypageFragment extends BaseFragment {
 
     private TextView mTvUserName;
     private TextView mTvUserLevel;
@@ -36,7 +33,7 @@ public class MypageFragment extends BaseHorizontalScrollFragment {
         mTvUserRecommendCount = (TextView) view.findViewById(R.id.tv_user_drip_recommend_count);
         mTvUserDripCount = (TextView) view.findViewById(R.id.tv_user_drip_count);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS,InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, InputMethodManager.HIDE_NOT_ALWAYS);
         return view;
     }
 
@@ -56,8 +53,4 @@ public class MypageFragment extends BaseHorizontalScrollFragment {
     }
 
 
-    @Override
-    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List pageDatas) {
-        return null;
-    }
 }

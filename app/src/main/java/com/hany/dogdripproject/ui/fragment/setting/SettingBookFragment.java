@@ -28,7 +28,7 @@ public class SettingBookFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting_book, null);
+        View view = inflater.inflate(R.layout.fragment_setting_book, container, false);
         mSettingButton = (Button) view.findViewById(R.id.btn_setting_book_setting);
         mSettingButton.setOnClickListener(new View.OnClickListener() {
             @Override
