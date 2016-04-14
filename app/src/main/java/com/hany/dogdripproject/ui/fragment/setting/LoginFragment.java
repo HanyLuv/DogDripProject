@@ -55,10 +55,14 @@ public class LoginFragment extends BaseFragment {
                     public void onLoginCompleted(User user) {
                         showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        MypageFragment mypageFragment = new MypageFragment();
-                        fragmentTransaction.replace(R.id.layout_setting_book_root, mypageFragment);
-                        fragmentTransaction.commit();
+                        for (Fragment f : fragmentManager.getFragments()) {
+                            if (f instanceof SettingBookFragment) {
+                                MypageFragment mypageFragment = new MypageFragment();
+                                FragmentManager childFragmentManager = f.getChildFragmentManager();
+                                childFragmentManager.beginTransaction().replace(((SettingBookFragment) f).getChildFragmentAnchorId(), mypageFragment).commit();
+                            }
+                        }
+
                     }
 
                     @Override
