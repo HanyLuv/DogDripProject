@@ -9,7 +9,7 @@
 
     <!-- 사용자 사진, 레벨, 이름 -->
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/iv_user_photo"
         android:layout_width="@dimen/my_page_base_height"
         android:layout_height="50dp"

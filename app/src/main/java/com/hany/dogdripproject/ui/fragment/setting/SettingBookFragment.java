@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
 import com.hany.dogdripproject.preferences.UserLoginPreferenceManager;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
+import com.hany.dogdripproject.vo.user.User;
 
 
 /**
@@ -49,7 +51,7 @@ public class SettingBookFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(TextUtils.isEmpty(mUserPref.loadLoginId())){
+        if(UserInfoManager.getInstance().getUserInfo() == null){
             addChildFragment(LoginFragment.class, null);
         }else{
             addChildFragment(MypageFragment.class, null);
@@ -61,4 +63,14 @@ public class SettingBookFragment extends BaseFragment {
         return R.id.layout_setting_book_root;
     }
 
+    @Override
+    public void onUserInfoChanged(User user) {
+        super.onUserInfoChanged(user);
+        while(getChildFragmentManager().popBackStackImmediate());
+        if(user != null){
+            addChildFragment(MypageFragment.class, null);
+        }else{
+            addChildFragment(LoginFragment.class, null);
+        }
+    }
 }
