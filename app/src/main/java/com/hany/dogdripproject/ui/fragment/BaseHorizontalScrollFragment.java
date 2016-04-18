@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.ui.adapter.BaseFragmentPagerAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 abstract public class BaseHorizontalScrollFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
+    private RelativeLayout mViewContainer = null;
     private ViewPager mViewPager = null;
     private BaseFragmentPagerAdapter mPagerAdapter = null;
 
@@ -28,9 +30,14 @@ abstract public class BaseHorizontalScrollFragment extends BaseFragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_base_horizontal, container, false);
+        mViewContainer = (RelativeLayout) view.findViewById(R.id.layout_base_horizontal_container);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_base_horizontal);
         mViewPager.addOnPageChangeListener(this);
+        onCreateChildView(inflater, mViewContainer);
         return view;
+    }
+
+    protected void onCreateChildView(LayoutInflater inflater, RelativeLayout parent){
     }
 
 
