@@ -22,6 +22,7 @@
     <string name="login_btn_login">LOGIN</string>
     <string name="login_btn_facebook_login">FACEBOOK LOGIN</string>
     <string name="login_welcome"> 님 로그인!</string>
+    <string name="logout">로그아웃</string>
 
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
     <string name="write_btn_write">글쓰기</string>

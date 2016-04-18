@@ -86,4 +86,13 @@
         android:gravity="right|center_vertical"
         android:text="0" />
 
+    <Button
+        android:id="@+id/btn_user_drip_logout"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_user_drip_recommend_count"
+        android:background="@drawable/btn_bg"
+        android:text="@string/logout" />
+
 </RelativeLayout>

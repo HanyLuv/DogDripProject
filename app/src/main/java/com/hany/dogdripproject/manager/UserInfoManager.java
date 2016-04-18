@@ -58,6 +58,14 @@ public class UserInfoManager {
         mPref = new UserInfoPreferenceManager(mContext);
     }
 
+    public void logout(){
+        mMe = null;
+        saveUserInfo(null);
+        Intent intent = new Intent(ACTION_USER_INFO_STATE_CHANGED);
+        intent.putExtra(User.class.getName(), mMe);
+        mContext.sendBroadcast(intent);
+    }
+
     public void autoLogin(final OnUserLoginListener ll){
         String email = mPref.loadLoginId();
         long lastConn = mPref.loadLastConnection();
@@ -170,6 +178,7 @@ public class UserInfoManager {
     private void facebookLogin(){
 
     }
+
     private void saveUserInfo(User user){
         if(user != null){
             mPref.saveLoginId(user.getEmail());

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -26,6 +27,7 @@ public class MypageFragment extends BaseFragment {
     private TextView mTvUserLevel;
     private TextView mTvUserRecommendCount;
     private TextView mTvUserDripCount;
+    private Button mLogoutButton = null;
 
     @Nullable
     @Override
@@ -36,6 +38,13 @@ public class MypageFragment extends BaseFragment {
         mTvUserLevel = (TextView) view.findViewById(R.id.tv_user_level);
         mTvUserRecommendCount = (TextView) view.findViewById(R.id.tv_user_drip_recommend_count);
         mTvUserDripCount = (TextView) view.findViewById(R.id.tv_user_drip_count);
+        mLogoutButton = (Button) view.findViewById(R.id.btn_user_drip_logout);
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoManager.getInstance().logout();
+            }
+        });
         return view;
     }
 
