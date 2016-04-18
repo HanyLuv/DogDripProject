@@ -167,6 +167,9 @@ public class UserInfoManager {
         }
     }
 
+    private void facebookLogin(){
+
+    }
     private void saveUserInfo(User user){
         if(user != null){
             mPref.saveLoginId(user.getEmail());
