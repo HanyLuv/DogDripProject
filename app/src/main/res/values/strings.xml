@@ -19,6 +19,7 @@
     <string name="login_password">Password</string>
     <string name="login_device">Device</string>
     <string name="login_btn_login">LOGIN</string>
+    <string name="login_btn_facebook_login">FACEBOOK LOGIN</string>
     <string name="login_welcome"> 님 로그인!</string>
 
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
@@ -36,4 +37,8 @@
     <!-- UserInfo -->
     <string name="invalid_user_email">이메일 형식이 잘 못 되었습니다</string>
     <string name="invalid_user_password">패스워드 형식이 잘 못 되었습니다</string>
+
+
+    <!--face book-->
+    <string name="facebook_app_id">1074552379254338</string>
 </resources>
