@@ -5,14 +5,16 @@ import android.content.Context;
 /**
  * Created by HanyLuv on 2016-04-05.
  */
-public class UserLoginPreferenceManager {
-    private static final String PREF_NAME = "login";
+public class UserInfoPreferenceManager {
+    private static final String PREF_NAME = "user_info";
     private static final String KEY_LOGIN_ID = "id";
     private static final String KEY_NICK_NAME = "nickname";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_LAST_CONNECTION = "last_conn";
+
     private SharedPreferenceHelper mHelper;
 
-    public UserLoginPreferenceManager(Context context) {
+    public UserInfoPreferenceManager(Context context) {
         mHelper = new SharedPreferenceHelper(context, PREF_NAME);
     }
 
@@ -32,16 +34,13 @@ public class UserLoginPreferenceManager {
         mHelper.putData(KEY_NICK_NAME, nickname);
     }
 
-//    /**
-//     * 비밀번호 저장.
-//     */
-//    public void savePassword(String password) {
-//        mHelper.putData(KEY_PASSWORD, password);
-//    }
-//
-//    public String loadPassword() {
-//        return mHelper.getData(KEY_PASSWORD, "");
-//    }
+    public void saveLastConnection(long time){
+        mHelper.putData(KEY_LAST_CONNECTION, time);
+    }
+
+    public long loadLastConnection(){
+        return mHelper.getData(KEY_LAST_CONNECTION, 0L);
+    }
 
     public String loadNickName() {
         return mHelper.getData(KEY_NICK_NAME, "");

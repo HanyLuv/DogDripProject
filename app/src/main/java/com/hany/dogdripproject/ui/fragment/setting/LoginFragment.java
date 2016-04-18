@@ -5,11 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.manager.UserInfoManager;
@@ -43,33 +46,48 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void init() {
+        etEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    etPassword.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    doLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = etEmail.getText().toString();
-                String password = etPassword.getText().toString();
+                doLogin();
+            }
+        });
+    }
 
-                UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
-                    @Override
-                    public void onLoginCompleted(User user) {
-                        showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        for (Fragment f : fragmentManager.getFragments()) {
-                            if (f instanceof SettingBookFragment) {
-                                MypageFragment mypageFragment = new MypageFragment();
-                                FragmentManager childFragmentManager = f.getChildFragmentManager();
-                                childFragmentManager.beginTransaction().replace(((SettingBookFragment) f).getChildFragmentAnchorId(), mypageFragment).commit();
-                            }
-                        }
+    private void doLogin(){
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
+            @Override
+            public void onLoginCompleted(User user) {
+                showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
+            }
 
-                    }
-
-                    @Override
-                    public void onLoginFailed(String errorMessage) {
-                        showToast(errorMessage);
-                    }
-                });
+            @Override
+            public void onLoginFailed(String errorMessage) {
+                showToast(errorMessage);
             }
         });
     }

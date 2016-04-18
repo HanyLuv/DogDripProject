@@ -2,16 +2,16 @@ package com.hany.dogdripproject.ui.fragment.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
-import com.hany.dogdripproject.preferences.UserLoginPreferenceManager;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
+import com.hany.dogdripproject.vo.user.User;
 
 
 /**
@@ -20,7 +20,6 @@ import com.hany.dogdripproject.ui.fragment.BaseFragment;
 public class SettingBookFragment extends BaseFragment {
 
     private ConfigPreferenceManager mConfigPref = null;
-    private UserLoginPreferenceManager mUserPref = null;
 
     private Button mSettingButton = null;
 
@@ -43,13 +42,12 @@ public class SettingBookFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mConfigPref = new ConfigPreferenceManager(getActivity());
-        mUserPref = new UserLoginPreferenceManager(getActivity());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(TextUtils.isEmpty(mUserPref.loadLoginId())){
+        if(UserInfoManager.getInstance().getUserInfo() == null){
             addChildFragment(LoginFragment.class, null);
         }else{
             addChildFragment(MypageFragment.class, null);
@@ -61,4 +59,14 @@ public class SettingBookFragment extends BaseFragment {
         return R.id.layout_setting_book_root;
     }
 
+    @Override
+    public void onUserInfoChanged(User user) {
+        super.onUserInfoChanged(user);
+        while(getChildFragmentManager().popBackStackImmediate());
+        if(user != null){
+            addChildFragment(MypageFragment.class, null);
+        }else{
+            addChildFragment(LoginFragment.class, null);
+        }
+    }
 }

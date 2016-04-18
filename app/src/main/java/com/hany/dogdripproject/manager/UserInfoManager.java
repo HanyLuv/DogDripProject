@@ -2,12 +2,14 @@ package com.hany.dogdripproject.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.LoginRequst;
+import com.hany.dogdripproject.preferences.UserInfoPreferenceManager;
 import com.hany.dogdripproject.vo.user.User;
 
 import java.util.regex.Matcher;
@@ -34,8 +36,8 @@ public class UserInfoManager {
      * Application Context
      */
     private Context mContext = null;
-
     private User mMe = null;
+    private UserInfoPreferenceManager mPref = null;
 
 
     private static UserInfoManager sInstance = null;
@@ -53,6 +55,59 @@ public class UserInfoManager {
 
     private UserInfoManager(Context context){
         mContext = context;
+        mPref = new UserInfoPreferenceManager(mContext);
+    }
+
+    public void autoLogin(final OnUserLoginListener ll){
+        String email = mPref.loadLoginId();
+        long lastConn = mPref.loadLastConnection();
+
+        if(!TextUtils.isEmpty(email) && lastConn > 0){
+            if(mMe == null){
+                LoginRequst loginRequst = new LoginRequst(mContext, new BaseApiResponse.OnResponseListener<User>() {
+                    @Override
+                    public void onResponse(BaseApiResponse<User> response) {
+                        if(response != null){
+                            if(response.getErrorCode() == 0 && response.getData() != null){
+                                mMe = response.getData();
+                                saveUserInfo(mMe);
+                                if(ll != null){
+                                    ll.onLoginCompleted(mMe);
+                                    Intent intent = new Intent(ACTION_USER_INFO_STATE_CHANGED);
+                                    intent.putExtra(User.class.getName(), mMe);
+                                    mContext.sendBroadcast(intent);
+                                }
+                            }else {
+                                mMe = null;
+                                ll.onLoginFailed(response.getMessage());
+                                saveUserInfo(null);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        if(ll != null){
+                            ll.onLoginFailed(error.toString());
+                        }
+                    }
+                });
+
+                loginRequst.setUserInfoForAutoLogin(email, lastConn);
+                NetworkManager.getInstance().request(loginRequst);
+            }else{
+                if(ll != null){
+                    ll.onLoginCompleted(mMe);
+                    Intent intent = new Intent(ACTION_USER_INFO_STATE_CHANGED);
+                    intent.putExtra(User.class.getName(), mMe);
+                    mContext.sendBroadcast(intent);
+                }
+            }
+        }else{
+            if(ll != null){
+                ll.onLoginFailed("User infomation is empty");
+            }
+        }
     }
 
     public void login(String email, String password, final OnUserLoginListener ll){
@@ -77,6 +132,7 @@ public class UserInfoManager {
                     if(response != null){
                         if(response.getErrorCode() == 0 && response.getData() != null){
                             mMe = response.getData();
+                            saveUserInfo(mMe);
                             if(ll != null){
                                 ll.onLoginCompleted(mMe);
                                 Intent intent = new Intent(ACTION_USER_INFO_STATE_CHANGED);
@@ -84,6 +140,8 @@ public class UserInfoManager {
                                 mContext.sendBroadcast(intent);
                             }
                         }else {
+                            mMe = null;
+                            saveUserInfo(null);
                             ll.onLoginFailed(response.getMessage());
                         }
                     }
@@ -102,7 +160,22 @@ public class UserInfoManager {
         }else{
             if(ll != null){
                 ll.onLoginCompleted(mMe);
+                Intent intent = new Intent(ACTION_USER_INFO_STATE_CHANGED);
+                intent.putExtra(User.class.getName(), mMe);
+                mContext.sendBroadcast(intent);
             }
+        }
+    }
+
+    private void saveUserInfo(User user){
+        if(user != null){
+            mPref.saveLoginId(user.getEmail());
+            mPref.saveLastConnection(user.getLastconn());
+            mPref.saveNickName(user.getNickname());
+        }else{
+            mPref.saveLoginId(null);
+            mPref.saveLastConnection(0);
+            mPref.saveNickName(null);
         }
     }
 

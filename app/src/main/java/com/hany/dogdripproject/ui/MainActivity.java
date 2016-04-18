@@ -1,6 +1,7 @@
 package com.hany.dogdripproject.ui;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.hany.dogdripproject.ui.adapter.fragment.FrameFragmentPagerAdapter;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
 import com.hany.dogdripproject.ui.fragment.drip.DripBookFragment;
 import com.hany.dogdripproject.ui.fragment.setting.SettingBookFragment;
+import com.hany.dogdripproject.vo.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,5 +121,18 @@ public class MainActivity extends FaceBookActivity implements ViewPager.OnPageCh
             b = fm.popBackStackImmediate();
         }
         return b;
+    }
+
+    @Override
+    protected void onUserInfoChanged(User user) {
+        super.onUserInfoChanged(user);
+        if(super.getCurrentFragmentManager() != null
+                && super.getCurrentFragmentManager().getFragments() != null){
+            for(Fragment f  : super.getCurrentFragmentManager().getFragments()){
+                if(f instanceof BaseFragment){
+                    ((BaseFragment) f).onUserInfoChanged(user);
+                }
+            }
+        }
     }
 }

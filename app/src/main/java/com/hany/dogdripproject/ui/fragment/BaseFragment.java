@@ -9,6 +9,7 @@ import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiRequest;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
+import com.hany.dogdripproject.vo.user.User;
 
 import java.util.Objects;
 
@@ -93,4 +94,7 @@ public class BaseFragment extends Fragment {
         return getView().getId();
     }
 
+    public void onUserInfoChanged(User user){
+
+    }
 }
