@@ -5,16 +5,19 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.hany.dogdripproject.R;
+import com.hany.dogdripproject.manager.UserInfoManager;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
 import com.hany.dogdripproject.net.request.ConfigReqeust;
 import com.hany.dogdripproject.net.request.GcmRegisterRequest;
 import com.hany.dogdripproject.preferences.ConfigPreferenceManager;
 import com.hany.dogdripproject.vo.config.AppConfig;
+import com.hany.dogdripproject.vo.user.User;
 
 import java.io.IOException;
 
@@ -137,7 +140,21 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void doStartNextStep(){
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        mTvLoading.setText(R.string.config_data_auto_login);
+        UserInfoManager.getInstance().autoLogin(new UserInfoManager.OnUserLoginListener() {
+            @Override
+            public void onLoginCompleted(User user) {
+                Toast.makeText(SplashActivity.this,
+                        user.getNickname() + getResources().getString(R.string.login_welcome),
+                        Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
+
+            @Override
+            public void onLoginFailed(String errorMessage) {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
+        });
     }
 
 }
