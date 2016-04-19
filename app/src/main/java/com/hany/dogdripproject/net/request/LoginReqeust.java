@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 /**
  * Created by HanyLuv on 2016-03-22.
  */
-public class LoginRequst extends BasicRequest<User> {
+public class LoginReqeust extends BasicRequest<User> {
     private static final String API = Constants.API_SERVER_HOST + "/user/login";
 
     public static final String KEY_EMAIL = "email";
@@ -26,7 +26,7 @@ public class LoginRequst extends BasicRequest<User> {
 
     private ConfigPreferenceManager mPref = null;
 
-    public LoginRequst(Context context, BaseApiResponse.OnResponseListener<User> responseListener) {
+    public LoginReqeust(Context context, BaseApiResponse.OnResponseListener<User> responseListener) {
         super(context, API, responseListener);
         mPref = new ConfigPreferenceManager(context);
     }

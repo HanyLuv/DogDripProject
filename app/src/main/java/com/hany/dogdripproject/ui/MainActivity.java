@@ -19,7 +19,7 @@ import java.util.List;
 
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 
-public class MainActivity extends FaceBookActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends FaceBookLoginActivity implements ViewPager.OnPageChangeListener{
 
     private VerticalViewPager mViewPager;
     private FrameFragmentPagerAdapter mAdapter = null;

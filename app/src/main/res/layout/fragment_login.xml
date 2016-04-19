@@ -51,7 +51,7 @@
         android:text="@string/login_btn_login" />
 
     <Button
-        android:id="@+id/bt_join_login"
+        android:id="@+id/bt_join"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
@@ -64,7 +64,7 @@
         android:id="@+id/tv_login_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bt_join_login"
+        android:layout_below="@id/bt_join"
         android:layout_marginBottom="@dimen/login_fragment_margin_bottom_5dp"
         android:gravity="center"
         android:text="LOGIN WITH SNS"

@@ -1,17 +1,32 @@
 package com.hany.dogdripproject.manager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
-import com.hany.dogdripproject.net.request.LoginRequst;
+import com.hany.dogdripproject.net.request.LoginReqeust;
 import com.hany.dogdripproject.preferences.UserInfoPreferenceManager;
+import com.hany.dogdripproject.utils.Log;
 import com.hany.dogdripproject.vo.user.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +56,8 @@ public class UserInfoManager {
 
 
     private static UserInfoManager sInstance = null;
+
+    private AccessToken mAccessToken;
 
     public static void init(Context context){
         sInstance = new UserInfoManager(context);
@@ -72,7 +89,7 @@ public class UserInfoManager {
 
         if(!TextUtils.isEmpty(email) && lastConn > 0){
             if(mMe == null){
-                LoginRequst loginRequst = new LoginRequst(mContext, new BaseApiResponse.OnResponseListener<User>() {
+                LoginReqeust loginRequst = new LoginReqeust(mContext, new BaseApiResponse.OnResponseListener<User>() {
                     @Override
                     public void onResponse(BaseApiResponse<User> response) {
                         if(response != null){
@@ -134,7 +151,7 @@ public class UserInfoManager {
         }
 
         if(mMe == null){
-            LoginRequst loginRequst = new LoginRequst(mContext, new BaseApiResponse.OnResponseListener<User>() {
+            LoginReqeust loginRequst = new LoginReqeust(mContext, new BaseApiResponse.OnResponseListener<User>() {
                 @Override
                 public void onResponse(BaseApiResponse<User> response) {
                     if(response != null){
@@ -175,10 +192,6 @@ public class UserInfoManager {
         }
     }
 
-    private void facebookLogin(){
-
-    }
-
     private void saveUserInfo(User user){
         if(user != null){
             mPref.saveLoginId(user.getEmail());
@@ -215,6 +228,68 @@ public class UserInfoManager {
         return err;
     }
 
+    public void facebookLoginInit(CallbackManager callbackManager,final OnFacebookCallbackListener listner) {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                if(listner!=null){
+                    listner.onSuccess(loginResult);
+                }
+                mAccessToken = loginResult.getAccessToken();
+                AccessToken.setCurrentAccessToken(mAccessToken);
+
+                GraphRequest request = GraphRequest.newMeRequest(mAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject userInfo, GraphResponse response) {
+                        try {
+                            String name = userInfo.getString("name");
+                            String id = userInfo.getString("id");
+
+                            Log.d(getClass().getSimpleName().toString()," FACEBOOK RESULT : NAME : "+name+" || ID : "+id);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+                if(listner!=null){
+                    listner.onCancel();
+                }
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                if(listner!=null){
+                    listner.onError(error);
+                }
+            }
+        });
+    }
+
+    public void facebookLogin(Activity activity) {
+        requestFacebookPermissions(activity);
+    }
+
+
+    public interface OnFacebookCallbackListener {
+        void onSuccess(LoginResult loginResult);
+        void onCancel();
+        void onError(FacebookException error);
+    }
+
+    public void requestFacebookPermissions(Activity activity){
+        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile"));
+    }
 }
 
 

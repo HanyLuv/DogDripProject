@@ -11,24 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.manager.UserInfoManager;
-import com.hany.dogdripproject.ui.FaceBookActivity;
+import com.hany.dogdripproject.ui.FaceBookLoginActivity;
 import com.hany.dogdripproject.ui.fragment.BaseFragment;
+import com.hany.dogdripproject.utils.Log;
 import com.hany.dogdripproject.vo.user.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
 
 /**
  * Created by HanyLuv on 2016-03-18.
@@ -39,7 +29,8 @@ public class LoginFragment extends BaseFragment {
     private EditText etPassword;
     private Button btnLogin;
     private Button btnFaceBookLogin;
-    private CallbackManager callbackManager;
+    private Button btnJoinus;
+
 
     @Nullable
     @Override
@@ -50,14 +41,13 @@ public class LoginFragment extends BaseFragment {
         etPassword = (EditText) view.findViewById(R.id.et_password);
         btnLogin = (Button) view.findViewById(R.id.bt_login);
         btnFaceBookLogin = (Button) view.findViewById(R.id.bt_facebook_login);
+        btnJoinus = (Button) view.findViewById(R.id.bt_join);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        callbackManager = ((FaceBookActivity) getActivity()).getCallbackManager();
-        LoginManager.getInstance().registerCallback(callbackManager, facebookCallback);
         init();
     }
 
@@ -97,6 +87,13 @@ public class LoginFragment extends BaseFragment {
                 doFaceBookLogin();
             }
         });
+
+        btnJoinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void doLogin(){
@@ -116,43 +113,28 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doFaceBookLogin() {
-        LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
-    }
-
-    private void requestFaceBookUserInfo(AccessToken accessToken){
-        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject userInfo, GraphResponse response) {
-                try {
-                    String email = userInfo.getString("email");
-                    String id = userInfo.getString("id");
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        if (getActivity() instanceof FaceBookLoginActivity) {
+            FaceBookLoginActivity faceBookLoginActivity = (FaceBookLoginActivity) getActivity();
+            UserInfoManager.getInstance().facebookLoginInit(faceBookLoginActivity.getCallbackManager(), new UserInfoManager.OnFacebookCallbackListener() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
                 }
-            }
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,picture,email");
-        request.setParameters(parameters);
-        request.executeAsync();
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+                    showToast(error.getMessage());
+                    Log.e(getClass().getSimpleName().toString(), error.getMessage());
+                }
+            });
+
+            UserInfoManager.getInstance().facebookLogin(getActivity());
+
+        }
     }
 
-    private  FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            AccessToken.setCurrentAccessToken(accessToken);
-            requestFaceBookUserInfo(accessToken);
-        }
-
-        @Override
-        public void onCancel() {
-
-        }
-
-        @Override
-        public void onError(FacebookException error) {
-            showToast(error.getMessage());
-        }
-    };
 }
