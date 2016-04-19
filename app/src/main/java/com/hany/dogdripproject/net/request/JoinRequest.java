@@ -16,20 +16,30 @@ import java.lang.reflect.Type;
 public class JoinRequest extends BasicRequest<User> {
 
     private static final String API = Constants.API_SERVER_HOST + "/user/register";
-    public static final String PARAM_EMAIL = "email";
-    public static final String PARAM_PASSWORD = "password";
-    public static final String PARAM_NICKNAME = "nickname";
+
+    public static final String KEY_NICKNAME = "nickname";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_EXTERNAL = "external";
+
     public JoinRequest(Context context, BaseApiResponse.OnResponseListener<User> responseListener) {
         super(context, API, responseListener);
     }
 
 
-    public void setUserInfo(String email, String password, String nickname) {
+    public void setUserInfo(String email, String password, String nickname, boolean external) {
         if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(nickname)) {
-            getParams().put(PARAM_EMAIL, email);
-            getParams().put(PARAM_PASSWORD, password);
-            getParams().put(PARAM_NICKNAME, nickname);
+            getParams().put(KEY_EMAIL, email);
+            getParams().put(KEY_PASSWORD, password);
+            getParams().put(KEY_NICKNAME, nickname);
+            if(external){
+                getParams().put(KEY_EXTERNAL, "true");
+            }
         }
+    }
+
+    public void setUserInfo(String email, String password, String nickname) {
+        setUserInfo(email, password, nickname, false);
     }
 
     @Override
