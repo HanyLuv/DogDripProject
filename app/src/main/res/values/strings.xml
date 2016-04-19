@@ -14,13 +14,15 @@
     <string name="join_nickname">닉네임</string>
     <string name="join_device">디바이스정보</string>
     <string name="join_btn_join">JOIN</string>
+    <string name="join_btn_join_us">JOIN US</string>
     <string name="join_welcome"> 님 환영합니다!</string>
 
     <string name="login_email">Email</string>
     <string name="login_password">Password</string>
     <string name="login_device">Device</string>
     <string name="login_btn_login">LOGIN</string>
-    <string name="login_btn_facebook_login">FACEBOOK LOGIN</string>
+    <string name="login_btn_facebook_login">FACEBOOK</string>
+    <string name="login_btn_kakaotalk_login">KAKAO</string>
     <string name="login_welcome"> 님 로그인!</string>
     <string name="logout">로그아웃</string>
 

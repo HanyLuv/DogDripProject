@@ -8,61 +8,98 @@
     android:gravity="center"
     android:padding="@dimen/login_fragment_padding">
 
-    <TextView
-        android:id="@+id/tv_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/et_id"
-        android:text="@string/login_email" />
 
     <EditText
         android:id="@+id/et_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_height="@dimen/login_edit_txt_height"
+        android:layout_marginBottom="@dimen/login_fragment_margin_bottom_10dp"
         android:layout_toRightOf="@+id/tv_password"
         android:background="@color/ed_txt_bg_color"
+        android:hint="@string/login_email"
         android:imeOptions="actionNext"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:paddingLeft="@dimen/login_fragment_padding_left_5dp"
+        android:textColorHint="@color/ed_hint_txt_color"
+        android:textSize="@dimen/login_fragment_edit_txt_size" />
 
-    <TextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/et_password"
-        android:layout_below="@+id/et_id"
-        android:layout_marginRight="10dp"
-        android:text="@string/login_password" />
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/login_edit_txt_height"
         android:layout_below="@+id/et_id"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/login_fragment_margin_bottom_10dp"
         android:layout_toRightOf="@+id/tv_password"
         android:background="@color/ed_txt_bg_color"
+        android:hint="@string/login_password"
         android:imeOptions="actionDone"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:paddingLeft="@dimen/login_fragment_padding_left_5dp"
+        android:textColorHint="@color/ed_hint_txt_color"
+        android:textSize="@dimen/login_fragment_edit_txt_size" />
 
 
     <Button
         android:id="@+id/bt_login"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:layout_below="@+id/et_password"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/login_fragment_margin_bottom_10dp"
         android:background="@drawable/btn_bg"
         android:text="@string/login_btn_login" />
 
     <Button
-        android:id="@+id/bt_facebook_login"
+        android:id="@+id/bt_join_login"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:layout_below="@+id/bt_login"
+        android:layout_marginBottom="@dimen/login_fragment_margin_bottom_20dp"
         android:background="@drawable/btn_bg"
-        android:text="@string/login_btn_facebook_login" />
+        android:text="@string/join_btn_join_us" />
 
+    <TextView
+        android:id="@+id/tv_login_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bt_join_login"
+        android:layout_marginBottom="@dimen/login_fragment_margin_bottom_5dp"
+        android:gravity="center"
+        android:text="LOGIN WITH SNS"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/login_fragment_edit_txt_size" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_login_btns"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_below="@id/tv_login_info"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_facebook_login"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/bt_login"
+            android:layout_marginRight="@dimen/login_fragment_margin_right_10dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:text="@string/login_btn_facebook_login"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/bt_kakao_login"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:text="@string/login_btn_kakaotalk_login"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
 </RelativeLayout>
