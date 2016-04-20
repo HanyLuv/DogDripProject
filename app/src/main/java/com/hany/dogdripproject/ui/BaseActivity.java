@@ -120,10 +120,6 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    /**
-     * 확인,취소만 존재하는 가장 기본적인 Alert Dialog 를 만들어 리턴.
-     * 음.. 이친구 선언 위치 고민중.
-     * **/
     public AlertDialog createAlertDialog(String msg,DialogInterface.OnClickListener okListener,DialogInterface.OnClickListener cancelListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(msg);

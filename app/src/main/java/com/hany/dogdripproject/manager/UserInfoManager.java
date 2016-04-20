@@ -18,6 +18,7 @@ import com.facebook.login.LoginResult;
 import com.hany.dogdripproject.R;
 import com.hany.dogdripproject.net.BaseApiResponse;
 import com.hany.dogdripproject.net.NetworkManager;
+import com.hany.dogdripproject.net.request.JoinRequest;
 import com.hany.dogdripproject.net.request.LoginReqeust;
 import com.hany.dogdripproject.preferences.UserInfoPreferenceManager;
 import com.hany.dogdripproject.utils.Log;
@@ -228,12 +229,15 @@ public class UserInfoManager {
         return err;
     }
 
-    public void facebookLoginInit(CallbackManager callbackManager,final OnFacebookCallbackListener listner) {
+    public void facebookLoginInit(CallbackManager callbackManager,
+                                  final OnFacebookCallbackListener facebookCallbackListener,
+                                  final OnGraphRequestListener graphRequestListener,
+                                  final OnJoinRequestListener joinRequestListener) {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                if(listner!=null){
-                    listner.onSuccess(loginResult);
+                if(facebookCallbackListener!=null){
+                    facebookCallbackListener.onSuccess(loginResult);
                 }
                 mAccessToken = loginResult.getAccessToken();
                 AccessToken.setCurrentAccessToken(mAccessToken);
@@ -241,9 +245,18 @@ public class UserInfoManager {
                 GraphRequest request = GraphRequest.newMeRequest(mAccessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject userInfo, GraphResponse response) {
+                        if (graphRequestListener !=null){
+                            graphRequestListener.onCompleted(userInfo,response);
+                        }
                         try {
+
                             String name = userInfo.getString("name");
                             String id = userInfo.getString("id");
+                            User user = new User();
+                            user.setEmail(id);
+                            user.setPassword(id);
+                            user.setNickname(name);
+                            requestJoin(user,joinRequestListener);
 
                             Log.d(getClass().getSimpleName().toString()," FACEBOOK RESULT : NAME : "+name+" || ID : "+id);
 
@@ -262,20 +275,49 @@ public class UserInfoManager {
 
             @Override
             public void onCancel() {
-                if(listner!=null){
-                    listner.onCancel();
+                if(facebookCallbackListener!=null){
+                    facebookCallbackListener.onCancel();
                 }
             }
 
             @Override
             public void onError(FacebookException error) {
-                if(listner!=null){
-                    listner.onError(error);
+                if(facebookCallbackListener!=null){
+                    facebookCallbackListener.onError(error);
                 }
             }
         });
     }
 
+    /** 회원가입 */
+    public void requestJoin(User user , final OnJoinRequestListener joinRequestListener) {
+        String email = user.getEmail();
+        String password = user.getEmail();
+        String nickname = user.getNickname();
+
+        JoinRequest joinRequest = new JoinRequest(mContext, new BaseApiResponse.OnResponseListener<User>() {
+            @Override
+            public void onResponse(BaseApiResponse<User> response) {
+                if (joinRequestListener != null) {
+                    joinRequestListener.onResponse(response);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                if (joinRequestListener != null) {
+                    joinRequestListener.onError(error);
+                }
+
+                Log.e(getClass().getSimpleName().toString(), error.getMessage());
+
+            }
+        });
+
+        joinRequest.setUserInfo(email, password, nickname,true);
+        NetworkManager.getInstance().request(joinRequest);
+
+    }
     public void facebookLogin(Activity activity) {
         requestFacebookPermissions(activity);
     }
@@ -287,9 +329,19 @@ public class UserInfoManager {
         void onError(FacebookException error);
     }
 
+    public interface OnGraphRequestListener{
+        void onCompleted(JSONObject userInfo, GraphResponse response);
+    }
+
+    public interface OnJoinRequestListener {
+        void onResponse(BaseApiResponse<User> response);
+        void onError(VolleyError error);
+    }
+
     public void requestFacebookPermissions(Activity activity){
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile"));
     }
+
 }
 
 
