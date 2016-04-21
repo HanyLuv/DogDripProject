@@ -35,7 +35,8 @@ public class LoginFragment extends BaseFragment {
     private EditText etPassword;
     private Button btnLogin;
     private Button btnFaceBookLogin;
-    private Button btnJoinus;
+    private Button btnKakaoLogin;
+    private Button btnJoin;
 
 
     @Nullable
@@ -47,7 +48,8 @@ public class LoginFragment extends BaseFragment {
         etPassword = (EditText) view.findViewById(R.id.et_password);
         btnLogin = (Button) view.findViewById(R.id.bt_login);
         btnFaceBookLogin = (Button) view.findViewById(R.id.bt_facebook_login);
-        btnJoinus = (Button) view.findViewById(R.id.bt_join);
+        btnKakaoLogin = (Button) view.findViewById(R.id.bt_kakao_login);
+        btnJoin = (Button) view.findViewById(R.id.bt_join);
         return view;
     }
 
@@ -94,14 +96,26 @@ public class LoginFragment extends BaseFragment {
             }
         });
 
-        btnJoinus.setOnClickListener(new View.OnClickListener() {
+        btnKakaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+
+
+        btnJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 2016-04-22 회원가입
+            }
+        });
     }
 
+
+    private void doKaKaoLogin(){
+
+    }
     private void getLoginInfo() {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
