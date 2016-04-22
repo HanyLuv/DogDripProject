@@ -135,4 +135,18 @@ public class MainActivity extends FaceBookLoginActivity implements ViewPager.OnP
             }
         }
     }
+
+    @Override
+    protected void onUserNeedLogin() {
+        super.onUserNeedLogin();
+        if(mViewPager != null && mAdapter != null && mAdapter.getCount() > 0){
+            for(int i = 0 ; i < mAdapter.getCount() ; i ++){
+                if(mAdapter.getItem(i) instanceof SettingBookFragment){
+                    mViewPager.setCurrentItem(i, true);
+                    break;
+                }
+            }
+
+        }
+    }
 }

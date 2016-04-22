@@ -1,5 +1,6 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.request.LikeCheckRequest;
 import com.organic.dogdrip.net.request.LikeRequest;
@@ -128,24 +130,29 @@ public class DripPageFragment extends BaseFragment {
 
 
     private void requestLikeDrip(Drip drip) {
-        LikeRequest likeRequest = new LikeRequest(getActivity(), new BaseApiResponse.OnResponseListener<Like>() {
-            @Override
-            public void onResponse(BaseApiResponse<Like> response) {
-                if (!isRequestSuccessfully(response)) {
-                    return;
+        if(UserInfoManager.getInstance().getUserInfo() != null){
+            LikeRequest likeRequest = new LikeRequest(getActivity(), new BaseApiResponse.OnResponseListener<Like>() {
+                @Override
+                public void onResponse(BaseApiResponse<Like> response) {
+                    if (!isRequestSuccessfully(response)) {
+                        return;
+                    }
+                    showToast(response.getMessage());
+                    if (response.getData() != null) {
+                        updateRecommendCount(response.getData());
+                    }
                 }
-                showToast(response.getMessage());
-                if (response.getData() != null) {
-                    updateRecommendCount(response.getData());
+                @Override
+                public void onError(VolleyError error) {
+                    showToast(error.getMessage());
                 }
-            }
-            @Override
-            public void onError(VolleyError error) {
-                showToast(error.getMessage());
-            }
-        });
-        likeRequest.setLikeInfo(drip.getId(),"admin");
-        request(likeRequest);
+            });
+            likeRequest.setLikeInfo(drip.getId(), UserInfoManager.getInstance().getUserInfo().getEmail());
+            request(likeRequest);
+        }else{
+            //TODO : Login 확인 다이얼로그 띄우기
+            UserInfoManager.getInstance().sendNeedLoginBroadcast();
+        }
     }
 
     private void updateRecommendCount(Like like) {

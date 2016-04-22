@@ -36,7 +36,9 @@ import java.util.regex.Pattern;
  */
 public class UserInfoManager {
 
-    public static final String ACTION_USER_INFO_STATE_CHANGED = "com.hany.dogdripproject.userinfo.changed";
+    private static final String ACTION_USER_PRE_FIX = "com.organic.dogdrip.userinfo.";
+    public static final String ACTION_USER_INFO_STATE_CHANGED = ACTION_USER_PRE_FIX + ".changed";
+    public static final String ACTION_USER_NEED_LOGIN = ACTION_USER_PRE_FIX + ".needlogin";
 
     private static final String EMAIL_REGEX =  "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
     private static final int MIN_PASSWORD_LENGTH = 8;
@@ -342,6 +344,10 @@ public class UserInfoManager {
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile"));
     }
 
+    public void sendNeedLoginBroadcast(){
+        Intent intent = new Intent(ACTION_USER_NEED_LOGIN);
+        mContext.sendBroadcast(intent);
+    }
 }
 
 

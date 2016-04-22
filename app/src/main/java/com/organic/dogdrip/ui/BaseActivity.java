@@ -32,12 +32,27 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         IntentFilter filter = new IntentFilter(UserInfoManager.ACTION_USER_INFO_STATE_CHANGED);
-        registerReceiver(broadcastReceiver, filter);
+        registerReceiver(bindActivityBroadcastReceiver, filter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(bindActivityBroadcastReceiver != null){
+            unregisterReceiver(bindActivityBroadcastReceiver);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(UserInfoManager.ACTION_USER_NEED_LOGIN);
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if(broadcastReceiver != null){
             unregisterReceiver(broadcastReceiver);
         }
@@ -130,7 +145,11 @@ public class BaseActivity extends FragmentActivity {
 
     }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    protected void onUserNeedLogin(){
+
+    }
+
+    private BroadcastReceiver bindActivityBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent != null){
@@ -139,6 +158,20 @@ public class BaseActivity extends FragmentActivity {
                     if(action.equals(UserInfoManager.ACTION_USER_INFO_STATE_CHANGED)){
                         User user = intent.getParcelableExtra(User.class.getName());
                         onUserInfoChanged(user);
+                    }
+                }
+            }
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent != null){
+                String action = intent.getAction();
+                if(action != null){
+                    if(action.equals(UserInfoManager.ACTION_USER_NEED_LOGIN)){
+                        onUserNeedLogin();
                     }
                 }
             }
