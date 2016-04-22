@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hany.dogdripproject">
+    package="com.organic.dogdrip">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!--GCM PERMISSIONS -->
-    <permission android:name="com.hany.dogdripproject.permission.C2D_MESSAGE"
+    <permission android:name="com.organic.dogdrip.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.hany.dogdripproject.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.organic.dogdrip.permission.C2D_MESSAGE" />
 
     <application
-        android:name=".ApplicationEx"
+        android:name="com.organic.dogdrip.ApplicationEx"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.organic.dogdrip.ui.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,16 +28,16 @@
         </activity>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.organic.dogdrip.ui.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".ui.ImageBuildActivity"
+            android:name="com.organic.dogdrip.ui.ImageBuildActivity"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.GCMService"
+            android:name="com.organic.dogdrip.service.GCMService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -53,7 +53,7 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.hany.dogdripproject" />
+                <category android:name="com.organic.dogdrip" />
             </intent-filter>
         </receiver>
 

@@ -1,16 +1,30 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    def VERSION_NAME = "1.0.0"
+    def VERSION_CODE = 2016042201
+
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.hany.dogdripproject"
+        applicationId "com.organic.dogdrip"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME + "_" + VERSION_CODE
     }
+
+    signingConfigs{
+        release{
+            storeFile file(KEY_PATH)
+            keyAlias KEY_ALIAS
+            storePassword ""
+            keyPassword ""
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
