@@ -1,6 +1,7 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -151,7 +152,22 @@ public class DripPageFragment extends BaseFragment {
             request(likeRequest);
         }else{
             //TODO : Login 확인 다이얼로그 띄우기
-            UserInfoManager.getInstance().sendNeedLoginBroadcast();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.login_need);
+            builder.setPositiveButton(getResources().getText(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    UserInfoManager.getInstance().sendNeedLoginBroadcast();
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }
     }
 

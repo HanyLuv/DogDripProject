@@ -1,6 +1,7 @@
 package com.organic.dogdrip.net.request;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.organic.dogdrip.Constants;
@@ -12,12 +13,22 @@ import java.lang.reflect.Type;
 /**
  * Created by HanyLuv on 2016-03-22.
  */
-public class WriteRequst extends BasicRequest<Drip>{
+public class WriteDripRequest extends BasicRequest<Drip>{
 
     private static final String API = Constants.API_SERVER_HOST + "/drip/put";
 
-    public WriteRequst(Context context, BaseApiResponse.OnResponseListener<Drip> responseListener) {
+    private static final String AUTHOR = "author";
+    private static final String DRIP = "drip";
+
+    public WriteDripRequest(Context context, BaseApiResponse.OnResponseListener<Drip> responseListener) {
         super(context, API, responseListener);
+    }
+
+    public void setDataInfo(String author, String drip){
+        if(!TextUtils.isEmpty(author) && !TextUtils.isEmpty(drip)){
+            getParams().put(AUTHOR, author);
+            getParams().put(DRIP, drip);
+        }
     }
 
     @Override

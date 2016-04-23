@@ -1,14 +1,20 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
 import com.organic.dogdrip.net.request.DripListRequest;
@@ -27,6 +33,7 @@ import java.util.List;
 public class DripBookFragment extends BaseHorizontalScrollFragment {
 
     private TextView mDripPage = null;
+    private Button mWriteButton = null;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -69,6 +76,36 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
         super.onCreateChildView(inflater, parent);
         View view = inflater.inflate(R.layout.fragment_drip_book, parent, true);
         mDripPage = (TextView) view.findViewById(R.id.tv_fragment_drip_book_page);
+        mWriteButton = (Button) view.findViewById(R.id.btn_fragment_drip_book_page_write);
+        mWriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(UserInfoManager.getInstance().getUserInfo() != null){
+                    WriteDripFragment f = (WriteDripFragment) WriteDripFragment.instantiate(getContext(), WriteDripFragment.TAG);
+                    getChildFragmentManager().beginTransaction().add(getChildFragmentAnchorId(), f, f.TAG)
+                            .addToBackStack(f.TAG)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit();
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.login_need);
+                    builder.setPositiveButton(getResources().getText(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            UserInfoManager.getInstance().sendNeedLoginBroadcast();
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }
+            }
+        });
     }
 
     @Override

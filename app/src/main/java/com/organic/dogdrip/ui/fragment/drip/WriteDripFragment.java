@@ -1,5 +1,6 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +13,9 @@ import android.widget.EditText;
 
 import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
-import com.organic.dogdrip.net.request.WriteRequst;
+import com.organic.dogdrip.net.request.WriteDripRequest;
 import com.organic.dogdrip.ui.BaseActivity;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.vo.drip.Drip;
@@ -21,7 +23,9 @@ import com.organic.dogdrip.vo.drip.Drip;
 /**
  * Created by HanyLuv on 2016-03-20.
  */
-public class WriteFragment extends BaseFragment {
+public class WriteDripFragment extends BaseFragment {
+
+    public static final String TAG = WriteDripFragment.class.getName();
 
     private EditText etWrite;
     private Button btnWrite;
@@ -44,12 +48,10 @@ public class WriteFragment extends BaseFragment {
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (TextUtils.isEmpty(etWrite.getText().toString())) {
+                if (TextUtils.isEmpty(etWrite.getText().toString()) && UserInfoManager.getInstance().getUserInfo() != null) {
                     showToast(getResources().getString(R.string.write_empty_notice).toString());
                     return;
                 }
-
                     ((BaseActivity) getActivity()).createAlertDialog(getActivity().getResources().getText(R.string.write_notice).toString(),
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -68,26 +70,45 @@ public class WriteFragment extends BaseFragment {
         }
 
     private void requestWriteDrip() {
-        WriteRequst writeRequst = new WriteRequst(getActivity(), new BaseApiResponse.OnResponseListener<Drip>() {
-            @Override
-            public void onResponse(BaseApiResponse<Drip> response) {
-                if (!isRequestSuccessfully(response)) {
-                    return;
+        if(UserInfoManager.getInstance().getUserInfo() != null){
+            WriteDripRequest writeRequst = new WriteDripRequest(getActivity(), new BaseApiResponse.OnResponseListener<Drip>() {
+                @Override
+                public void onResponse(BaseApiResponse<Drip> response) {
+                    if (!isRequestSuccessfully(response)) {
+                        return;
+                    }
+                    showToast(response.getData().getAuthor() + getResources().getString(R.string.write_welcome));
+                    getFragmentManager().beginTransaction().remove(WriteDripFragment.this).commit();
                 }
-                showToast(response.getData().getAuthor() + getResources().getString(R.string.write_welcome));
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                showToast(error.getMessage());
-            }
-        });
+                @Override
+                public void onError(VolleyError error) {
+                    showToast(error.getMessage());
+                }
+            });
 
-        //TODO : Have to fix blow codes
-        String dripContent = etWrite.getText().toString();
-//            writeRequst.putParam(Constants.PARAM_AUTHOR, "admin");
-//            writeRequst.putParam(Constants.PARAM_DRIP, dripContent);
+            //TODO : Have to fix blow codes
+            String dripContent = etWrite.getText().toString();
+            writeRequst.setDataInfo(UserInfoManager.getInstance().getUserInfo().getEmail(), dripContent);
             request(writeRequst);
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.login_need);
+            builder.setPositiveButton(getResources().getText(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    UserInfoManager.getInstance().sendNeedLoginBroadcast();
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        }
     }
 
 }

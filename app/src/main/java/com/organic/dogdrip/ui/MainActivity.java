@@ -117,7 +117,7 @@ public class MainActivity extends FaceBookLoginActivity implements ViewPager.OnP
     @Override
     protected boolean popFragment(FragmentManager fm) {
         boolean b = false;
-        if(fm != null && fm.getBackStackEntryCount() > 1){
+        if(fm != null && fm.getBackStackEntryCount() > 0){
             b = fm.popBackStackImmediate();
         }
         return b;
