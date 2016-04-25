@@ -48,9 +48,9 @@ public class SettingBookFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(UserInfoManager.getInstance().getUserInfo() == null){
-            addChildFragment(LoginFragment.class, null);
+            addChildFragment(LoginFragment.class, null, false);
         }else{
-            addChildFragment(MypageFragment.class, null);
+            addChildFragment(MypageFragment.class, null, false);
         }
     }
 
@@ -64,9 +64,9 @@ public class SettingBookFragment extends BaseFragment {
         super.onUserInfoChanged(user);
         while(getChildFragmentManager().popBackStackImmediate());
         if(user != null){
-            addChildFragment(MypageFragment.class, null);
+            addChildFragment(MypageFragment.class, null, false);
         }else{
-            addChildFragment(LoginFragment.class, null);
+            addChildFragment(LoginFragment.class, null, false);
         }
     }
 }

@@ -3,22 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/white"
     android:padding="@dimen/write_fragment_padding">
 
 
+    <Button
+        android:id="@+id/btn_fragment_write_drip"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/selector_circle_button"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/write_btn_write" />
+
     <EditText
-        android:id="@+id/et_write"
+        android:id="@+id/et_fragment_write_drip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_write"
+        android:layout_above="@id/btn_fragment_write_drip"
         android:gravity="top"
         android:hint="@string/write_hint"
         android:textSize="@dimen/write_fragment_text_size" />
 
-    <Button
-        android:id="@+id/btn_write"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:text="@string/write_btn_write" />
 </RelativeLayout>

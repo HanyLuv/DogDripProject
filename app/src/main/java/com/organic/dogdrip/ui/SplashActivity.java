@@ -1,9 +1,11 @@
 package com.organic.dogdrip.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class SplashActivity extends BaseActivity {
     private ConfigPreferenceManager mConfigPref = null;
 
     private TextView mTvLoading = null;
+    private ImageView mIvLoading = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class SplashActivity extends BaseActivity {
 
     private void initView(){
         mTvLoading = (TextView) findViewById(R.id.tv_splash_loading);
+        mIvLoading = (ImageView) findViewById(R.id.iv_splash);
+        ((AnimationDrawable)mIvLoading.getBackground()).start();
     }
 
     private void initModels(){

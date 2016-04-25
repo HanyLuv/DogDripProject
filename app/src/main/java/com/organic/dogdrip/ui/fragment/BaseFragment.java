@@ -51,7 +51,11 @@ public class BaseFragment extends Fragment {
         return this.getClass().getName();
     }
 
-    public void addChildFragment(Class<? extends BaseFragment> fClss, Bundle bundle) {
+    public void addChildFragment(Class<? extends BaseFragment> fClss, Bundle bundle){
+        addChildFragment(fClss, bundle, true);
+    }
+
+    public void addChildFragment(Class<? extends BaseFragment> fClss, Bundle bundle, boolean addBackStack) {
         BaseFragment f = null;
         try {
             f = fClss.newInstance();
@@ -70,9 +74,12 @@ public class BaseFragment extends Fragment {
                     if(bundle != null){
                         of.setArguments(bundle);
                     }
-                    ft.setBreadCrumbTitle(of.getFragmentTitle())
-                            .addToBackStack(of.getBackstackName())
-                            .commitAllowingStateLoss();
+                    ft.setBreadCrumbTitle(of.getFragmentTitle());
+                    if(addBackStack){
+                        ft.addToBackStack(of.getBackstackName());
+                    }
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commitAllowingStateLoss();
                 }
                 f = null;
             } else {
@@ -80,9 +87,12 @@ public class BaseFragment extends Fragment {
                 if(bundle != null){
                     f.setArguments(bundle);
                 }
-                ft.setBreadCrumbTitle(f.getFragmentTitle())
-                        .addToBackStack(f.getBackstackName())
-                        .commitAllowingStateLoss();
+                ft.setBreadCrumbTitle(f.getFragmentTitle());
+                if(addBackStack){
+                    ft.addToBackStack(f.getBackstackName());
+                }
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commitAllowingStateLoss();
             }
         }
     }

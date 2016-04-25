@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -79,13 +77,9 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
         mWriteButton = (Button) view.findViewById(R.id.btn_fragment_drip_book_page_write);
         mWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 if(UserInfoManager.getInstance().getUserInfo() != null){
-                    WriteDripFragment f = (WriteDripFragment) WriteDripFragment.instantiate(getContext(), WriteDripFragment.TAG);
-                    getChildFragmentManager().beginTransaction().add(getChildFragmentAnchorId(), f, f.TAG)
-                            .addToBackStack(f.TAG)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .commit();
+                    addChildFragment(DripWriteFragment.class, null);
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(R.string.login_need);
