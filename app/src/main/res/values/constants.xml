@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dogdic_app_key">com.fivetrue</string>
+    <string name="dogdic_app_key" translatable="false">com.fivetrue</string>
+    <string name="fabric_api_key" translatable="false">9cab9571fd66f1bdd6f7a8976a42fe5c8564e834</string>
+    <string name="facebook_app_id" translatable="false">1074552379254338</string>
+    <string name="kakao_app_key" translatable="false">62a6c93c93df8550596261b9027db954</string>
 </resources>

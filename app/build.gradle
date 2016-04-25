@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
 
@@ -43,4 +49,7 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:8.4.0"
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }
