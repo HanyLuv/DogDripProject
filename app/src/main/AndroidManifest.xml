@@ -72,6 +72,6 @@
             android:value="@string/kakao_app_key" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="@string/fabric_api_key" />
+            android:value="9cab9571fd66f1bdd6f7a8976a42fe5c8564e834" />
     </application>
 </manifest>
