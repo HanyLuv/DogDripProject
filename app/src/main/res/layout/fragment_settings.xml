@@ -10,17 +10,18 @@
         android:id="@+id/tv_push"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PUSH" />
+        android:text="@string/setting_title_push" />
 
     <TextView
         android:id="@+id/tv_push_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_push"
-        android:text="댓글 및 추천 알림 서비스 ON/OFF 설정"
+        android:text="@string/setting_check_push"
         android:textSize="10dp" />
 
     <CheckBox
+        android:id="@+id/cb_fragment_setting_push"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tv_push"

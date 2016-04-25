@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <com.organic.dogdrip.ui.view.FootProgress
+        android:id="@+id/fp_dialog_foot_progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_dialog_foot_progress_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fp_dialog_foot_progress"
+        style="@style/SmallText.Title"/>
+
+
+    <ProgressBar
+        android:id="@+id/pb_dialog_foot_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fp_dialog_foot_progress"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

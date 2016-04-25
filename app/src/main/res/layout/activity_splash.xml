@@ -23,13 +23,12 @@
         android:textColor="@color/colorPrimary"
          />
 
-    <ImageView
+    <com.organic.dogdrip.ui.view.FootProgress
         android:id="@+id/iv_splash"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_below="@id/tv_splash_loading"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/loading_dog_foot"
         android:layout_marginTop="15dp"
         />
 

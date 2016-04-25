@@ -29,6 +29,12 @@
     <string name="logout">로그아웃</string>
     <string name="login_need">로그인이 필요합니다. 로그인 하시겠습니까?</string>
 
+    <!-- Setting  -->
+    <string name="setting_title_push">PUSH</string>
+    <string name="setting_check_push">댓글 및 추천 알림 서비스 ON/OFF 설정</string>
+
+
+    <!-- Drip write-->
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
     <string name="write_btn_write">글쓰기</string>
     <string name="write_welcome"> 님의 글이 등록 되었습니다!</string>

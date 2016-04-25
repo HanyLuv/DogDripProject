@@ -48,8 +48,6 @@ public class SplashActivity extends BaseActivity {
 
     private void initView(){
         mTvLoading = (TextView) findViewById(R.id.tv_splash_loading);
-        mIvLoading = (ImageView) findViewById(R.id.iv_splash);
-        ((AnimationDrawable)mIvLoading.getBackground()).start();
     }
 
     private void initModels(){

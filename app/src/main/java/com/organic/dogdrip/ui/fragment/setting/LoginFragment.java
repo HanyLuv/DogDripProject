@@ -19,6 +19,7 @@ import com.organic.dogdrip.R;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.ui.FaceBookLoginActivity;
+import com.organic.dogdrip.ui.dialog.FootProgressDialog;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.utils.Log;
 import com.organic.dogdrip.vo.user.User;
@@ -128,15 +129,19 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doLogin(String email,String password){
+        final FootProgressDialog dialog = new FootProgressDialog(getActivity());
+        dialog.show();
         UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
             @Override
             public void onLoginCompleted(User user) {
                 showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
+                dialog.dismiss();
             }
 
             @Override
             public void onLoginFailed(String errorMessage) {
                 showToast(errorMessage);
+                dialog.dismiss();
             }
         });
     }

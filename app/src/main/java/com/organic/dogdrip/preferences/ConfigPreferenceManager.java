@@ -12,6 +12,8 @@ public class ConfigPreferenceManager {
     private static final String VERSION_NUMBER = "_version_number";
     private static final String GCM_DEVICE = "gcm_dvice_id";
 
+    private static final String SETTING_PUSH = "setting_push";
+
     private SharedPreferenceHelper mHelper = null;
 
     public ConfigPreferenceManager(Context context){
@@ -42,6 +44,14 @@ public class ConfigPreferenceManager {
 
     public String getGcmDeviceId(){
         return mHelper.getData(GCM_DEVICE, null);
+    }
+
+    public void setSettingPush(boolean b){
+        mHelper.putData(SETTING_PUSH, b);
+    }
+
+    public boolean isSettingPush(){
+        return mHelper.getData(SETTING_PUSH, false);
     }
 
 }

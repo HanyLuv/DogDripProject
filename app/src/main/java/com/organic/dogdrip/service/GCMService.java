@@ -3,6 +3,7 @@ package com.organic.dogdrip.service;
 import android.os.Bundle;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.organic.dogdrip.preferences.ConfigPreferenceManager;
 import com.organic.dogdrip.service.notification.NotificationData;
 import com.organic.dogdrip.ui.SplashActivity;
 import com.organic.dogdrip.utils.Log;
@@ -16,11 +17,17 @@ public class GCMService extends GcmListenerService {
     private static final String TAG = "GCMService";
     private static final String DATA_KEY = "msg";
 
+    private ConfigPreferenceManager mConfigPref = null;
+
     @Override
     public void onMessageReceived(String from, Bundle data) {
         super.onMessageReceived(from, data);
+        if(mConfigPref == null){
+            mConfigPref = new ConfigPreferenceManager(this);
+        }
+
         String message = data.getString(DATA_KEY);
-        if(message != null){
+        if(message != null && mConfigPref.isSettingPush()){
             NotificationData notificationData = new NotificationData();
             notificationData.id = 1;
             notificationData.message = message;
