@@ -15,6 +15,9 @@ import com.android.volley.VolleyError;
 import com.facebook.FacebookException;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
+import com.kakao.APIErrorResult;
+import com.kakao.MeResponseCallback;
+import com.kakao.UserProfile;
 import com.organic.dogdrip.R;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
@@ -99,7 +102,7 @@ public class LoginFragment extends BaseFragment {
         btnKakaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                doKaKaoLogin();
             }
         });
 
@@ -114,7 +117,27 @@ public class LoginFragment extends BaseFragment {
 
 
     private void doKaKaoLogin(){
+        UserInfoManager.getInstance().kakaoLogin(getActivity(), new MeResponseCallback() {
+            @Override
+            protected void onSuccess(UserProfile userProfile) {
+                Log.d("kakao onSuccess ",userProfile.toString());
+            }
 
+            @Override
+            protected void onNotSignedUp() {
+
+            }
+
+            @Override
+            protected void onSessionClosedFailure(APIErrorResult errorResult) {
+
+            }
+
+            @Override
+            protected void onFailure(APIErrorResult errorResult) {
+
+            }
+        });
     }
     private void getLoginInfo() {
         String email = etEmail.getText().toString();
@@ -175,7 +198,7 @@ public class LoginFragment extends BaseFragment {
         }
     };
 
-    private UserInfoManager.OnGraphRequestListener onGraphRequestListener = new UserInfoManager.OnGraphRequestListener() {
+    private UserInfoManager.OnFacebookGraphRequestListener onGraphRequestListener = new UserInfoManager.OnFacebookGraphRequestListener() {
         @Override
         public void onCompleted(JSONObject userInfo, GraphResponse response) {
         }

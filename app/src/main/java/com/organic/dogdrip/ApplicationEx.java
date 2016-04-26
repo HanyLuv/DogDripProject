@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
+import com.kakao.AuthType;
+import com.kakao.Session;
 import com.organic.dogdrip.image.ImageLoadManager;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.NetworkManager;
@@ -23,5 +25,6 @@ public class ApplicationEx extends Application {
         ImageLoadManager.init(NetworkManager.getInstance().getRequestQueue());
         UserInfoManager.init(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Session.initialize(this, AuthType.KAKAO_TALK);
     }
 }

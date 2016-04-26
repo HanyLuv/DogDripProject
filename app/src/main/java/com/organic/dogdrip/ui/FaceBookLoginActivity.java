@@ -8,7 +8,7 @@ import com.facebook.CallbackManager;
 /**
  * Created by HanyLuv on 2016-04-19.
  */
-public class FaceBookLoginActivity extends BaseActivity {
+public class FaceBookLoginActivity extends KaKaoLoginActivity {
 
     private CallbackManager mCallbackManager;
 

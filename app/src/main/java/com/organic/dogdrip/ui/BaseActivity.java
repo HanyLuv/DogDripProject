@@ -82,15 +82,6 @@ public class BaseActivity extends FragmentActivity {
         return mLayoutMainContainer.getId();
     }
 
-
-    /***
-     * Fragment 추가
-     *
-     */
-    public void addFragment(Class<? extends BaseFragment> fClss) {
-        addFragment(fClss, null);
-    }
-
     /**
      * BaseFragment를 추가한다. 이미 추가된 Fragment일 경우 FragmentManager에서 TAG값을 이용해 Frament를 가져와
      * 다시 Replace 시킨다

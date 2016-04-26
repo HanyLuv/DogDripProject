@@ -15,6 +15,14 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.kakao.APIErrorResult;
+import com.kakao.AuthType;
+import com.kakao.MeResponseCallback;
+import com.kakao.Session;
+import com.kakao.SessionCallback;
+import com.kakao.UserManagement;
+import com.kakao.UserProfile;
+import com.kakao.exception.KakaoException;
 import com.organic.dogdrip.R;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
@@ -233,7 +241,7 @@ public class UserInfoManager {
 
     public void facebookLoginInit(CallbackManager callbackManager,
                                   final OnFacebookCallbackListener facebookCallbackListener,
-                                  final OnGraphRequestListener graphRequestListener,
+                                  final OnFacebookGraphRequestListener graphRequestListener,
                                   final OnJoinRequestListener joinRequestListener) {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -331,7 +339,7 @@ public class UserInfoManager {
         void onError(FacebookException error);
     }
 
-    public interface OnGraphRequestListener{
+    public interface OnFacebookGraphRequestListener{
         void onCompleted(JSONObject userInfo, GraphResponse response);
     }
 
@@ -348,6 +356,37 @@ public class UserInfoManager {
         Intent intent = new Intent(ACTION_USER_NEED_LOGIN);
         mContext.sendBroadcast(intent);
     }
+
+   /**
+    * @param activity 세션을 오픈한 액티비티
+    * */
+    public void kakaoLogin(Activity activity,final MeResponseCallback meResponseCallback){
+        Session.getCurrentSession().addCallback(new SessionCallback() {
+            @Override
+            public void onSessionOpened() {
+                requestKakaoUserInfo(meResponseCallback);
+                Log.d("KakaoSessionCallback", "onSessionOpened");
+            }
+
+            @Override
+            public void onSessionClosed(KakaoException exception) {
+                Log.d("KakaoSessionCallback", "onSessionOpened");
+            }
+
+            @Override
+            public void onSessionOpening() {
+                Log.d("KakaoSessionCallback", "onSessionOpened");
+            }
+        });
+
+        Session.getCurrentSession().open(AuthType.KAKAO_TALK,activity);
+    }
+
+    private void requestKakaoUserInfo(MeResponseCallback meResponseCallback){
+        UserManagement.requestMe(meResponseCallback);
+    }
+
+
 }
 
 
