@@ -49,7 +49,7 @@
             </intent-filter>
         </service>
 
-        <sservice
+        <service
             android:name=".service.NotificationService"/>
 
         <receiver
