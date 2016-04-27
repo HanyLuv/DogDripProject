@@ -117,27 +117,7 @@ public class LoginFragment extends BaseFragment {
 
 
     private void doKaKaoLogin(){
-        UserInfoManager.getInstance().kakaoLogin(getActivity(), new MeResponseCallback() {
-            @Override
-            protected void onSuccess(UserProfile userProfile) {
-                Log.d("kakao onSuccess ",userProfile.toString());
-            }
-
-            @Override
-            protected void onNotSignedUp() {
-
-            }
-
-            @Override
-            protected void onSessionClosedFailure(APIErrorResult errorResult) {
-
-            }
-
-            @Override
-            protected void onFailure(APIErrorResult errorResult) {
-
-            }
-        });
+        UserInfoManager.getInstance().kakaoLogin(getActivity(),onJoinRequestListener);
     }
     private void getLoginInfo() {
         String email = etEmail.getText().toString();

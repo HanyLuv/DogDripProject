@@ -360,11 +360,11 @@ public class UserInfoManager {
    /**
     * @param activity 세션을 오픈한 액티비티
     * */
-    public void kakaoLogin(Activity activity,final MeResponseCallback meResponseCallback){
+    public void kakaoLogin(Activity activity,final OnJoinRequestListener joinRequestListener){
         Session.getCurrentSession().addCallback(new SessionCallback() {
             @Override
             public void onSessionOpened() {
-                requestKakaoUserInfo(meResponseCallback);
+                requestKakaoUserInfo(joinRequestListener);
                 Log.d("KakaoSessionCallback", "onSessionOpened");
             }
 
@@ -382,8 +382,34 @@ public class UserInfoManager {
         Session.getCurrentSession().open(AuthType.KAKAO_TALK,activity);
     }
 
-    private void requestKakaoUserInfo(MeResponseCallback meResponseCallback){
-        UserManagement.requestMe(meResponseCallback);
+    private void requestKakaoUserInfo(final OnJoinRequestListener joinRequestListener){
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            protected void onSuccess(UserProfile userProfile) {
+                String name = userProfile.getNickname();
+                String id = String.valueOf(userProfile.getId());
+                User user = new User();
+                user.setEmail(id);
+                user.setPassword(id);
+                user.setNickname(name);
+                requestJoin(user,joinRequestListener);
+            }
+
+            @Override
+            protected void onNotSignedUp() {
+
+            }
+
+            @Override
+            protected void onSessionClosedFailure(APIErrorResult errorResult) {
+
+            }
+
+            @Override
+            protected void onFailure(APIErrorResult errorResult) {
+
+            }
+        });
     }
 
 
