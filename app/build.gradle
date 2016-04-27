@@ -24,10 +24,13 @@ android {
 
     signingConfigs{
         release{
-            storeFile file(KEY_PATH)
+            storeFile file("organic.jks")
             keyAlias KEY_ALIAS
             storePassword ""
             keyPassword ""
+        }
+        debug{
+            storeFile file("..\\organic_debug.jks")
         }
     }
 
@@ -41,7 +44,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.google.code.gson:gson:2.2.+'
@@ -49,6 +51,7 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:8.4.0"
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
