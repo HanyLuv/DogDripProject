@@ -147,18 +147,24 @@ public class UserInfoManager {
     }
 
     public void login(String email, String password, final OnUserLoginListener ll){
-        if(!isValidEmail(email)){
-            if(ll != null){
-                ll.onLoginFailed(mContext.getString(R.string.invalid_user_email));
-            }
-            return;
-        }
+        login(email, password, ll, false);
+    }
 
-        if(!isValidPassword(password)){
-            if(ll != null){
-                ll.onLoginFailed(mContext.getString(R.string.invalid_user_password));
+    public void login(String email, String password, final OnUserLoginListener ll , boolean external){
+        if(!external){
+            if(!isValidEmail(email)){
+                if(ll != null){
+                    ll.onLoginFailed(mContext.getString(R.string.invalid_user_email));
+                }
+                return;
             }
-            return;
+
+            if(!isValidPassword(password)){
+                if(ll != null){
+                    ll.onLoginFailed(mContext.getString(R.string.invalid_user_password));
+                }
+                return;
+            }
         }
 
         if(mMe == null){
@@ -191,7 +197,7 @@ public class UserInfoManager {
                 }
             });
 
-            loginRequst.setUserInfo(email, password);
+            loginRequst.setUserInfo(email, password, external);
             NetworkManager.getInstance().request(loginRequst);
         }else{
             if(ll != null){

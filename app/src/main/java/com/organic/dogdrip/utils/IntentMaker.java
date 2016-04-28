@@ -50,8 +50,8 @@ public class IntentMaker {
         }
 
         public Pair<View, String>[] build(){
-            Pair<View, String>[] pairs = (Pair<View, String>[]) mPariList.toArray();
-            mPariList.clear();
+            Pair<View, String>[] pairs = new Pair[mPariList.size()];
+            mPariList.toArray(pairs);
             return pairs;
         }
     }
@@ -71,8 +71,8 @@ public class IntentMaker {
                 builder.addPair(data.toPair());
             }
             Intent intent = makeIntent(activity, cls);
-            ActivityOptions.makeSceneTransitionAnimation(activity, builder.build());
-            activity.startActivity(intent);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, builder.build());
+            activity.startActivity(intent, options.toBundle());
         }else {
             Intent intent = makeIntent(activity, cls);
             activity.startActivity(intent);
