@@ -66,34 +66,23 @@ public class BaseFragment extends Fragment {
         }
 
         if(f != null){
-            BaseFragment of = (BaseFragment) getChildFragmentManager().findFragmentByTag(f.getFragmentTag());
-            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            BaseFragment of = (BaseFragment) getFragmentManager().findFragmentByTag(f.getFragmentTag());
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
             if (of != null) {
-                if(of.isDetached()){
-                    ft.replace(getChildFragmentAnchorId(), of);
-                    if(bundle != null){
-                        of.setArguments(bundle);
-                    }
-                    ft.setBreadCrumbTitle(of.getFragmentTitle());
-                    if(addBackStack){
-                        ft.addToBackStack(of.getBackstackName());
-                    }
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    ft.commitAllowingStateLoss();
-                }
                 f = null;
             } else {
-                ft.add(getChildFragmentAnchorId(), f, f.getFragmentTag());
-                if(bundle != null){
-                    f.setArguments(bundle);
-                }
-                ft.setBreadCrumbTitle(f.getFragmentTitle());
-                if(addBackStack){
-                    ft.addToBackStack(f.getBackstackName());
-                }
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commitAllowingStateLoss();
+                of = f;
             }
+            ft.replace(getChildFragmentAnchorId(), of);
+            if(bundle != null){
+                of.setArguments(bundle);
+            }
+            ft.setBreadCrumbTitle(of.getFragmentTitle());
+            if(addBackStack){
+                ft.addToBackStack(of.getBackstackName());
+            }
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commitAllowingStateLoss();
         }
     }
 

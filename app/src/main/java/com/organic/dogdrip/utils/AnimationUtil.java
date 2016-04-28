@@ -16,9 +16,8 @@ public class AnimationUtil {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void circularRevealExpend(View view, Animator.AnimatorListener ll){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            Animator anim = ViewAnimationUtils.createCircularReveal(view, getCx(view), getCy(view),
+            Animator anim = ViewAnimationUtils.createCircularReveal(view, view.getWidth() / 2, view.getHeight() / 2,
                     0, Math.max(view.getHeight(), view.getWidth()));
-            anim.setDuration(ANIMATION_DURATION);
             if(ll != null){
                 anim.addListener(ll);
             }
@@ -29,22 +28,13 @@ public class AnimationUtil {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void circularReveal(final View view, Animator.AnimatorListener ll){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            Animator anim = ViewAnimationUtils.createCircularReveal(view, getCx(view), getCy(view),
+            Animator anim = ViewAnimationUtils.createCircularReveal(view, view.getWidth() / 2, view.getHeight() / 2,
                     Math.max(view.getHeight(), view.getWidth()), 0);
             if(ll != null){
                 anim.addListener(ll);
             }
-            anim.setDuration(ANIMATION_DURATION);
             anim.start();
         }
-    }
-
-    private static int getCy(View view){
-        return (view.getTop() + view.getBottom()) / 2;
-    }
-
-    private static int getCx(View view){
-        return (view.getLeft() + view.getRight()) / 2;
     }
 
 

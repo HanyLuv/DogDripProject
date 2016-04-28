@@ -16,6 +16,20 @@ import java.util.ArrayList;
  */
 public class IntentMaker {
 
+    public static class SharedElemetData{
+        private View view = null;
+        private String transitionName = null;
+
+        public SharedElemetData(View view, String transitionName){
+            this.view = view;
+            this.transitionName = transitionName;
+        }
+
+        public Pair<View, String> toPair(){
+            return new Pair<>(view, transitionName);
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static class PairBuilder{
 
@@ -25,12 +39,21 @@ public class IntentMaker {
             return  new PairBuilder();
         }
 
-        PairBuilder addPair(View view, String transitionName){
-
+        public PairBuilder addPair(View view, String transitionName){
+            mPariList.add(new Pair<View, String>(view, transitionName));
+            return this;
         }
 
-        private View view;
-        private String transitionName;
+        public PairBuilder addPair(Pair<View, String> pair){
+            mPariList.add(pair);
+            return this;
+        }
+
+        public Pair<View, String>[] build(){
+            Pair<View, String>[] pairs = (Pair<View, String>[]) mPariList.toArray();
+            mPariList.clear();
+            return pairs;
+        }
     }
 
 
@@ -40,16 +63,32 @@ public class IntentMaker {
     }
 
 
-    public static void startActivityWithSharedTransition(Context context, Class< ? extends Activity> cls
-            , SharedElementData... datas){
-
+    public static void startActivityWithSharedTransition(Activity activity, Class< ? extends Activity> cls
+            , SharedElemetData... datas){
         if(isAboveL()){
-            Intent intent = makeIntent(context, cls);
-            ActivityOptions.
-            context.startActivity(intent);
+            PairBuilder builder = PairBuilder.makeBuilder();
+            for(SharedElemetData data : datas){
+                builder.addPair(data.toPair());
+            }
+            Intent intent = makeIntent(activity, cls);
+            ActivityOptions.makeSceneTransitionAnimation(activity, builder.build());
+            activity.startActivity(intent);
         }else {
+            Intent intent = makeIntent(activity, cls);
+            activity.startActivity(intent);
         }
+    }
 
+    public static void startActivityWithSharedTransition(Activity activity, Class< ? extends Activity> cls
+            , PairBuilder builder){
+        if(isAboveL()){
+            Intent intent = makeIntent(activity, cls);
+            ActivityOptions.makeSceneTransitionAnimation(activity, builder.build());
+            activity.startActivity(intent);
+        }else {
+            Intent intent = makeIntent(activity, cls);
+            activity.startActivity(intent);
+        }
     }
 
     public static boolean isAboveL(){

@@ -5,5 +5,5 @@
     <string name="kakao_app_key" translatable="false">62a6c93c93df8550596261b9027db954</string>
 
     <!-- -->
-    <string name="circle_button" translatable="false">circle_button</string>
+    <string name="single_shared_object" translatable="false">single_shared_object</string>
 </resources>

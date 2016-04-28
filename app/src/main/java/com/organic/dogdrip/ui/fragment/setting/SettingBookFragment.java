@@ -32,7 +32,7 @@ public class SettingBookFragment extends BaseFragment {
         mSettingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addChildFragment(SettingsFragment.class, null);
+                addChildFragment(SettingsFragment.class, null, true);
             }
         });
         return view;

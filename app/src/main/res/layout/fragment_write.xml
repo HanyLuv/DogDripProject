@@ -11,11 +11,13 @@
         android:id="@+id/btn_fragment_write_drip"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/selector_circle_button"
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:transitionName="@string/single_shared_object"
+        android:background="@drawable/selector_circle_button"
         android:text="@string/write_btn_write" />
+
 
     <EditText
         android:id="@+id/et_fragment_write_drip"

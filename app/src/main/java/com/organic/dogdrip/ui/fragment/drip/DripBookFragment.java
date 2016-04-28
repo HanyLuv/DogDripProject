@@ -1,7 +1,9 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
 import com.organic.dogdrip.net.request.DripListRequest;
+import com.organic.dogdrip.ui.DripWriteActivity;
 import com.organic.dogdrip.ui.adapter.BaseFragmentPagerAdapter;
 import com.organic.dogdrip.ui.adapter.fragment.DripFragmentPagerAdapter;
 import com.organic.dogdrip.ui.fragment.BaseHorizontalScrollFragment;
+import com.organic.dogdrip.utils.IntentMaker;
 import com.organic.dogdrip.utils.Log;
 import com.organic.dogdrip.vo.drip.Drip;
 
@@ -79,7 +83,8 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
             @Override
             public void onClick(final View v) {
                 if(UserInfoManager.getInstance().getUserInfo() != null){
-                    addChildFragment(DripWriteFragment.class, null);
+                    IntentMaker.startActivityWithSharedTransition(getActivity(),
+                            DripWriteActivity.class, new IntentMaker.SharedElemetData(mWriteButton, getString(R.string.single_shared_object)));
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(R.string.login_need);
