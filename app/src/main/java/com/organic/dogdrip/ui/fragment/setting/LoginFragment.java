@@ -2,6 +2,8 @@ package com.organic.dogdrip.ui.fragment.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.organic.dogdrip.R;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.ui.FaceBookLoginActivity;
+import com.organic.dogdrip.ui.MainActivity;
 import com.organic.dogdrip.ui.dialog.FootProgressDialog;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.utils.Log;
@@ -110,9 +113,15 @@ public class LoginFragment extends BaseFragment {
         btnJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2016-04-22 회원가입
+                doJoin();
             }
         });
+    }
+
+    private void doJoin() {
+        JoinFragment joinFragment = new JoinFragment();
+        SettingBookFragment fragment = (SettingBookFragment) getParentFragment();
+        fragment.getFragmentManager().beginTransaction().add(fragment.getChildFragmentAnchorId(), joinFragment).addToBackStack(joinFragment.getBackstackName()).commit();
     }
 
 

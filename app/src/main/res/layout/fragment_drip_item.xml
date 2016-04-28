@@ -7,15 +7,32 @@
 
     <TextView
         android:id="@+id/tv_drip_drip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black" />
+        android:layout_marginLeft="@dimen/drip_page_drip_margin_right"
+        android:layout_marginRight="@dimen/drip_page_drip_margin_left"
+        android:layout_marginBottom="@dimen/drip_page_drip_margin_bottom"
+        android:textColor="@color/black"
+        android:textSize="@dimen/drip_page_drip_txt_size" />
 
     <TextView
         android:id="@+id/tv_drip_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/drip_page_author_margin_right"
         android:textColor="@color/black" />
+
+    <!--임시로 값추가해둠. -->
+    <TextView
+        android:id="@+id/tv_drip_write_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/drip_page_write_date_margin_right"
+        android:text="2016.5.8 11:33"
+        android:textColor="@color/black"
+        android:textSize="@dimen/drip_page_write_date_txt_size" />
 
     <View
         android:layout_width="match_parent"
