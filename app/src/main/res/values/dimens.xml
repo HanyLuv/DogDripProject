@@ -31,6 +31,8 @@
     <dimen name="drip_page_write_date_txt_size">8dp</dimen>
     <dimen name="drip_page_drip_txt_size">28dp</dimen>
 
+    <dimen name="btn_write_drip_size">60dp</dimen>
+
     <dimen name="large_text_text_size">20dp</dimen>
     <dimen name="small_text_subtitle_text_size">8dp</dimen>
     <dimen name="small_text_title_size">12dp</dimen>
