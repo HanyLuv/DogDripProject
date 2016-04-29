@@ -37,6 +37,7 @@
     <!-- Drip write-->
     <string name="write_hint">개드립 한번 해보시개ㅋ.</string>
     <string name="write_btn_write">글쓰기</string>
+    <string name="write_btn_add_image">사진 추가</string>
     <string name="write_welcome"> 님의 글이 등록 되었습니다!</string>
     <string name="write_notice">한 번 내 뱉은 드립은 주워 담을 수 없다.</string>
     <string name="write_empty_notice">드립을 입력하시게.</string>

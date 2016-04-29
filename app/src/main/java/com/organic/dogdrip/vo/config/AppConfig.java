@@ -4,12 +4,16 @@ package com.organic.dogdrip.vo.config;
  * Created by kwonojin on 16. 3. 14..
  */
 public class AppConfig {
+
     private String appId = null;
     private String appSercureKey = null;
     private String appLatestVersion = null;
     private String appVersionName = null;
     private String appMarketUrl = null;
     private String senderId = null;
+    private String cognitoPoolId = null;
+    private String buketName = null;
+
 
     public String getAppId() {
         return appId;
@@ -59,6 +63,22 @@ public class AppConfig {
         this.senderId = senderId;
     }
 
+    public String getCognitoPoolId() {
+        return cognitoPoolId;
+    }
+
+    public void setCognitoPoolId(String cognitoPoolId) {
+        this.cognitoPoolId = cognitoPoolId;
+    }
+
+    public String getBuketName() {
+        return buketName;
+    }
+
+    public void setBuketName(String buketName) {
+        this.buketName = buketName;
+    }
+
     @Override
     public String toString() {
         return "AppConfig{" +
@@ -68,6 +88,8 @@ public class AppConfig {
                 ", appVersionName='" + appVersionName + '\'' +
                 ", appMarketUrl='" + appMarketUrl + '\'' +
                 ", senderId='" + senderId + '\'' +
+                ", cognitoPoolId='" + cognitoPoolId + '\'' +
+                ", buketName='" + buketName + '\'' +
                 '}';
     }
 }

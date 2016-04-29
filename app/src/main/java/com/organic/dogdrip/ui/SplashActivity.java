@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.organic.dogdrip.ApplicationEx;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.aws.S3Manager;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
@@ -115,6 +117,8 @@ public class SplashActivity extends BaseActivity {
             protected String doInBackground(Void... params) {
                 String regId = null;
                 if(appConfig != null){
+                    ((ApplicationEx)getApplicationContext()).setAppConfig(appConfig);
+                    S3Manager.init(SplashActivity.this, appConfig);
                     if(regId == null && appConfig.getSenderId() != null){
                         GoogleCloudMessaging gcm =  GoogleCloudMessaging.getInstance(getApplicationContext());
                         try {

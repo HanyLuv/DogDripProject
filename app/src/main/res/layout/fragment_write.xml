@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/btn_fragment_write_drip"
+        android:id="@+id/btn_drip_write_commit"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:textColor="@android:color/white"
@@ -18,14 +18,34 @@
         android:background="@drawable/selector_circle_button"
         android:text="@string/write_btn_write" />
 
+    <Button
+        android:id="@+id/btn_drip_write_add_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn_drip_write_commit"
+        android:transitionName="@string/single_shared_object"
+        android:background="@drawable/selector_circle_button"
+        android:text="@string/write_btn_add_image" />
 
-    <EditText
-        android:id="@+id/et_fragment_write_drip"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_fragment_write_drip"
-        android:gravity="top"
-        android:hint="@string/write_hint"
-        android:textSize="@dimen/write_fragment_text_size" />
+        android:layout_above="@id/btn_drip_write_add_image">
+        <ImageView
+            android:id="@+id/iv_drip_write_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <EditText
+            android:id="@+id/et_drip_write_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:hint="@string/write_hint"
+            android:textSize="@dimen/write_fragment_text_size" />
+    </FrameLayout>
 
 </RelativeLayout>
