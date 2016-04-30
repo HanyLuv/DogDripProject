@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.image.ImageLoadManager;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.request.LikeCheckRequest;
@@ -36,6 +38,7 @@ public class DripPageFragment extends BaseFragment {
     private TextView mTvDrip;
     private TextView mTvRecommend;
     private TextView mTvcomment;
+    private NetworkImageView mImageView = null;
 
     private Drip mDrip = null;
     private int mPagePosition = -1;
@@ -70,6 +73,7 @@ public class DripPageFragment extends BaseFragment {
         mTvDrip = (TextView) view.findViewById(R.id.tv_drip_drip);
         mTvRecommend = (TextView) view.findViewById(R.id.tv_drip_recommend);
         mTvcomment = (TextView) view.findViewById(R.id.tv_drip_comment);
+        mImageView = (NetworkImageView) view.findViewById(R.id.iv_drip_background);
         return view;
     }
 
@@ -87,6 +91,9 @@ public class DripPageFragment extends BaseFragment {
             mTvRecommend.setText(recommend);
 //        mTvRecommend.setOnClickListener(recommendCheckClickListener); //추천인 조회
             mTvRecommend.setOnClickListener(recommendClickListener); //추천하기
+            if(mDrip.getImageurl() != null){
+                mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
+            }
         }
     }
 

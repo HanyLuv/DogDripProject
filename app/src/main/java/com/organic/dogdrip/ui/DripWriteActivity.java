@@ -6,7 +6,9 @@ import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,15 +25,23 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.aws.AWSUtil;
 import com.organic.dogdrip.aws.S3Manager;
+import com.organic.dogdrip.image.ImageUtil;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
 import com.organic.dogdrip.net.request.WriteDripRequest;
+import com.organic.dogdrip.ui.dialog.FootProgressDialog;
 import com.organic.dogdrip.utils.Log;
 import com.organic.dogdrip.vo.drip.Drip;
+import com.organic.dogdrip.vo.user.User;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Random;
 
 /**
  * Created by kwonojin on 16. 4. 27..
@@ -78,39 +88,33 @@ public class DripWriteActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                });
+                }).show();
             }
         });
 
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    // For Android KitKat, we use a different intent to ensure
-                    // we can
-                    // get the file path from the returned intent URI
-                    intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-
-                } else {
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                }
-                intent.setType("image/*");
-                startActivityForResult(intent, 0);
+                Intent galleryIntent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent , 0 );
             }
         });
     }
 
-
     private void requestWriteDrip() {
+
         if(UserInfoManager.getInstance().getUserInfo() != null){
-            WriteDripRequest writeRequst = new WriteDripRequest(this, new BaseApiResponse.OnResponseListener<Drip>() {
+            final User user = UserInfoManager.getInstance().getUserInfo();
+            final FootProgressDialog dialog = new FootProgressDialog(this);
+            dialog.show();
+            final WriteDripRequest writeRequst = new WriteDripRequest(this, new BaseApiResponse.OnResponseListener<Drip>() {
                 @Override
                 public void onResponse(BaseApiResponse<Drip> response) {
                     if (response != null && response.getData() != null && !TextUtils.isEmpty(response.getData().getAuthor())) {
                         Toast.makeText(DripWriteActivity.this, response.getData().getAuthor() + getResources().getString(R.string.write_welcome), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                         finish();
                     }
                 }
@@ -121,10 +125,68 @@ public class DripWriteActivity extends BaseActivity {
                 }
             });
 
-            //TODO : Have to fix blow codes
             String dripContent = etWrite.getText().toString();
-            writeRequst.setDataInfo(UserInfoManager.getInstance().getUserInfo().getEmail(), dripContent);
-            NetworkManager.getInstance().request(writeRequst);
+            writeRequst.setDataInfo(user.getEmail(), dripContent);
+            if(mImageUri != null){
+                new AsyncTask<Void, Void, File>() {
+                    @Override
+                    protected File doInBackground(Void... params) {
+                        File file = null;
+                        try {
+                            String path = S3Manager.getInstance().getPath(mImageUri);
+                            File imageFile = new File(path);
+                            if(imageFile.length() > 1024 * 1000){
+                                Bitmap originalImage = ImageUtil.getBitmapFromFile(imageFile);
+                                Bitmap compressBitmap = ImageUtil.compressBitmap(originalImage, 10);
+                                file = ImageUtil.saveBitmapToCache(DripWriteActivity.this , compressBitmap, user.getNickname() + "_" + new Random().nextInt());
+                                compressBitmap.recycle();
+                            }else{
+                                file = imageFile;
+                            }
+
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        return file;
+                    }
+
+                    @Override
+                    protected void onPostExecute(final File file) {
+                        super.onPostExecute(file);
+                        if(file != null && file.exists()){
+                            S3Manager.getInstance().uploadFile(file, new S3Manager.TransferDataListener() {
+                                @Override
+                                public void onStateChanged(int id, TransferState state) {
+
+                                }
+
+                                @Override
+                                public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+
+                                }
+
+                                @Override
+                                public void onError(int id, Exception ex) {
+                                    Log.e(TAG, ex.toString());
+                                    dialog.dismiss();
+                                    Toast.makeText(DripWriteActivity.this, "이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                                    file.delete();
+
+                                }
+
+                                @Override
+                                public void onCompleteTransfer(File file, String url) {
+                                    writeRequst.setImageUrl(url);
+                                    file.delete();
+                                    NetworkManager.getInstance().request(writeRequst);
+                                }
+                            });
+                        }
+                    }
+                }.execute();
+            }else{
+                NetworkManager.getInstance().request(writeRequst);
+            }
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.login_need);
@@ -151,24 +213,8 @@ public class DripWriteActivity extends BaseActivity {
         if(resultCode == RESULT_OK){
             mImageUri = data.getData();
             try {
-                String path = getPath(mImageUri);
+                String path = S3Manager.getInstance().getPath(mImageUri);
                 ivBackground.setImageURI(mImageUri);
-//                S3Manager.getInstance().uploadFile(path, new TransferListener() {
-//                    @Override
-//                    public void onStateChanged(int id, TransferState state) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(int id, Exception ex) {
-//
-//                    }
-//                });
             } catch (URISyntaxException e) {
                 Toast.makeText(this,
                         "Unable to get the file from the given URI.  See error log for details",
@@ -176,85 +222,5 @@ public class DripWriteActivity extends BaseActivity {
                 Log.e(TAG, "Unable to upload file from the given uri" + e);
             }
         }
-    }
-
-    /*
-     * Gets the file path of the given Uri.
-     */
-    @SuppressLint("NewApi")
-    private String getPath(Uri uri) throws URISyntaxException {
-        final boolean needToCheckUri = Build.VERSION.SDK_INT >= 19;
-        String selection = null;
-        String[] selectionArgs = null;
-        // Uri is different in versions after KITKAT (Android 4.4), we need to
-        // deal with different Uris.
-        if (needToCheckUri && DocumentsContract.isDocumentUri(getApplicationContext(), uri)) {
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                return Environment.getExternalStorageDirectory() + "/" + split[1];
-            } else if (isDownloadsDocument(uri)) {
-                final String id = DocumentsContract.getDocumentId(uri);
-                uri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-            } else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-                if ("image".equals(type)) {
-                    uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-                selection = "_id=?";
-                selectionArgs = new String[] {
-                        split[1]
-                };
-            }
-        }
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {
-                    MediaStore.Images.Media.DATA
-            };
-            Cursor cursor = null;
-            try {
-                cursor = getContentResolver()
-                        .query(uri, projection, selection, selectionArgs, null);
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-            }
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-        return null;
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is ExternalStorageProvider.
-     */
-    public static boolean isExternalStorageDocument(Uri uri) {
-        return "com.android.externalstorage.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is DownloadsProvider.
-     */
-    public static boolean isDownloadsDocument(Uri uri) {
-        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
-    }
-
-    /**
-     * @param uri The Uri to check.
-     * @return Whether the Uri authority is MediaProvider.
-     */
-    public static boolean isMediaDocument(Uri uri) {
-        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 }

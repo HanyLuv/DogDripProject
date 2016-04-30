@@ -19,15 +19,29 @@ public class WriteDripRequest extends BasicRequest<Drip>{
 
     private static final String AUTHOR = "author";
     private static final String DRIP = "drip";
+    private static final String IMAGE_URL = "imageUrl";
 
     public WriteDripRequest(Context context, BaseApiResponse.OnResponseListener<Drip> responseListener) {
         super(context, API, responseListener);
     }
 
     public void setDataInfo(String author, String drip){
+        setDataInfo(author, drip, null);
+    }
+
+    public void setImageUrl(String imageUrl){
+        if(!TextUtils.isEmpty(imageUrl)){
+            getParams().put(IMAGE_URL, imageUrl);
+        }
+    }
+
+    public void setDataInfo(String author, String drip, String imageUrl){
         if(!TextUtils.isEmpty(author) && !TextUtils.isEmpty(drip)){
             getParams().put(AUTHOR, author);
             getParams().put(DRIP, drip);
+            if(!TextUtils.isEmpty(imageUrl)){
+                getParams().put(IMAGE_URL, imageUrl);
+            }
         }
     }
 
