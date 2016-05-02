@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +36,7 @@ import java.util.List;
 public class DripBookFragment extends BaseHorizontalScrollFragment {
 
     private TextView mDripPage = null;
-    private Button mWriteButton = null;
+    private ImageButton mWriteButton = null;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
         super.onCreateChildView(inflater, parent);
         View view = inflater.inflate(R.layout.fragment_drip_book, parent, true);
         mDripPage = (TextView) view.findViewById(R.id.tv_fragment_drip_book_page);
-        mWriteButton = (Button) view.findViewById(R.id.btn_fragment_drip_book_page_write);
+        mWriteButton = (ImageButton) view.findViewById(R.id.btn_fragment_drip_book_page_write);
         mWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
