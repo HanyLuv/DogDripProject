@@ -101,18 +101,7 @@ public class BaseActivity extends FragmentActivity {
         if(f != null){
             BaseFragment of = (BaseFragment) getCurrentFragmentManager().findFragmentByTag(f.getFragmentTag());
             FragmentTransaction ft = getCurrentFragmentManager().beginTransaction();
-            if (of != null) {
-                if(of.isDetached()){
-                    ft.replace(getFragmentAchorViewId(), of);
-                    if(bundle != null){
-                        of.setArguments(bundle);
-                    }
-                    ft.setBreadCrumbTitle(of.getFragmentTitle())
-                            .addToBackStack(of.getBackstackName())
-                            .commitAllowingStateLoss();
-                }
-                f = null;
-            } else {
+            if(of == null){
                 ft.add(getFragmentAchorViewId(), f, f.getFragmentTag());
                 if(bundle != null){
                     f.setArguments(bundle);
@@ -120,8 +109,33 @@ public class BaseActivity extends FragmentActivity {
                 ft.setBreadCrumbTitle(f.getFragmentTitle())
                         .addToBackStack(f.getBackstackName())
                         .commitAllowingStateLoss();
+            }else{
+                f = null;
             }
         }
+
+//        if(f != null){
+//            BaseFragment of = (BaseFragment) getCurrentFragmentManager().findFragmentByTag(f.getFragmentTag());
+//            FragmentTransaction ft = getCurrentFragmentManager().beginTransaction();
+//            if (of != null) {
+//                ft.replace(getFragmentAchorViewId(), of);
+//                if(bundle != null){
+//                    of.setArguments(bundle);
+//                }
+//                ft.setBreadCrumbTitle(of.getFragmentTitle())
+//                        .addToBackStack(of.getBackstackName())
+//                        .commitAllowingStateLoss();
+//                f = null;
+//            } else {
+//                ft.add(getFragmentAchorViewId(), f, f.getFragmentTag());
+//                if(bundle != null){
+//                    f.setArguments(bundle);
+//                }
+//                ft.setBreadCrumbTitle(f.getFragmentTitle())
+//                        .addToBackStack(f.getBackstackName())
+//                        .commitAllowingStateLoss();
+//            }
+//        }
     }
 
     public AlertDialog createAlertDialog(String msg,DialogInterface.OnClickListener okListener,DialogInterface.OnClickListener cancelListener) {

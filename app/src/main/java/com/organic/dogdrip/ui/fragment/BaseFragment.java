@@ -66,29 +66,48 @@ public class BaseFragment extends Fragment {
         }
 
         if(f != null){
-            BaseFragment of = (BaseFragment) getFragmentManager().findFragmentByTag(f.getFragmentTag());
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (of != null) {
-                f = null;
-            } else {
-                of = f;
-            }
-            ft.replace(getChildFragmentAnchorId(), of);
-            if(bundle != null){
-                of.setArguments(bundle);
-            }
-            ft.setBreadCrumbTitle(of.getFragmentTitle());
-            if(addBackStack){
-                for (int count = 0; count < getFragmentManager().getBackStackEntryCount(); count++) {
-                   if(of.getBackstackName().equals(getFragmentManager().getBackStackEntryAt(count).getName()));{
-                        return;
-                    }
+            BaseFragment of = (BaseFragment) getChildFragmentManager().findFragmentByTag(f.getFragmentTag());
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            if(of == null){
+                ft.add(getChildFragmentAnchorId(), f, f.getFragmentTag());
+                if(bundle != null){
+                    f.setArguments(bundle);
                 }
-                ft.addToBackStack(of.getBackstackName());
+                ft.setBreadCrumbTitle(f.getFragmentTitle());
+                if(addBackStack){
+                    ft.addToBackStack(f.getBackstackName());
+                }
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commitAllowingStateLoss();
+            }else{
+                f = null;
             }
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commitAllowingStateLoss();
         }
+
+//        if(f != null){
+//            BaseFragment of = (BaseFragment) getFragmentManager().findFragmentByTag(f.getFragmentTag());
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            if (of != null) {
+//                f = null;
+//            } else {
+//                of = f;
+//            }
+//            ft.replace(getChildFragmentAnchorId(), of);
+//            if(bundle != null){
+//                of.setArguments(bundle);
+//            }
+//            ft.setBreadCrumbTitle(of.getFragmentTitle());
+//            if(addBackStack){
+//                for (int count = 0; count < getFragmentManager().getBackStackEntryCount(); count++) {
+//                    if(of.getBackstackName().equals(getFragmentManager().getBackStackEntryAt(count).getName()));{
+//                        return;
+//                    }
+//                }
+//                ft.addToBackStack(of.getBackstackName());
+//            }
+//            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//            ft.commitAllowingStateLoss();
+//        }
     }
 
     protected int getChildFragmentAnchorId(){
