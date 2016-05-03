@@ -5,5 +5,6 @@
     <string name="kakao_app_key" translatable="false">62a6c93c93df8550596261b9027db954</string>
 
     <!-- -->
-    <string name="single_shared_object" translatable="false">single_shared_object</string>
+    <string name="single_shared_object_image" translatable="false">single_shared_object_image</string>
+    <string name="single_shared_object_text" translatable="false">single_shared_object_text</string>
 </resources>

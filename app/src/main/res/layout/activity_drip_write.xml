@@ -7,32 +7,33 @@
     android:padding="@dimen/write_fragment_padding">
 
 
-    <Button
-        android:id="@+id/btn_drip_write_commit"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:textColor="@android:color/white"
+    <ImageView
+        android:id="@+id/iv_drip_write_commit"
+        android:layout_width="@dimen/btn_write_drip_size"
+        android:layout_height="@dimen/btn_write_drip_size"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:transitionName="@string/single_shared_object"
+        android:transitionName="@string/single_shared_object_image"
+        android:src="@drawable/ic_create_white_24dp"
         android:background="@drawable/selector_circle_button"
+        android:scaleType="centerInside"
         android:text="@string/write_btn_write" />
 
-    <Button
-        android:id="@+id/btn_drip_write_add_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/btn_drip_write_commit"
-        android:transitionName="@string/single_shared_object"
-        android:background="@drawable/selector_circle_button"
-        android:text="@string/write_btn_add_image" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_drip_write_add_image"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toRightOf="@id/btn_drip_write_commit"-->
+        <!--android:transitionName="@string/single_shared_object"-->
+        <!--android:background="@drawable/selector_circle_button"-->
+        <!--android:text="@string/write_btn_add_image" />-->
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_drip_write_add_image">
+        android:layout_above="@id/iv_drip_write_commit">
         <ImageView
             android:id="@+id/iv_drip_write_image"
             android:layout_width="match_parent"

@@ -16,15 +16,19 @@ import com.organic.dogdrip.R;
 import com.organic.dogdrip.image.ImageLoadManager;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
+import com.organic.dogdrip.net.request.DripListRequest;
 import com.organic.dogdrip.net.request.LikeCheckRequest;
 import com.organic.dogdrip.net.request.LikeRequest;
+import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.drip.Like;
 import com.organic.dogdrip.vo.drip.LikeInfo;
+import com.organic.dogdrip.vo.drip.Reply;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-15.
@@ -94,6 +98,7 @@ public class DripPageFragment extends BaseFragment {
             if(mDrip.getImageurl() != null){
                 mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
             }
+            requestReplyList(mDrip);
         }
     }
 
@@ -135,6 +140,14 @@ public class DripPageFragment extends BaseFragment {
             }
         }
     };
+
+    private void requestReplyList(Drip drip){
+        if(drip != null && getActivity() != null){
+            ReplyListRequest request = new ReplyListRequest(getActivity(), onReplyListResponseListener);
+            request.setDripId(drip.getId());
+            request(request);
+        }
+    }
 
 
     private void requestLikeDrip(Drip drip) {
@@ -191,7 +204,6 @@ public class DripPageFragment extends BaseFragment {
 //     * BaseFragment에 공통으로 뺄까 고민중...
 //     *
 //     * @param format 포맷형식
-//     * @param value  값
 //     **/
 //
 //    private String createStringForFormat(String format, String value) {
@@ -208,4 +220,23 @@ public class DripPageFragment extends BaseFragment {
     public String getFragmentTitle() {
         return "Drip";
     }
+
+
+    private BaseApiResponse.OnResponseListener<List<Reply>> onReplyListResponseListener = new BaseApiResponse.OnResponseListener<List<Reply>>() {
+        @Override
+        public void onResponse(BaseApiResponse<List<Reply>> response) {
+            if(response != null){
+                if(response.getData() != null && getActivity() != null){
+                    mTvcomment.setText(String.format(getString(R.string.drip_comment), response.getData().size()));
+                }
+            }
+
+        }
+
+        @Override
+        public void onError(VolleyError error) {
+
+        }
+    };
+
 }

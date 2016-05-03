@@ -1,14 +1,11 @@
 package com.organic.dogdrip.ui.fragment.drip;
 
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,9 +38,9 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final DripListRequest request = new DripListRequest(getActivity(), new BaseApiResponse.OnResponseListener<ArrayList<Drip>>() {
+        final DripListRequest request = new DripListRequest(getActivity(), new BaseApiResponse.OnResponseListener<List<Drip>>() {
             @Override
-            public void onResponse(BaseApiResponse<ArrayList<Drip>> response) {
+            public void onResponse(BaseApiResponse<List<Drip>> response) {
                 if (!isRequestSuccessfully(response)) {
                     Log.d("Error",response.getMessage());
                 }else {
@@ -85,7 +82,7 @@ public class DripBookFragment extends BaseHorizontalScrollFragment {
             public void onClick(final View v) {
                 if(UserInfoManager.getInstance().getUserInfo() != null){
                     IntentMaker.startActivityWithSharedTransition(getActivity(),
-                            DripWriteActivity.class, new IntentMaker.SharedElemetData(mWriteButton, getString(R.string.single_shared_object)));
+                            DripWriteActivity.class, new IntentMaker.SharedElemetData(mWriteButton, getString(R.string.single_shared_object_image)));
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setMessage(R.string.login_need);

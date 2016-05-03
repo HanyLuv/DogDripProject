@@ -1,31 +1,21 @@
 package com.organic.dogdrip.ui;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
-import com.organic.dogdrip.aws.AWSUtil;
 import com.organic.dogdrip.aws.S3Manager;
 import com.organic.dogdrip.image.ImageUtil;
 import com.organic.dogdrip.manager.UserInfoManager;
@@ -38,8 +28,6 @@ import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.user.User;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Random;
 
@@ -52,25 +40,25 @@ public class DripWriteActivity extends BaseActivity {
 
     private ImageView ivBackground;
     private EditText etWrite;
-    private Button btnWrite;
-    private Button btnAddImage = null;
+    private ImageView mWriteDrip;
+//    private Button btnAddImage = null;
     private Uri mImageUri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_write);
+        setContentView(R.layout.activity_drip_write);
         initView();
     }
 
     private void initView(){
 
         etWrite = (EditText) findViewById(R.id.et_drip_write_input);
-        btnWrite = (Button) findViewById(R.id.btn_drip_write_commit);
-        btnAddImage  = (Button) findViewById(R.id.btn_drip_write_add_image);
+        mWriteDrip = (ImageView) findViewById(R.id.iv_drip_write_commit);
+//        btnAddImage  = (Button) findViewById(R.id.btn_drip_write_add_image);
         ivBackground = (ImageView) findViewById(R.id.iv_drip_write_image);
         ivBackground.setAlpha(0.5f);
-        btnWrite.setOnClickListener(new View.OnClickListener() {
+        mWriteDrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(etWrite.getText().toString()) && UserInfoManager.getInstance().getUserInfo() != null) {
@@ -92,15 +80,15 @@ public class DripWriteActivity extends BaseActivity {
             }
         });
 
-        btnAddImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent , 0 );
-            }
-        });
+//        btnAddImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent galleryIntent = new Intent(
+//                        Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(galleryIntent , 0 );
+//            }
+//        });
     }
 
     private void requestWriteDrip() {

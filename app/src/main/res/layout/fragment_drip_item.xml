@@ -22,6 +22,7 @@
             android:layout_marginRight="@dimen/drip_page_drip_margin_left"
             android:layout_marginBottom="@dimen/drip_page_drip_margin_bottom"
             android:textColor="@color/black"
+            android:transitionName="@string/single_shared_object_text"
             android:textSize="@dimen/drip_page_drip_txt_size" />
 
         <TextView
@@ -62,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="@dimen/drip_page_common_padding"
-                android:text="@string/drip_comment"
                 android:textColor="@color/black" />
 
             <TextView
@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:padding="@dimen/drip_page_common_padding"
-                android:text="@string/drip_recommend"
                 android:textColor="@color/black" />
         </RelativeLayout>
     </LinearLayout>

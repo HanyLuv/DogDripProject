@@ -20,6 +20,6 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/selector_circle_button"
         android:src="@drawable/ic_create_white_24dp"
-        android:transitionName="@string/single_shared_object" />
+        android:transitionName="@string/single_shared_object_image" />
 
 </RelativeLayout>
