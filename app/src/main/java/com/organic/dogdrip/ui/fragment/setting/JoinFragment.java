@@ -73,6 +73,7 @@ public class JoinFragment extends BaseHorizontalScrollFragment {
                     return;
                 }
                 showToast(response.getData().getNickname() + getResources().getString(R.string.join_welcome));
+                getFragmentManager().popBackStack();
             }
 
             @Override

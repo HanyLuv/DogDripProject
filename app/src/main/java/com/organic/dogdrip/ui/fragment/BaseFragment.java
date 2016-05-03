@@ -79,6 +79,11 @@ public class BaseFragment extends Fragment {
             }
             ft.setBreadCrumbTitle(of.getFragmentTitle());
             if(addBackStack){
+                for (int count = 0; count < getFragmentManager().getBackStackEntryCount(); count++) {
+                   if(of.getBackstackName().equals(getFragmentManager().getBackStackEntryAt(count).getName()));{
+                        return;
+                    }
+                }
                 ft.addToBackStack(of.getBackstackName());
             }
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

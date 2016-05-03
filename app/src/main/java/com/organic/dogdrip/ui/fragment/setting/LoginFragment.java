@@ -3,7 +3,7 @@ package com.organic.dogdrip.ui.fragment.setting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +17,18 @@ import com.android.volley.VolleyError;
 import com.facebook.FacebookException;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
-import com.kakao.APIErrorResult;
-import com.kakao.MeResponseCallback;
-import com.kakao.UserProfile;
 import com.organic.dogdrip.R;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.ui.FaceBookLoginActivity;
-import com.organic.dogdrip.ui.MainActivity;
 import com.organic.dogdrip.ui.dialog.FootProgressDialog;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.utils.Log;
 import com.organic.dogdrip.vo.user.User;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-18.
@@ -119,13 +117,25 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doJoin() {
+        SettingBookFragment settingBookFragment = null;
         JoinFragment joinFragment = new JoinFragment();
-        SettingBookFragment fragment = (SettingBookFragment) getParentFragment();
-        fragment.getFragmentManager().beginTransaction().add(fragment.getChildFragmentAnchorId(), joinFragment).addToBackStack(joinFragment.getBackstackName()).commit();
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment instanceof SettingBookFragment) {
+                settingBookFragment = (SettingBookFragment) fragment;
+                break;
+            }
+        }
+        if (settingBookFragment != null) {
+            getFragmentManager().beginTransaction()
+                    .add(settingBookFragment.getChildFragmentAnchorId(), joinFragment)
+                    .addToBackStack(joinFragment.getBackstackName()).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
+        }
     }
 
 
-    private void doKaKaoLogin(){
+    private void doKaKaoLogin() {
         UserInfoManager.getInstance().kakaoLogin(getActivity(),onJoinRequestListener);
     }
     private void getLoginInfo() {
