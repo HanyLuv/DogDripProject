@@ -91,6 +91,19 @@ public class IntentMaker {
         }
     }
 
+    public static void startActivityWithSharedTransition(Activity activity, Intent intent, SharedElemetData... datas){
+        if(isAboveL()){
+            PairBuilder builder = PairBuilder.makeBuilder();
+            for(SharedElemetData data : datas){
+                builder.addPair(data.toPair());
+            }
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, builder.build());
+            activity.startActivity(intent, options.toBundle());
+        }else {
+            activity.startActivity(intent);
+        }
+    }
+
     public static boolean isAboveL(){
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }

@@ -9,19 +9,19 @@ import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.vo.drip.Reply;
 
 import java.lang.reflect.Type;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by HanyLuv on 2016-03-22.
  */
-public class ReplyListRequest extends BasicRequest<List<Reply>>{
+public class ReplyListRequest extends BasicRequest<ArrayList<Reply>>{
 
     private static final String API = Constants.API_SERVER_HOST + "/reply/get";
 
     private static final String AUTHOR = "author";
     private static final String DRIP_ID = "dripId";
 
-    public ReplyListRequest(Context context, BaseApiResponse.OnResponseListener<List<Reply>> responseListener) {
+    public ReplyListRequest(Context context, BaseApiResponse.OnResponseListener<ArrayList<Reply>> responseListener) {
         super(context, API, responseListener);
     }
 
@@ -46,6 +46,6 @@ public class ReplyListRequest extends BasicRequest<List<Reply>>{
 
     @Override
     protected Type getClassType() {
-        return new TypeToken<List<Reply>>(){}.getType();
+        return new TypeToken<ArrayList<Reply>>(){}.getType();
     }
 }

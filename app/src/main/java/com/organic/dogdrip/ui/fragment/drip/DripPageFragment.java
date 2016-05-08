@@ -24,7 +24,9 @@ import com.organic.dogdrip.net.request.LikeRequest;
 import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
 import com.organic.dogdrip.ui.ImageDetailActivity;
+import com.organic.dogdrip.ui.DripDetailActivity;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
+import com.organic.dogdrip.utils.IntentMaker;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.drip.Like;
 import com.organic.dogdrip.vo.drip.LikeInfo;
@@ -49,6 +51,8 @@ public class DripPageFragment extends BaseFragment {
 
     private Drip mDrip = null;
     private int mPagePosition = -1;
+
+    private ArrayList<Reply> mReplyList = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,12 +102,22 @@ public class DripPageFragment extends BaseFragment {
             mTvRecommend.setText(recommend);
 //        mTvRecommend.setOnClickListener(recommendCheckClickListener); //추천인 조회
             mTvRecommend.setOnClickListener(recommendClickListener); //추천하기
-//            if (!TextUtils.isEmpty(mDrip.getImageurl())) {
-            if (!TextUtils.isEmpty(mDrip.getImageurl())&& !(mDrip.getImageurl().equals("null"))) { //이부분 값이 없으면 정말 "null" String이 내려와욥 선배님!
+            if (!TextUtils.isEmpty(mDrip.getImageurl())) {
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
                 mImageView.setOnClickListener(new OnImageClickListener(mDrip.getImageurl()));
             }
+
+            mTvcomment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), DripDetailActivity.class);
+                    intent.putExtra(Drip.class.getName(), mDrip);
+                    intent.putParcelableArrayListExtra(Reply.class.getName(), mReplyList);
+                    IntentMaker.startActivityWithSharedTransition(getActivity(), intent,
+                            new IntentMaker.SharedElemetData(mTvDrip, getString(R.string.single_shared_object_text)));
+                }
+            });
             requestReplyList(mDrip);
         }
     }
@@ -247,9 +261,9 @@ public class DripPageFragment extends BaseFragment {
     }
 
 
-    private BaseApiResponse.OnResponseListener<List<Reply>> onReplyListResponseListener = new BaseApiResponse.OnResponseListener<List<Reply>>() {
+    private BaseApiResponse.OnResponseListener<ArrayList<Reply>> onReplyListResponseListener = new BaseApiResponse.OnResponseListener<ArrayList<Reply>>() {
         @Override
-        public void onResponse(BaseApiResponse<List<Reply>> response) {
+        public void onResponse(BaseApiResponse<ArrayList<Reply>> response) {
             if(response != null){
                 if(response.getData() != null && getActivity() != null){
                     mTvcomment.setText(String.format(getString(R.string.drip_comment), response.getData().size()));

@@ -48,7 +48,7 @@ public class BaseFragment extends Fragment {
     }
 
     public String getBackstackName(){
-        return this.getClass().getName();
+        return getClass().getName();
     }
 
     public void addChildFragment(Class<? extends BaseFragment> fClss, Bundle bundle){

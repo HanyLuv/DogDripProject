@@ -43,6 +43,10 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name="com.organic.dogdrip.ui.DripDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.organic.dogdrip.ui.ImageBuildActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -12,16 +12,13 @@ import com.android.volley.VolleyError;
 import com.organic.dogdrip.R;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.request.JoinRequest;
-import com.organic.dogdrip.ui.adapter.BaseFragmentPagerAdapter;
-import com.organic.dogdrip.ui.fragment.BaseHorizontalScrollFragment;
+import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.vo.user.User;
-
-import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-18.
  */
-public class JoinFragment extends BaseHorizontalScrollFragment {
+public class JoinFragment extends BaseFragment {
 
     private EditText etEmail;
     private EditText etNickname;
@@ -32,18 +29,12 @@ public class JoinFragment extends BaseHorizontalScrollFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_join, container, false);
-
         etEmail = (EditText) view.findViewById(R.id.et_email);
         etNickname = (EditText) view.findViewById(R.id.et_nickname);
         etPassword = (EditText) view.findViewById(R.id.et_password);
         btnJoin = (Button) view.findViewById(R.id.bt_join);
 
         return view;
-    }
-
-    @Override
-    protected BaseFragmentPagerAdapter makeFragmentPagerAdapter(List pageDatas) {
-        return null;
     }
 
     @Override
@@ -84,15 +75,5 @@ public class JoinFragment extends BaseHorizontalScrollFragment {
 
         joinRequest.setUserInfo(email, password, nickname);
         request(joinRequest);
-    }
-
-    @Override
-    public String getFragmentTag() {
-        return getClass().getSimpleName();
-    }
-
-    @Override
-    public String getFragmentTitle() {
-        return null;
     }
 }
