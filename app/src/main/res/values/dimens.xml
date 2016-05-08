@@ -23,10 +23,13 @@
     <dimen name="drip_page_divider_left_top">@dimen/drip_page_divider_margin_top</dimen>
     <dimen name="drip_page_divider_right_top">@dimen/drip_page_divider_margin_top</dimen>
     <dimen name="drip_page_common_padding">10dp</dimen>
-    <dimen name="drip_page_drip_margin_right">30dp</dimen>
-    <dimen name="drip_page_drip_margin_left">30dp</dimen>
+    <dimen name="drip_page_drip_padding_left">10dp</dimen>
+    <dimen name="drip_page_drip_padding_right">10dp</dimen>
     <dimen name="drip_page_drip_margin_bottom">10dp</dimen>
     <dimen name="drip_page_author_margin_right">30dp</dimen>
+    <dimen name="drip_page_image_margin_right">10dp</dimen>
+    <dimen name="drip_page_image_margin_left">10dp</dimen>
+    <dimen name="drip_page_image_height">300dp</dimen>
     <dimen name="drip_page_write_date_margin_right">30dp</dimen>
     <dimen name="drip_page_write_date_txt_size">8dp</dimen>
     <dimen name="drip_page_drip_txt_size">28dp</dimen>

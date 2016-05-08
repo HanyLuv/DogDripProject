@@ -3,6 +3,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://jitpack.io" }
 }
 
 
@@ -61,4 +62,5 @@ dependencies {
     compile 'com.amazonaws:aws-android-sdk-cognito:2.+'
     compile 'com.amazonaws:aws-android-sdk-s3:2.+'
     compile 'com.amazonaws:aws-android-sdk-ddb:2.+'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
 }

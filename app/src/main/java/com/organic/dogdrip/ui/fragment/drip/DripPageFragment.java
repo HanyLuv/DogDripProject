@@ -2,9 +2,11 @@ package com.organic.dogdrip.ui.fragment.drip;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.organic.dogdrip.net.request.LikeCheckRequest;
 import com.organic.dogdrip.net.request.LikeRequest;
 import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
+import com.organic.dogdrip.ui.ImageDetailActivity;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.drip.Like;
@@ -95,10 +98,32 @@ public class DripPageFragment extends BaseFragment {
             mTvRecommend.setText(recommend);
 //        mTvRecommend.setOnClickListener(recommendCheckClickListener); //추천인 조회
             mTvRecommend.setOnClickListener(recommendClickListener); //추천하기
-            if(mDrip.getImageurl() != null){
+//            if (!TextUtils.isEmpty(mDrip.getImageurl())) {
+            if (!TextUtils.isEmpty(mDrip.getImageurl())&& !(mDrip.getImageurl().equals("null"))) { //이부분 값이 없으면 정말 "null" String이 내려와욥 선배님!
+                mImageView.setVisibility(View.VISIBLE);
                 mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
+                mImageView.setOnClickListener(new OnImageClickListener(mDrip.getImageurl()));
             }
             requestReplyList(mDrip);
+        }
+    }
+
+    private class OnImageClickListener implements View.OnClickListener {
+
+        private String mImageUrl;
+
+        public OnImageClickListener(String imageUrl) {
+            mImageUrl = imageUrl;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(!TextUtils.isEmpty(mImageUrl)){
+                Intent intent = new Intent(getActivity(),ImageDetailActivity.class);
+                intent.putExtra("imageUrl",mImageUrl);
+                startActivity(intent);
+            }
+
         }
     }
 

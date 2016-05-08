@@ -5,25 +5,33 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/iv_drip_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_drip_drip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/drip_page_drip_margin_right"
-            android:layout_marginRight="@dimen/drip_page_drip_margin_left"
             android:layout_marginBottom="@dimen/drip_page_drip_margin_bottom"
+            android:paddingLeft="@dimen/drip_page_drip_padding_left"
+            android:paddingRight="@dimen/drip_page_drip_padding_right"
             android:textColor="@color/black"
-            android:transitionName="@string/single_shared_object_text"
-            android:textSize="@dimen/drip_page_drip_txt_size" />
+            android:textSize="@dimen/drip_page_drip_txt_size"
+            android:transitionName="@string/single_shared_object_text" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/iv_drip_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/drip_page_image_height"
+            android:layout_marginBottom="@dimen/drip_page_drip_margin_bottom"
+            android:layout_marginLeft="@dimen/drip_page_image_margin_left"
+            android:layout_marginRight="@dimen/drip_page_image_margin_right"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_drip_author"
@@ -40,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/drip_page_write_date_margin_right"
-            android:text="2016.5.8 11:33"
             android:textColor="@color/black"
             android:textSize="@dimen/drip_page_write_date_txt_size" />
 
