@@ -3,7 +3,6 @@ package com.organic.dogdrip.ui.fragment.setting;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +78,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    getLoginInfo();
+                    getLoginInfo(false);
                     return true;
                 }
                 return false;
@@ -89,7 +88,7 @@ public class LoginFragment extends BaseFragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoginInfo();
+                getLoginInfo(false);
             }
         });
 
@@ -138,19 +137,19 @@ public class LoginFragment extends BaseFragment {
     private void doKaKaoLogin() {
         UserInfoManager.getInstance().kakaoLogin(getActivity(),onJoinRequestListener);
     }
-    private void getLoginInfo() {
+    private void getLoginInfo(boolean external) {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
-        doLogin(email,password);
+        doLogin(email,password, external);
     }
 
-    private void getLoginInfo(User user) {
+    private void getLoginInfo(User user, boolean external) {
         String email = user.getEmail();
         String password = user.getEmail();
-        doLogin(email, password);
+        doLogin(email, password, external);
     }
 
-    private void doLogin(String email,String password){
+    private void doLogin(String email,String password, boolean external){
         final FootProgressDialog dialog = new FootProgressDialog(getActivity());
         dialog.show();
         UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
@@ -165,7 +164,7 @@ public class LoginFragment extends BaseFragment {
                 showToast(errorMessage);
                 dialog.dismiss();
             }
-        });
+        }, external);
     }
 
     private void doFaceBookLogin() {
@@ -186,7 +185,7 @@ public class LoginFragment extends BaseFragment {
         @Override
         public void onResponse(BaseApiResponse<User> response) {
             if (response.getData() != null) {
-                getLoginInfo(response.getData());
+                getLoginInfo(response.getData(), true);
             }
         }
 
