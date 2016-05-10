@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.organic.dogdrip.R;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.ui.view.DetailPhotoView;
-import com.organic.dogdrip.utils.AnimationUtil;
 
 /**
  * Created by HanyLuv on 2016-05-09.
@@ -37,13 +36,6 @@ public class ImageDetailFragment extends BaseFragment {
         if (bitmap != null && !bitmap.isRecycled()) {
             mDetailImageView.setImageBitmap(bitmap);
         }
-        view.setVisibility(View.INVISIBLE);
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                AnimationUtil.circularRevealExpend(view, null);
-                view.setVisibility(View.VISIBLE);
-            }
-        });
     }
+
 }

@@ -88,7 +88,8 @@ public class BaseActivity extends FragmentActivity {
      * @param fClss BaseFragment 를 상속 받은 Fragment의 class
      * @param bundle 전달한 Fragment Argument
      */
-    public void addFragment(Class<? extends BaseFragment> fClss, Bundle bundle) {
+    public void addFragment(Class<? extends BaseFragment> fClss, Bundle bundle,
+                            int enterTransition, int exitTransition) {
         BaseFragment f = null;
         try {
             f = fClss.newInstance();
@@ -100,7 +101,8 @@ public class BaseActivity extends FragmentActivity {
 
         if(f != null){
             FragmentTransaction ft = getCurrentFragmentManager().beginTransaction();
-            ft.replace(getFragmentAchorViewId(), f, f.getFragmentTag());
+            ft.setCustomAnimations(enterTransition, exitTransition, enterTransition, exitTransition)
+                    .replace(getFragmentAchorViewId(), f, f.getFragmentTag());
             if(bundle != null){
                 f.setArguments(bundle);
             }
@@ -108,6 +110,10 @@ public class BaseActivity extends FragmentActivity {
                     .addToBackStack(f.getBackstackName())
                     .commitAllowingStateLoss();
         }
+    }
+
+    public void addFragment(Class<? extends BaseFragment> fClss, Bundle bundle){
+        addFragment(fClss, bundle, R.anim.enter_smooth, R.anim.exit_smooth);
     }
 
     public AlertDialog createAlertDialog(String msg,DialogInterface.OnClickListener okListener,DialogInterface.OnClickListener cancelListener) {

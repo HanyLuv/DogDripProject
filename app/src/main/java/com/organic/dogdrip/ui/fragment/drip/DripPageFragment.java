@@ -114,7 +114,8 @@ public class DripPageFragment extends BaseFragment {
                                 Bitmap bm = ((BitmapDrawable)((ImageView) v).getDrawable()).getBitmap();
                                 Bundle b = new Bundle();
                                 b.putParcelable(Bitmap.class.getName(), bm);
-                                ((BaseActivity) getActivity()).addFragment(ImageDetailFragment.class, b);
+                                ((BaseActivity) getActivity()).addFragment(ImageDetailFragment.class, b
+                                        , R.anim.enter_transform, R.anim.exit_transform);
                             }
                         }
                     }
