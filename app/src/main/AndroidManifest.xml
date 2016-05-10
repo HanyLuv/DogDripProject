@@ -49,9 +49,6 @@
         <activity
             android:name="com.organic.dogdrip.ui.ImageBuildActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.organic.dogdrip.ui.ImageDetailActivity"
-            android:screenOrientation="portrait" />
 
         <service
             android:name="com.organic.dogdrip.service.GCMService"

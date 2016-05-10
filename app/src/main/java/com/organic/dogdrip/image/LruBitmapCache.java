@@ -24,9 +24,4 @@ public class LruBitmapCache extends LruCache<String, Bitmap> implements ImageLoa
     public void putBitmap(String url, Bitmap bitmap) {
         put(url, bitmap);
     }
-
-    @Override
-    protected int sizeOf(String key, Bitmap value) {
-        return value.getRowBytes() * value.getHeight();
-    }
 }

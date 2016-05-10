@@ -3,6 +3,8 @@ package com.organic.dogdrip.ui.fragment.drip;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -18,12 +21,11 @@ import com.organic.dogdrip.R;
 import com.organic.dogdrip.image.ImageLoadManager;
 import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
-import com.organic.dogdrip.net.request.DripListRequest;
 import com.organic.dogdrip.net.request.LikeCheckRequest;
 import com.organic.dogdrip.net.request.LikeRequest;
 import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
-import com.organic.dogdrip.ui.ImageDetailActivity;
+import com.organic.dogdrip.ui.ImageDetailFragment;
 import com.organic.dogdrip.ui.DripDetailActivity;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.utils.IntentMaker;
@@ -33,7 +35,6 @@ import com.organic.dogdrip.vo.drip.LikeInfo;
 import com.organic.dogdrip.vo.drip.Reply;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by HanyLuv on 2016-03-15.
@@ -105,7 +106,19 @@ public class DripPageFragment extends BaseFragment {
             if (!TextUtils.isEmpty(mDrip.getImageurl())) {
                 mImageView.setVisibility(View.VISIBLE);
                 mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
-                mImageView.setOnClickListener(new OnImageClickListener(mDrip.getImageurl()));
+                mImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(getActivity() != null && getActivity() instanceof BaseActivity){
+                            if(v != null && v instanceof ImageView && ((ImageView) v).getDrawable() != null){
+                                Bitmap bm = ((BitmapDrawable)((ImageView) v).getDrawable()).getBitmap();
+                                Bundle b = new Bundle();
+                                b.putParcelable(Bitmap.class.getName(), bm);
+                                ((BaseActivity) getActivity()).addFragment(ImageDetailFragment.class, b);
+                            }
+                        }
+                    }
+                });
             }
 
             mTvcomment.setOnClickListener(new View.OnClickListener() {
@@ -119,25 +132,6 @@ public class DripPageFragment extends BaseFragment {
                 }
             });
             requestReplyList(mDrip);
-        }
-    }
-
-    private class OnImageClickListener implements View.OnClickListener {
-
-        private String mImageUrl;
-
-        public OnImageClickListener(String imageUrl) {
-            mImageUrl = imageUrl;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if(!TextUtils.isEmpty(mImageUrl)){
-                Intent intent = new Intent(getActivity(),ImageDetailActivity.class);
-                intent.putExtra("imageUrl",mImageUrl);
-                startActivity(intent);
-            }
-
         }
     }
 
