@@ -151,21 +151,23 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doLogin(String email,String password, boolean external){
-        final FootProgressDialog dialog = new FootProgressDialog(getActivity());
-        dialog.show();
-        UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
-            @Override
-            public void onLoginCompleted(User user) {
-                showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
-                dialog.dismiss();
-            }
+        if(getActivity() != null){
+            final FootProgressDialog dialog = new FootProgressDialog(getActivity());
+            dialog.show();
+            UserInfoManager.getInstance().login(email, password, new UserInfoManager.OnUserLoginListener() {
+                @Override
+                public void onLoginCompleted(User user) {
+                    showToast(user.getNickname() + getResources().getString(R.string.login_welcome));
+                    dialog.dismiss();
+                }
 
-            @Override
-            public void onLoginFailed(String errorMessage) {
-                showToast(errorMessage);
-                dialog.dismiss();
-            }
-        }, external);
+                @Override
+                public void onLoginFailed(String errorMessage) {
+                    showToast(errorMessage);
+                    dialog.dismiss();
+                }
+            }, external);
+        }
     }
 
     private void doFaceBookLogin() {
