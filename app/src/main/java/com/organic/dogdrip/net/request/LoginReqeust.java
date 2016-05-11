@@ -5,8 +5,10 @@ import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.organic.dogdrip.Constants;
+import com.organic.dogdrip.manager.UserInfoManager;
 import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.preferences.ConfigPreferenceManager;
+import com.organic.dogdrip.preferences.UserInfoPreferenceManager;
 import com.organic.dogdrip.vo.user.User;
 
 import java.lang.reflect.Type;
@@ -69,7 +71,8 @@ public class LoginReqeust extends BasicRequest<User> {
     }
 
     public void setUserInfoForAutoLogin(String email, long lastConn){
-        setUserInfoForAutoLogin(email, lastConn, false);
+        boolean isExternal = UserInfoManager.isValidEmail(email);
+        setUserInfoForAutoLogin(email, lastConn, !isExternal);
     }
 
 }
