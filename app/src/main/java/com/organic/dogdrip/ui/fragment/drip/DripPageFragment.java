@@ -2,7 +2,6 @@ package com.organic.dogdrip.ui.fragment.drip;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -26,9 +25,8 @@ import com.organic.dogdrip.net.request.LikeRequest;
 import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
 import com.organic.dogdrip.ui.ImageDetailFragment;
-import com.organic.dogdrip.ui.DripDetailActivity;
+import com.organic.dogdrip.ui.DripReplyListFragment;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
-import com.organic.dogdrip.utils.IntentMaker;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.drip.Like;
 import com.organic.dogdrip.vo.drip.LikeInfo;
@@ -125,11 +123,14 @@ public class DripPageFragment extends BaseFragment {
             mTvcomment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), DripDetailActivity.class);
-                    intent.putExtra(Drip.class.getName(), mDrip);
-                    intent.putParcelableArrayListExtra(Reply.class.getName(), mReplyList);
-                    IntentMaker.startActivityWithSharedTransition(getActivity(), intent,
-                            new IntentMaker.SharedElemetData(mTvDrip, getString(R.string.single_shared_object_text)));
+
+                    if(getActivity() != null && getActivity() instanceof BaseActivity){
+                        Bundle b = new Bundle();
+                        b.putParcelable(Drip.class.getName(), mDrip);
+                        b.putParcelableArrayList(Reply.class.getName(), mReplyList);
+                        ((BaseActivity) getActivity()).addFragment(DripReplyListFragment.class, b,
+                                R.anim.enter_translate_up, R.anim.exit_translate_down);
+                    }
                 }
             });
             requestReplyList(mDrip);

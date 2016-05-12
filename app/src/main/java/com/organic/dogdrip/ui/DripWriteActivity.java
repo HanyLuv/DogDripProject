@@ -23,6 +23,7 @@ import com.organic.dogdrip.net.BaseApiResponse;
 import com.organic.dogdrip.net.NetworkManager;
 import com.organic.dogdrip.net.request.WriteDripRequest;
 import com.organic.dogdrip.ui.dialog.FootProgressDialog;
+import com.organic.dogdrip.utils.AnimationUtil;
 import com.organic.dogdrip.utils.Log;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.user.User;
@@ -41,7 +42,7 @@ public class DripWriteActivity extends BaseActivity {
     private ImageView ivBackground;
     private EditText etWrite;
     private ImageView mWriteDrip;
-//    private Button btnAddImage = null;
+    private ImageView mAddImage = null;
     private Uri mImageUri = null;
 
     @Override
@@ -55,7 +56,7 @@ public class DripWriteActivity extends BaseActivity {
 
         etWrite = (EditText) findViewById(R.id.et_drip_write_input);
         mWriteDrip = (ImageView) findViewById(R.id.iv_drip_write_commit);
-//        btnAddImage  = (Button) findViewById(R.id.btn_drip_write_add_image);
+        mAddImage  = (ImageView) findViewById(R.id.iv_drip_write_add_image);
         ivBackground = (ImageView) findViewById(R.id.iv_drip_write_image);
         ivBackground.setAlpha(0.5f);
         mWriteDrip.setOnClickListener(new View.OnClickListener() {
@@ -80,15 +81,22 @@ public class DripWriteActivity extends BaseActivity {
             }
         });
 
-//        btnAddImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent galleryIntent = new Intent(
-//                        Intent.ACTION_PICK,
-//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(galleryIntent , 0 );
-//            }
-//        });
+        mAddImage.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AnimationUtil.circularRevealExpend(mAddImage, null);
+                mAddImage.setVisibility(View.VISIBLE);
+            }
+        }, 500L);
+        mAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent , 0 );
+            }
+        });
     }
 
     private void requestWriteDrip() {

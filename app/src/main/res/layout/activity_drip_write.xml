@@ -19,16 +19,16 @@
         android:scaleType="centerInside"
         android:text="@string/write_btn_write" />
 
-    <!--<Button-->
-        <!--android:id="@+id/btn_drip_write_add_image"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_toRightOf="@id/btn_drip_write_commit"-->
-        <!--android:transitionName="@string/single_shared_object"-->
-        <!--android:background="@drawable/selector_circle_button"-->
-        <!--android:text="@string/write_btn_add_image" />-->
+    <ImageView
+        android:id="@+id/iv_drip_write_add_image"
+        android:layout_width="@dimen/btn_write_drip_size"
+        android:layout_height="@dimen/btn_write_drip_size"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_local_see_white_24dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/selector_circle_button"
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:layout_width="match_parent"
