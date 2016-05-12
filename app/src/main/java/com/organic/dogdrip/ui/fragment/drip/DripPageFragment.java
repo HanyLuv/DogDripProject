@@ -25,7 +25,6 @@ import com.organic.dogdrip.net.request.LikeRequest;
 import com.organic.dogdrip.net.request.ReplyListRequest;
 import com.organic.dogdrip.ui.BaseActivity;
 import com.organic.dogdrip.ui.ImageDetailFragment;
-import com.organic.dogdrip.ui.DripReplyListFragment;
 import com.organic.dogdrip.ui.fragment.BaseFragment;
 import com.organic.dogdrip.vo.drip.Drip;
 import com.organic.dogdrip.vo.drip.Like;
@@ -60,19 +59,13 @@ public class DripPageFragment extends BaseFragment {
         mPagePosition = getArguments().getInt(KEY_ARGUMENT_PAGER_POSITION, -1);
     }
 
-    public static Fragment newInstance(Bundle bundle) {
+    public static DripPageFragment newInstance(Drip drip, int pos) {
+        Bundle b = new Bundle();
+        b.putParcelable(KEY_ARGUMENT_DRIP, drip);
+        b.putInt(KEY_ARGUMENT_PAGER_POSITION, pos);
         DripPageFragment dripFragment = new DripPageFragment();
-        dripFragment.setArguments(bundle);
+        dripFragment.setArguments(b);
         return dripFragment;
-    }
-
-    public static Bundle makeArgument(Drip drip){
-        Bundle argument = null;
-        if(drip != null){
-            argument = new Bundle();
-            argument.putParcelable(KEY_ARGUMENT_DRIP, drip);
-        }
-        return argument;
     }
 
     @Nullable
@@ -123,7 +116,6 @@ public class DripPageFragment extends BaseFragment {
             mTvcomment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if(getActivity() != null && getActivity() instanceof BaseActivity){
                         Bundle b = new Bundle();
                         b.putParcelable(Drip.class.getName(), mDrip);
@@ -134,6 +126,12 @@ public class DripPageFragment extends BaseFragment {
                 }
             });
             requestReplyList(mDrip);
+        }
+    }
+
+    public void updateCommentCount(){
+        if(mTvRecommend != null && mReplyList != null){
+            mTvcomment.setText(String.format(getString(R.string.drip_comment), mReplyList.size()));
         }
     }
 
@@ -263,6 +261,7 @@ public class DripPageFragment extends BaseFragment {
             if(response != null){
                 if(response.getData() != null && getActivity() != null){
                     mTvcomment.setText(String.format(getString(R.string.drip_comment), response.getData().size()));
+                    mReplyList = response.getData();
                 }
             }
 

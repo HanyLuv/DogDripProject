@@ -38,7 +38,7 @@
             android:id="@+id/iv_drip_write_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerInside"/>
 
         <EditText
             android:id="@+id/et_drip_write_input"

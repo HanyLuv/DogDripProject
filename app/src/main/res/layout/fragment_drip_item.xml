@@ -30,6 +30,7 @@
             android:layout_marginBottom="@dimen/drip_page_drip_margin_bottom"
             android:layout_marginLeft="@dimen/drip_page_image_margin_left"
             android:layout_marginRight="@dimen/drip_page_image_margin_right"
+            android:scaleType="centerCrop"
             android:visibility="gone" />
 
         <TextView
