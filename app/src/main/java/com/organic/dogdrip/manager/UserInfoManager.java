@@ -211,7 +211,7 @@ public class UserInfoManager {
 
     private void saveUserInfo(User user){
         if(user != null){
-            mPref.saveLoginId(user.getEmail());
+            mPref.saveLoginId(user.getUserid());
             mPref.saveLastConnection(user.getLastconn());
             mPref.saveNickName(user.getNickname());
         }else{
@@ -269,7 +269,7 @@ public class UserInfoManager {
                             String name = userInfo.getString("name");
                             String id = userInfo.getString("id");
                             User user = new User();
-                            user.setEmail(id);
+                            user.setUserid(id);
                             user.setPassword(id);
                             user.setNickname(name);
                             requestJoin(user,joinRequestListener);
@@ -307,8 +307,8 @@ public class UserInfoManager {
 
     /** 회원가입 */
     public void requestJoin(User user , final OnJoinRequestListener joinRequestListener) {
-        String email = user.getEmail();
-        String password = user.getEmail();
+        String email = user.getUserid();
+        String password = user.getUserid();
         String nickname = user.getNickname();
 
         JoinRequest joinRequest = new JoinRequest(mContext, new BaseApiResponse.OnResponseListener<User>() {
@@ -395,7 +395,7 @@ public class UserInfoManager {
                 String name = userProfile.getNickname();
                 String id = String.valueOf(userProfile.getId());
                 User user = new User();
-                user.setEmail(id);
+                user.setUserid(id);
                 user.setPassword(id);
                 user.setNickname(name);
                 requestJoin(user,joinRequestListener);

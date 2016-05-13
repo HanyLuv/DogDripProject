@@ -7,11 +7,11 @@ import android.os.Parcelable;
  * Created by kwonojin on 16. 3. 15..
  */
 public class User implements Parcelable {
-    private String email = null;
+    private String userid = null;
     private String nickname = null;
     private String password = null;
-    private String imageurl = null;
-    private long createdate = 0;
+    private String userimage = null;
+    private long joindate = 0;
     private long lastconn = 0;
     private int point = 0;
 
@@ -20,36 +20,20 @@ public class User implements Parcelable {
 
     public User(Parcel parcel) {
         point = parcel.readInt();
-        createdate = parcel.readLong();
+        joindate = parcel.readLong();
         lastconn = parcel.readLong();
+        userid = parcel.readString();
         password = parcel.readString();
-        imageurl = parcel.readString();
+        userimage = parcel.readString();
         nickname = parcel.readString();
-        email = parcel.readString();
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getImageurl() {
-        return imageurl;
-    }
-
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getNickname() {
@@ -60,12 +44,28 @@ public class User implements Parcelable {
         this.nickname = nickname;
     }
 
-    public long getCreatedate() {
-        return createdate;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCreatedate(long createdate) {
-        this.createdate = createdate;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserimage() {
+        return userimage;
+    }
+
+    public void setUserimage(String userimage) {
+        this.userimage = userimage;
+    }
+
+    public long getJoindate() {
+        return joindate;
+    }
+
+    public void setJoindate(long joindate) {
+        this.joindate = joindate;
     }
 
     public long getLastconn() {
@@ -87,11 +87,11 @@ public class User implements Parcelable {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "userid='" + userid + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
-                ", imageurl='" + imageurl + '\'' +
-                ", createdate=" + createdate +
+                ", userimage='" + userimage + '\'' +
+                ", joindate=" + joindate +
                 ", lastconn=" + lastconn +
                 ", point=" + point +
                 '}';
@@ -105,12 +105,12 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(point);
-        dest.writeLong(createdate);
+        dest.writeLong(joindate);
         dest.writeLong(lastconn);
-        dest.writeString(email);
-        dest.writeString(nickname);
+        dest.writeString(userid);
         dest.writeString(password);
-        dest.writeString(imageurl);
+        dest.writeString(userimage);
+        dest.writeString(nickname);
     }
 
     public static Creator<User> CREATOR = new Creator<User>() {

@@ -108,8 +108,8 @@ public class DripWriteActivity extends BaseActivity {
             final WriteDripRequest writeRequst = new WriteDripRequest(this, new BaseApiResponse.OnResponseListener<Drip>() {
                 @Override
                 public void onResponse(BaseApiResponse<Drip> response) {
-                    if (response != null && response.getData() != null && !TextUtils.isEmpty(response.getData().getAuthor())) {
-                        Toast.makeText(DripWriteActivity.this, response.getData().getAuthor() + getResources().getString(R.string.write_welcome), Toast.LENGTH_SHORT).show();
+                    if (response != null && response.getData() != null && !TextUtils.isEmpty(response.getData().getUserid())) {
+                        Toast.makeText(DripWriteActivity.this, response.getData().getUserid() + getResources().getString(R.string.write_welcome), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         finish();
                     }
@@ -122,7 +122,7 @@ public class DripWriteActivity extends BaseActivity {
             });
 
             String dripContent = etWrite.getText().toString();
-            writeRequst.setDataInfo(user.getEmail(), dripContent);
+            writeRequst.setDataInfo(user.getUserid(), dripContent);
             if(mImageUri != null){
                 new AsyncTask<Void, Void, File>() {
                     @Override
@@ -210,7 +210,7 @@ public class DripWriteActivity extends BaseActivity {
             mImageUri = data.getData();
             try {
                 String path = S3Manager.getInstance().getPath(mImageUri);
-                ivBackground.setImageURI(mImageUri);
+                ivBackground.setImageURI(Uri.parse(path));
             } catch (URISyntaxException e) {
                 Toast.makeText(this,
                         "Unable to get the file from the given URI.  See error log for details",

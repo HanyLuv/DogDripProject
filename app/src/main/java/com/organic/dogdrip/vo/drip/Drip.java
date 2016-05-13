@@ -3,36 +3,40 @@ package com.organic.dogdrip.vo.drip;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.organic.dogdrip.vo.user.User;
+
 
 /**
  * Created by HanyLuv on 2016-03-14.
  */
 public class Drip implements Parcelable {
 
-    private int id;
+    private int dripid;
     private String drip;
-    private String author;
-    private String imageurl;
+    private String dripimage;
+    private String userid;
     private long createdate;
     private int heartcount;
+    private User user = null;
 
     public Drip(){}
 
     public Drip(Parcel parcel){
         heartcount = parcel.readInt();
-        id = parcel.readInt();
+        dripid = parcel.readInt();
         createdate = parcel.readLong();
-        author = parcel.readString();
+        userid = parcel.readString();
         drip = parcel.readString();
-        imageurl = parcel.readString();
+        dripimage= parcel.readString();
+        user = parcel.readParcelable(User.class.getClassLoader());
     }
 
-    public int getId() {
-        return id;
+    public int getDripid() {
+        return dripid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDripid(int dripid) {
+        this.dripid = dripid;
     }
 
     public String getDrip() {
@@ -43,12 +47,20 @@ public class Drip implements Parcelable {
         this.drip = drip;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getDripimage() {
+        return dripimage;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setDripimage(String dripimage) {
+        this.dripimage = dripimage;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public long getCreatedate() {
@@ -67,12 +79,25 @@ public class Drip implements Parcelable {
         this.heartcount = heartcount;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public User getUser() {
+        return user;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Drip{" +
+                "dripid=" + dripid +
+                ", drip='" + drip + '\'' +
+                ", dripimage='" + dripimage + '\'' +
+                ", userid='" + userid + '\'' +
+                ", createdate=" + createdate +
+                ", heartcount=" + heartcount +
+                ", user=" + user +
+                '}';
     }
 
     @Override
@@ -83,24 +108,14 @@ public class Drip implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(heartcount);
-        dest.writeInt(id);
+        dest.writeInt(dripid);
         dest.writeLong(createdate);
-        dest.writeString(author);
+        dest.writeString(userid);
         dest.writeString(drip);
-        dest.writeString(imageurl);
+        dest.writeString(dripimage);
+        dest.writeParcelable(user, flags);
     }
 
-    @Override
-    public String toString() {
-        return "Drip{" +
-                "id=" + id +
-                ", drip='" + drip + '\'' +
-                ", author='" + author + '\'' +
-                ", imageurl='" + imageurl + '\'' +
-                ", createdate=" + createdate +
-                ", heartcount=" + heartcount +
-                '}';
-    }
 
     public static Creator<Drip> CREATOR = new Creator<Drip>() {
 

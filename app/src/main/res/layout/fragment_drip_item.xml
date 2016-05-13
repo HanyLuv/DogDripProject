@@ -33,6 +33,12 @@
             android:scaleType="centerCrop"
             android:visibility="gone" />
 
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/iv_drip_user_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            />
+
         <TextView
             android:id="@+id/tv_drip_author"
             android:layout_width="wrap_content"

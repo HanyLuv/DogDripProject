@@ -145,8 +145,8 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void getLoginInfo(User user, boolean external) {
-        String email = user.getEmail();
-        String password = user.getEmail();
+        String email = user.getUserid();
+        String password = user.getUserid();
         doLogin(email, password, external);
     }
 

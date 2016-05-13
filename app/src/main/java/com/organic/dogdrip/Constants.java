@@ -8,5 +8,6 @@ public class Constants {
 
     //호스트 주소
     public static final String API_SERVER_HOST = "http://52.76.24.8:8080/dogdic";
+//    public static final String API_SERVER_HOST = "http://192.168.219.134:8080/DogDIc";
 
 }

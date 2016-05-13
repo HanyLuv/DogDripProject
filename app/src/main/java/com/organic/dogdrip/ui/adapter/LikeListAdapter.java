@@ -32,7 +32,7 @@ public class LikeListAdapter extends BaseListAdapter<LikeInfo, LikeListAdapter.V
     protected void initView(ViewHolder holder, int position) {
         LikeInfo info = getItem(position);
         if(info != null){
-            holder.tvUserName.setText(info.getUser());
+            holder.tvUserName.setText(info.getUserid());
         }
     }
 

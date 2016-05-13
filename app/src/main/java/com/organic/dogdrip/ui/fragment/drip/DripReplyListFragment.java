@@ -103,8 +103,8 @@ public class DripReplyListFragment extends BaseFragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     ReplyWriteRequest request = new ReplyWriteRequest(getActivity(), replyOnResponseListener);
-                                    request.setReplyInfo(UserInfoManager.getInstance().getUserInfo().getEmail(),
-                                            mDrip.getId(),
+                                    request.setReplyInfo(UserInfoManager.getInstance().getUserInfo().getUserid(),
+                                            mDrip.getDripid(),
                                             mInput.getText().toString());
                                     request(request);
                                 }

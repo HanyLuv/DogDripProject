@@ -18,7 +18,7 @@ public class Log {
 
     public static void e(String tag, String msg){
         if(DEBUG){
-            android.util.Log.e(tag, msg);
+            android.util.Log.e(tag + "", msg  + "");
         }
     }
 

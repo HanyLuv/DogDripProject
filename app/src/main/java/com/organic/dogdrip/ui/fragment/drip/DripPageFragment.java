@@ -46,6 +46,7 @@ public class DripPageFragment extends BaseFragment {
     private TextView mTvRecommend;
     private TextView mTvcomment;
     private NetworkImageView mImageView = null;
+    private NetworkImageView mUserImage = null;
 
     private Drip mDrip = null;
     private int mPagePosition = -1;
@@ -77,6 +78,7 @@ public class DripPageFragment extends BaseFragment {
         mTvRecommend = (TextView) view.findViewById(R.id.tv_drip_recommend);
         mTvcomment = (TextView) view.findViewById(R.id.tv_drip_comment);
         mImageView = (NetworkImageView) view.findViewById(R.id.iv_drip_background);
+        mUserImage = (NetworkImageView) view.findViewById(R.id.iv_drip_user_image);
         return view;
     }
 
@@ -88,15 +90,16 @@ public class DripPageFragment extends BaseFragment {
 
     private void init() {
         if(mDrip != null && mPagePosition >= 0){
-            mTvAuthor.setText(mDrip.getAuthor());
+            mTvAuthor.setText(mDrip.getUser().getNickname());
+            mUserImage.setImageUrl(mDrip.getUser().getUserimage(), ImageLoadManager.getImageLoader());
             mTvDrip.setText(mDrip.getDrip());
             String recommend = String.format(getResources().getString(R.string.drip_recommend), mDrip.getHeartcount());
             mTvRecommend.setText(recommend);
 //        mTvRecommend.setOnClickListener(recommendCheckClickListener); //추천인 조회
             mTvRecommend.setOnClickListener(recommendClickListener); //추천하기
-            if (!TextUtils.isEmpty(mDrip.getImageurl())) {
+            if (!TextUtils.isEmpty(mDrip.getDripimage())) {
                 mImageView.setVisibility(View.VISIBLE);
-                mImageView.setImageUrl(mDrip.getImageurl(), ImageLoadManager.getImageLoader());
+                mImageView.setImageUrl(mDrip.getDripimage(), ImageLoadManager.getImageLoader());
                 mImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,7 +161,7 @@ public class DripPageFragment extends BaseFragment {
                         showToast(error.getMessage());
                     }
                 });
-                likeCheckRequest.setDripId(mDrip.getId());
+                likeCheckRequest.setDripId(mDrip.getDripid());
                 request(likeCheckRequest);
             }
         }
@@ -177,7 +180,7 @@ public class DripPageFragment extends BaseFragment {
     private void requestReplyList(Drip drip){
         if(drip != null && getActivity() != null){
             ReplyListRequest request = new ReplyListRequest(getActivity(), onReplyListResponseListener);
-            request.setDripId(drip.getId());
+            request.setDripId(drip.getDripid());
             request(request);
         }
     }
@@ -201,7 +204,7 @@ public class DripPageFragment extends BaseFragment {
                     showToast(error.getMessage());
                 }
             });
-            likeRequest.setLikeInfo(drip.getId(), UserInfoManager.getInstance().getUserInfo().getEmail());
+            likeRequest.setLikeInfo(drip.getDripid(), UserInfoManager.getInstance().getUserInfo().getUserid());
             request(likeRequest);
         }else{
             //TODO : Login 확인 다이얼로그 띄우기

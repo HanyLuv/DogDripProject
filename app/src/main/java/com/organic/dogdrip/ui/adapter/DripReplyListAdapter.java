@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.organic.dogdrip.R;
+import com.organic.dogdrip.image.ImageLoadManager;
 import com.organic.dogdrip.vo.drip.LikeInfo;
 import com.organic.dogdrip.vo.drip.Reply;
 
@@ -18,14 +20,15 @@ public class DripReplyListAdapter extends BaseListAdapter<Reply, DripReplyListAd
 
 
     public DripReplyListAdapter(Context context, List<Reply> data) {
-        super(context, data, R.layout.item_likelist_row);
+        super(context, data, R.layout.item_reply_row);
     }
 
     @Override
     protected ViewHolder makeHolder(View view) {
         ViewHolder holder = new ViewHolder();
-        holder.ivUserImg = (ImageView) view.findViewById(R.id.iv_user);
-        holder.tvUserName = (TextView) view.findViewById(R.id.tv_user_name);
+        holder.ivUserImg = (NetworkImageView) view.findViewById(R.id.iv_item_reply_image);
+        holder.tvUserName = (TextView) view.findViewById(R.id.tv_item_reply_name);
+        holder.tvComment = (TextView) view.findViewById(R.id.tv_item_reply_comment);
         return holder;
     }
 
@@ -33,12 +36,15 @@ public class DripReplyListAdapter extends BaseListAdapter<Reply, DripReplyListAd
     protected void initView(ViewHolder holder, int position) {
         Reply info = getItem(position);
         if(info != null){
-            holder.tvUserName.setText(info.getAuthor());
+            holder.ivUserImg.setImageUrl(info.getDrip().getUser().getUserimage(), ImageLoadManager.getImageLoader());
+            holder.tvUserName.setText(info.getDrip().getUser().getNickname());
+            holder.tvComment.setText(info.getComment());
         }
     }
 
     protected static class ViewHolder {
-        public ImageView ivUserImg;
+        public NetworkImageView ivUserImg;
         public TextView tvUserName;
+        public TextView tvComment;
     }
 }

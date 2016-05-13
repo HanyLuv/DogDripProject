@@ -59,7 +59,7 @@ public class MypageFragment extends BaseFragment {
         }
         mTvUserName.setText(user.getNickname());
         mTvUserLevel.setText(String.valueOf(user.getPoint()));
-        mUserImage.setImageUrl(user.getImageurl(), ImageLoadManager.getImageLoader());
+        mUserImage.setImageUrl(user.getUserimage(), ImageLoadManager.getImageLoader());
     }
 
 

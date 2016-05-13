@@ -8,48 +8,61 @@ import android.os.Parcelable;
  */
 public class LikeInfo implements Parcelable {
 
-    private int id = 0;
-    private String user = null;
-    private String author = null;
-    private long createdate = 0;
+    private int likeid = 0;
+    private String dripid = null;
+    private String userid = null;
+    private long likedate = 0;
 
     public LikeInfo(){}
 
-    public int getId() {
-        return id;
+    public int getLikeid() {
+        return likeid;
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public void setLikeid(int likeid) {
+        this.likeid = likeid;
     }
-    public String getUser() {
-        return user;
+
+    public String getDripid() {
+        return dripid;
     }
-    public void setUser(String user) {
-        this.user = user;
+
+    public void setDripid(String dripid) {
+        this.dripid = dripid;
     }
-    public String getAuthor() {
-        return author;
+
+    public String getUserid() {
+        return userid;
     }
-    public void setAuthor(String author) {
-        this.author = author;
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
-    public long getCreatedate() {
-        return createdate;
+
+    public long getLikedate() {
+        return likedate;
     }
-    public void setCreatedate(long createdate) {
-        this.createdate = createdate;
+
+    public void setLikedate(long likedate) {
+        this.likedate = likedate;
     }
 
     public LikeInfo(Parcel parcel){
-        id = parcel.readInt();
-        author = parcel.readString();
-        user = parcel.readString();
-        createdate = parcel.readLong();
+        likeid = parcel.readInt();
+        dripid = parcel.readString();
+        userid = parcel.readString();
+        likedate = parcel.readLong();
 
     }
+
     @Override
     public String toString() {
-        return "LikeDrips [id=" + id + ", user=" + user + ", author=" + author + ", createdate=" + createdate + "]";
+        return "LikeInfo{" +
+                "likeid=" + likeid +
+                ", dripid='" + dripid + '\'' +
+                ", userid='" + userid + '\'' +
+                ", likedate=" + likedate +
+                '}';
     }
 
     @Override
@@ -59,10 +72,10 @@ public class LikeInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(author);
-        dest.writeString(user);
-        dest.writeLong(createdate);
+        dest.writeInt(likeid);
+        dest.writeString(dripid);
+        dest.writeString(userid);
+        dest.writeLong(likedate);
     }
 
     public static Parcelable.Creator<LikeInfo> CREATOR = new Creator<LikeInfo>() {
